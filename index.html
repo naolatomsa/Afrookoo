@@ -3,13 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Afrookoo Software builds intelligent, scalable and secure digital solutions: custom software, AI, enterprise systems, cloud and digital transformation." />
-    <title>Afrookoo Software</title>
+    <title>Afrookoo Software | Enterprise Systems, AI & Modern Applications</title>
+    <meta
+      name="description"
+      content="Afrookoo Software engineers mission-critical enterprise systems, AI multi-agent platforms, scalable web architectures, and native iOS applications from Addis Ababa to global enterprises."
+    />
+    <meta name="author" content="Afrookoo Software Team" />
+    <meta name="keywords" content="Afrookoo, Software Engineering, Addis Ababa, Ethiopia, Software Engineering Team, Full-Stack, iOS, Swift, React, Node.js, Spring Boot, Artificial Intelligence, Multi-Agent AI, Enterprise ERP, POS, Hexagonal Architecture" />
+    <meta name="theme-color" content="#0a0f1d" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Afrookoo Software | Enterprise Systems, AI & Modern Applications" />
+    <meta
+      property="og:description"
+      content="Building Intelligent Technology. Transforming Businesses. Custom software, enterprise systems, native iOS and AI-driven platforms from Addis Ababa, Ethiopia."
+    />
+    <meta property="og:image" content="https://media.base44.com/images/public/6a252a130a6d44cc87309d9e/901f2c158_generated_image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Afrookoo Software | Enterprise Systems, AI & Modern Applications" />
+    <meta
+      name="twitter:description"
+      content="Building Intelligent Technology. Transforming Businesses. Custom software, enterprise systems, native iOS and AI-driven platforms."
+    />
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Immediate theme bootstrap to prevent flash of wrong theme -->
+    <script>
+      (function () {
+        var key = 'afrookoo-theme';
+        var stored = localStorage.getItem(key);
+        var theme = stored === 'light' || stored === 'dark'
+          ? stored
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
   </head>
-  <body>
+  <body class="bg-[var(--bg-page)] text-[var(--text-body)] antialiased selection:bg-blue-600 selection:text-white transition-colors duration-300">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
