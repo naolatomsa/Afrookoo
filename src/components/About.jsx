@@ -74,7 +74,7 @@ export default function About() {
                     Software &amp; Digital Systems Collective
                   </p>
                   <p className="text-xs text-[var(--text-muted)] mt-0.5">
-                    Addis Ababa, Ethiopia · EAT (UTC+3)
+                    4 Kilo (Abrehot Library / RVU), Addis Ababa · EAT (UTC+3)
                   </p>
                 </div>
               </div>

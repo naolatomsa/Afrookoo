@@ -125,27 +125,36 @@ export default function Contact() {
 
           {/* Client Commitment & Response Promise Card */}
           <Reveal delay={150}>
-            <div className="rounded-2xl border border-blue-500/20 dark:border-blue-500/30 bg-blue-50/70 dark:bg-gradient-to-br dark:from-blue-900/30 dark:via-slate-900/60 dark:to-slate-950 p-6 shadow-sm">
-              <div className="flex items-center gap-2.5 mb-3">
-                <Shield size={20} className="text-blue-600 dark:text-blue-400" />
-                <h4 className="font-serif text-lg font-bold text-slate-900 dark:text-white">
-                  Enterprise Client Commitment
-                </h4>
+            <div className="rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] p-6 shadow-sm">
+              <div className="flex items-center gap-3.5 mb-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                  <Shield size={18} />
+                </div>
+                <div>
+                  <h4 className="font-serif text-base font-bold text-[var(--text-heading)]">
+                    Enterprise Client Commitment
+                  </h4>
+                  <span className="text-[11px] font-mono text-blue-600 dark:text-blue-400 font-medium">
+                    Direct Architect Engagement
+                  </span>
+                </div>
               </div>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+
+              <p className="text-xs text-[var(--text-muted)] leading-relaxed mb-4">
                 We treat every inquiry with senior architectural care. Submit your project requirements to receive a structured technical assessment and scope estimate within 24 hours.
               </p>
-              <div className="space-y-2 border-t border-blue-200/60 dark:border-slate-800 pt-3.5 text-xs text-slate-700 dark:text-slate-200">
-                <div className="flex items-center gap-2">
-                  <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
+
+              <div className="space-y-2.5 border-t border-[var(--border-subtle)] pt-4 text-xs text-[var(--text-body)]">
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle size={15} className="text-emerald-500 shrink-0" />
                   <span>24-Hour Technical Proposal Turnaround</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle size={15} className="text-emerald-500 shrink-0" />
                   <span>Mutual Non-Disclosure Agreement (NDA) Protected</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle size={14} className="text-emerald-600 dark:text-emerald-400 shrink-0" />
+                <div className="flex items-center gap-2.5">
+                  <CheckCircle size={15} className="text-emerald-500 shrink-0" />
                   <span>Direct Senior Software Architect Access</span>
                 </div>
               </div>
