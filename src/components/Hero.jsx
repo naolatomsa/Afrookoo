@@ -147,7 +147,7 @@ export default function Hero() {
         {/* Right Column: Interactive System Preview (5 Pillars) */}
         <div className="lg:col-span-5">
           <Reveal delay={150}>
-            <div className="relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 shadow-xl shadow-slate-200/50 backdrop-blur-xl dark:shadow-2xl dark:border-slate-800 dark:bg-slate-900/90">
+            <div className="relative rounded-2xl border border-slate-200/90 bg-white p-5 sm:p-7 backdrop-blur-xl dark:border-slate-800 dark:bg-slate-900/90 shadow-none">
               {/* Window Header */}
               <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-5">
                 <div className="flex items-center gap-2">
@@ -213,7 +213,7 @@ export default function Hero() {
                   {activeShowcase.tech.map((t) => (
                     <span
                       key={t}
-                      className="rounded-md border border-slate-200/90 bg-white px-2.5 py-1 font-mono text-[11px] text-slate-800 font-semibold shadow-2xs dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
+                      className="rounded-md border border-slate-200/90 bg-white px-2.5 py-1 font-mono text-[11px] text-slate-800 font-semibold dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
                     >
                       {t}
                     </span>
