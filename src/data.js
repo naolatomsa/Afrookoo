@@ -5,8 +5,8 @@ export const companyInfo = {
   tagline: 'Building Intelligent Technology. Transforming Businesses.',
   subtitle:
     'We engineer mission-critical enterprise systems, AI agent platforms, scalable web architectures, and native iOS applications from Addis Ababa to global enterprises.',
-  location: 'Addis Ababa, Ethiopia · EAT (UTC+3)',
-  address: 'Bole Innovation Corridor, Addis Ababa, Ethiopia',
+  location: '4 Kilo, Addis Ababa, Ethiopia · EAT (UTC+3)',
+  address: '4 Kilo, Around Abrehot Library, Rift Valley University, Addis Ababa, Ethiopia',
   email: 'contact@afrookoo.com',
   workEmail: 'contact@afrookoo.com',
   phone: '+251 91 234 5678',
