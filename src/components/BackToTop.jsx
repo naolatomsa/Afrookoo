@@ -21,17 +21,17 @@ export default function BackToTop() {
       type="button"
       onClick={goTop}
       aria-label="Scroll back to top"
-      className={`fixed bottom-6 right-6 z-40 flex h-12 w-12 cursor-pointer items-center justify-center rounded-2xl border border-slate-300 dark:border-slate-700/80 bg-white/90 dark:bg-slate-900/90 text-slate-800 dark:text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:border-blue-500 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 hover:-translate-y-1 hover:shadow-blue-500/25 ${
+      className={`fixed bottom-6 right-6 z-40 flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-zinc-400 dark:hover:border-zinc-600 hover:text-black dark:hover:text-white ${
         shown ? 'visible scale-100 opacity-100' : 'invisible scale-75 opacity-0 pointer-events-none'
       }`}
     >
       <svg
-        width="20"
-        height="20"
+        width="16"
+        height="16"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
         aria-hidden="true"

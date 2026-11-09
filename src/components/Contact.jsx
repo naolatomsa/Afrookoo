@@ -1,364 +1,304 @@
-import { useState } from 'react'
-import { Section, Eyebrow, Button, Card, AddisAbabaClock } from '../ui.jsx'
+import { useState, useEffect } from 'react'
+import { Section } from '../ui.jsx'
 import Reveal from './Reveal.jsx'
-import { serviceOptions, companyInfo } from '../data.js'
-import { MapPin, Mail, Phone, Clock, Shield, Send, CheckCircle, Copy, Telegram, LinkedIn, GitHub } from './Icons.jsx'
+import { projectTypes, timelines, companyInfo } from '../data.js'
+import {
+  MapPin,
+  Mail,
+  Send,
+  CheckCircle,
+  Copy,
+  Telegram,
+} from './Icons.jsx'
 
-const empty = {
-  name: '',
-  organization: '',
-  email: '',
-  phone: '',
-  service: serviceOptions[0],
-  budget: 'Under $10k',
-  description: '',
-}
+export default function Contact({ preselectedLane }) {
+  const [projectType, setProjectType] = useState('web-nest')
+  const [timeline, setTimeline] = useState('standard')
+  const [formData, setFormData] = useState({
+    name: '',
+    organization: '',
+    email: '',
+    scope: '',
+  })
+  const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [copiedEmail, setCopiedEmail] = useState(false)
 
-export default function Contact() {
-  const [form, setForm] = useState(empty)
-  const [sent, setSent] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [copied, setCopied] = useState(false)
-
-  const update = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+  useEffect(() => {
+    if (preselectedLane === 'sprint') setTimeline('immediate')
+    if (preselectedLane === 'turnkey') setTimeline('standard')
+    if (preselectedLane === 'pod') setTimeline('continuous')
+  }, [preselectedLane])
 
   const copyEmail = () => {
     navigator.clipboard.writeText(companyInfo.email)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2500)
+    setCopiedEmail(true)
+    setTimeout(() => setCopiedEmail(false), 2500)
+  }
+
+  const handleInputChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setLoading(true)
-
-    // Simulate rapid dispatch / integration
+    setIsSubmitting(true)
     setTimeout(() => {
-      setLoading(false)
-      setSent(true)
-      setForm(empty)
-    }, 800)
+      setIsSubmitting(false)
+      setSubmitted(true)
+    }, 600)
   }
 
-  const labelCls = 'mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[var(--text-body)]'
-  const inputCls =
-    'min-h-[46px] w-full rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] px-4 py-2.5 text-sm text-[var(--text-heading)] transition-all duration-200 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none'
+  const selectedTypeObj = projectTypes.find((p) => p.id === projectType) || projectTypes[0]
 
   return (
-    <Section id="contact" tone="surface">
-      <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-14">
-        {/* Left Column: Direct Info & Client Commitments */}
-        <div className="lg:col-span-5 space-y-8">
+    <Section id="contact" tone="default" pad="py-16 sm:py-20 lg:py-24">
+      <div className="grid items-start gap-12 lg:grid-cols-12 lg:gap-12">
+        {/* Left Column: Direct Info & Addis Ababa Positioning */}
+        <div className="lg:col-span-5 space-y-6">
           <Reveal>
-            <Eyebrow icon={Mail}>Get in Touch</Eyebrow>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[var(--text-heading)] mt-3 leading-[1.15]">
-              Let’s build something extraordinary together.
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white leading-tight">
+              Start your build with an engineering-led team.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-[var(--text-muted)]">
-              Have a software vision, enterprise infrastructure challenge, or AI initiative? Our engineering leadership is ready to analyze your technical needs.
+            <p className="mt-4 text-sm sm:text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
+              Your inquiry is evaluated directly by our technical leads within 4 business hours. We review architecture, tech stack, and deliver an actionable technical roadmap.
             </p>
           </Reveal>
 
-          {/* Contact Details List */}
+          {/* Contact Details Card */}
           <Reveal delay={100}>
-            <div className="space-y-4 rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] p-6 shadow-sm">
+            <div className="space-y-4 rounded-2xl border border-zinc-200/80 dark:border-white/10 bg-white/90 dark:bg-zinc-900/40 p-6 backdrop-blur-xl shadow-lg dark:shadow-xl">
               <div className="flex items-start gap-3.5">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  <MapPin size={18} />
-                </div>
+                <MapPin size={18} className="text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-serif text-sm font-bold text-[var(--text-heading)]">
-                    Headquarters
+                  <h4 className="text-sm font-semibold text-zinc-950 dark:text-zinc-100">
+                    Addis Ababa Engineering Studio
                   </h4>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-0.5">
                     {companyInfo.address}
                   </p>
-                  <p className="text-[11px] font-mono text-blue-500 mt-1">
+                  <p className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 mt-1">
                     {companyInfo.location}
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5 border-t border-[var(--border-subtle)] pt-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  <Mail size={18} />
-                </div>
+              <div className="flex items-start gap-3.5 border-t border-zinc-100 dark:border-zinc-800/80 pt-4">
+                <Mail size={18} className="text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <h4 className="font-serif text-sm font-bold text-[var(--text-heading)]">
+                  <h4 className="text-sm font-semibold text-zinc-950 dark:text-zinc-100">
                     Direct Email
                   </h4>
                   <div className="flex items-center gap-2 mt-0.5">
                     <a
                       href={`mailto:${companyInfo.email}`}
-                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-mono"
+                      className="text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white font-mono font-medium"
                     >
                       {companyInfo.email}
                     </a>
                     <button
                       type="button"
                       onClick={copyEmail}
-                      className="rounded p-1 text-slate-400 hover:text-blue-500 transition-colors cursor-pointer"
+                      className="rounded p-1 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-pointer"
                       title="Copy email to clipboard"
                     >
-                      {copied ? <CheckCircle size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                      <Copy size={13} />
                     </button>
-                    {copied && <span className="font-mono text-[10px] text-emerald-500">Copied!</span>}
+                    {copiedEmail && (
+                      <span className="font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                        Copied
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3.5 border-t border-[var(--border-subtle)] pt-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  <Clock size={18} />
-                </div>
+              <div className="flex items-start gap-3.5 border-t border-zinc-100 dark:border-zinc-800/80 pt-4">
+                <Telegram size={18} className="text-zinc-400 dark:text-zinc-500 shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-serif text-sm font-bold text-[var(--text-heading)]">
-                    Operational Hours
+                  <h4 className="text-sm font-semibold text-zinc-950 dark:text-zinc-100">
+                    Telegram Direct
                   </h4>
-                  <p className="text-xs text-[var(--text-muted)] mt-0.5">
-                    {companyInfo.hours}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* Client Commitment & Response Promise Card */}
-          <Reveal delay={150}>
-            <div className="rounded-2xl border border-[var(--border-card)] bg-[var(--bg-card)] p-6 shadow-sm">
-              <div className="flex items-center gap-3.5 mb-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400">
-                  <Shield size={18} />
-                </div>
-                <div>
-                  <h4 className="font-serif text-base font-bold text-[var(--text-heading)]">
-                    Enterprise Client Commitment
-                  </h4>
-                  <span className="text-[11px] font-mono text-blue-600 dark:text-blue-400 font-medium">
-                    Direct Architect Engagement
-                  </span>
+                  <a
+                    href={companyInfo.telegram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white font-mono font-medium"
+                  >
+                    {companyInfo.telegramHandle}
+                  </a>
                 </div>
               </div>
 
-              <p className="text-xs text-[var(--text-muted)] leading-relaxed mb-4">
-                We treat every inquiry with senior architectural care. Submit your project requirements to receive a structured technical assessment and scope estimate within 24 hours.
-              </p>
-
-              <div className="space-y-2.5 border-t border-[var(--border-subtle)] pt-4 text-xs text-[var(--text-body)]">
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle size={15} className="text-emerald-500 shrink-0" />
-                  <span>24-Hour Technical Proposal Turnaround</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle size={15} className="text-emerald-500 shrink-0" />
-                  <span>Mutual Non-Disclosure Agreement (NDA) Protected</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <CheckCircle size={15} className="text-emerald-500 shrink-0" />
-                  <span>Direct Senior Software Architect Access</span>
-                </div>
+              {/* SLA Guarantee */}
+              <div className="rounded-lg bg-zinc-50 dark:bg-zinc-900/60 p-3 flex items-center justify-between font-mono text-xs text-zinc-600 dark:text-zinc-400 border border-zinc-100 dark:border-zinc-800/80">
+                <span>Response Window: Under 4 Business Hours</span>
+                <span className="text-zinc-400 dark:text-zinc-500 font-semibold">UTC+3</span>
               </div>
-            </div>
-          </Reveal>
-
-          {/* Direct Telegram & Social Links */}
-          <Reveal delay={200}>
-            <div className="flex items-center gap-3">
-              <a
-                href={companyInfo.telegram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] py-2.5 text-xs font-semibold text-[var(--text-heading)] hover:border-blue-500 hover:text-blue-500 transition-colors shadow-sm"
-              >
-                <Telegram size={16} className="text-sky-500" />
-                <span>Chat on Telegram</span>
-              </a>
-
-              <a
-                href={companyInfo.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-2.5 text-[var(--text-muted)] hover:text-blue-500 hover:border-blue-500 transition-colors shadow-sm"
-                title="LinkedIn"
-              >
-                <LinkedIn size={18} />
-              </a>
-
-              <a
-                href={companyInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-2.5 text-[var(--text-muted)] hover:text-blue-500 hover:border-blue-500 transition-colors shadow-sm"
-                title="GitHub"
-              >
-                <GitHub size={18} />
-              </a>
             </div>
           </Reveal>
         </div>
 
-        {/* Right Column: Interactive Proposal Form */}
+        {/* Right Column: Project Scoping Form */}
         <div className="lg:col-span-7">
           <Reveal delay={120}>
-            <div className="rounded-3xl border border-[var(--border-card)] bg-[var(--bg-card)] p-6 sm:p-10 shadow-xl">
-              <h3 className="font-serif text-2xl font-bold text-[var(--text-heading)] mb-2">
-                Request a Detailed Proposal
-              </h3>
-              <p className="text-xs sm:text-sm text-[var(--text-muted)] mb-8">
-                Fill out the brief below and our architects will review your requirements and respond within 24 business hours.
-              </p>
+            <div className="rounded-2xl border border-zinc-200/80 dark:border-white/10 bg-white/90 dark:bg-zinc-900/40 p-6 sm:p-8 backdrop-blur-xl shadow-lg dark:shadow-xl">
+              <div className="border-b border-zinc-100 dark:border-zinc-800/80 pb-4 mb-6">
+                <span className="font-mono text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block mb-1">
+                  Project Inquiry
+                </span>
+                <h3 className="text-xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
+                  Tell us about your requirements
+                </h3>
+              </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="name" className={labelCls}>
-                      Your Full Name *
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      type="text"
-                      required
-                      placeholder="e.g. Abebe Bikila"
-                      value={form.name}
-                      onChange={update}
-                      className={inputCls}
-                    />
+              {submitted ? (
+                <div className="py-12 text-center space-y-4">
+                  <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
+                    <CheckCircle size={24} />
                   </div>
-
-                  <div>
-                    <label htmlFor="organization" className={labelCls}>
-                      Company / Organization
-                    </label>
-                    <input
-                      id="organization"
-                      name="organization"
-                      type="text"
-                      placeholder="e.g. Enterprise Ltd."
-                      value={form.organization}
-                      onChange={update}
-                      className={inputCls}
-                    />
-                  </div>
+                  <h4 className="text-xl font-semibold text-zinc-950 dark:text-zinc-50">
+                    Scope Received
+                  </h4>
+                  <p className="max-w-md mx-auto text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                    Thank you, {formData.name || 'Partner'}. Our engineering team is reviewing your {selectedTypeObj.title} specifications. We will send our technical assessment to {formData.email || 'your email'} shortly.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setSubmitted(false)}
+                    className="rounded-lg border border-zinc-300 dark:border-zinc-700 px-4 py-2 text-xs font-mono font-medium text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer"
+                  >
+                    Submit Another Scope
+                  </button>
                 </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Step 1: Select Project Type */}
                   <div>
-                    <label htmlFor="email" className={labelCls}>
-                      Work Email *
+                    <label className="font-mono text-xs font-medium uppercase tracking-wider text-zinc-700 dark:text-zinc-300 block mb-2.5">
+                      1. Project Category
                     </label>
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      placeholder="name@company.com"
-                      value={form.email}
-                      onChange={update}
-                      className={inputCls}
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="phone" className={labelCls}>
-                      Phone / WhatsApp / Telegram
-                    </label>
-                    <input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      placeholder="+251 9... or international"
-                      value={form.phone}
-                      onChange={update}
-                      className={inputCls}
-                    />
-                  </div>
-                </div>
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="service" className={labelCls}>
-                      Primary Service Required
-                    </label>
-                    <select
-                      id="service"
-                      name="service"
-                      value={form.service}
-                      onChange={update}
-                      className={inputCls}
-                    >
-                      {serviceOptions.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label htmlFor="budget" className={labelCls}>
-                      Target Budget Range
-                    </label>
-                    <select
-                      id="budget"
-                      name="budget"
-                      value={form.budget}
-                      onChange={update}
-                      className={inputCls}
-                    >
-                      <option value="Under $5k">Under $5k (Prototyping / MVP)</option>
-                      <option value="$5k - $15k">$5k - $15k (Standard Build)</option>
-                      <option value="$15k - $50k">$15k - $50k (Enterprise Platform)</option>
-                      <option value="$50k+">$50k+ (Comprehensive Modernization)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="description" className={labelCls}>
-                    Project Overview &amp; Technical Requirements *
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    rows={4}
-                    required
-                    placeholder="Briefly describe your objectives, intended users, current technology stack, and desired launch timeline..."
-                    value={form.description}
-                    onChange={update}
-                    className={`${inputCls} resize-y min-h-[110px]`}
-                  />
-                </div>
-
-                <Button
-                  as="button"
-                  type="submit"
-                  variant="primary"
-                  className="w-full text-base py-3 min-h-[50px]"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <span>Submitting Request...</span>
-                  ) : (
-                    <>
-                      <span>Submit Project Proposal Request</span>
-                      <Send size={16} />
-                    </>
-                  )}
-                </Button>
-
-                {sent && (
-                  <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-emerald-600 dark:text-emerald-400">
-                    <div className="flex items-center gap-2 font-semibold text-sm">
-                      <CheckCircle size={18} />
-                      <span>Request successfully received!</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {projectTypes.map((pt) => {
+                        const isSelected = projectType === pt.id
+                        return (
+                          <button
+                            key={pt.id}
+                            type="button"
+                            onClick={() => setProjectType(pt.id)}
+                            className={`rounded-lg border p-3 text-left transition-all cursor-pointer ${
+                              isSelected
+                                ? 'border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white'
+                                : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700'
+                            }`}
+                          >
+                            <div className="text-xs font-semibold">{pt.title}</div>
+                            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                              {pt.desc}
+                            </div>
+                          </button>
+                        )
+                      })}
                     </div>
-                    <p className="text-xs mt-1 text-slate-300">
-                      Our lead software architect will review your project requirements and follow up via email at <strong className="font-mono">{form.email || 'your address'}</strong>.
-                    </p>
                   </div>
-                )}
-              </form>
+
+                  {/* Step 2: Desired Timeline */}
+                  <div>
+                    <label className="font-mono text-xs font-medium uppercase tracking-wider text-zinc-700 dark:text-zinc-300 block mb-2.5">
+                      2. Target Velocity
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                      {timelines.map((tl) => {
+                        const isSelected = timeline === tl.id
+                        return (
+                          <button
+                            key={tl.id}
+                            type="button"
+                            onClick={() => setTimeline(tl.id)}
+                            className={`rounded-lg border p-3 text-left transition-all cursor-pointer ${
+                              isSelected
+                                ? 'border-zinc-900 bg-zinc-100 dark:border-zinc-100 dark:bg-zinc-800 text-zinc-950 dark:text-white'
+                                : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 text-zinc-600 dark:text-zinc-400 hover:border-zinc-300 dark:hover:border-zinc-700'
+                            }`}
+                          >
+                            <div className="text-xs font-semibold">{tl.title}</div>
+                            <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                              {tl.detail}
+                            </div>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Step 3: Scope Description & Contact Details */}
+                  <div className="space-y-3.5 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
+                    <label className="font-mono text-xs font-medium uppercase tracking-wider text-zinc-700 dark:text-zinc-300 block">
+                      3. Organization &amp; Project Details
+                    </label>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <input
+                          type="text"
+                          name="name"
+                          required
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          placeholder="Your Name *"
+                          className="w-full rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 px-3.5 py-2 text-xs text-zinc-900 dark:text-white focus:border-zinc-400 dark:focus:border-zinc-600 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          name="organization"
+                          value={formData.organization}
+                          onChange={handleInputChange}
+                          placeholder="Organization / Company"
+                          className="w-full rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 px-3.5 py-2 text-xs text-zinc-900 dark:text-white focus:border-zinc-400 dark:focus:border-zinc-600 outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        placeholder="Work Email *"
+                        className="w-full rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 px-3.5 py-2 text-xs text-zinc-900 dark:text-white focus:border-zinc-400 dark:focus:border-zinc-600 outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <textarea
+                        name="scope"
+                        rows={3}
+                        required
+                        value={formData.scope}
+                        onChange={handleInputChange}
+                        placeholder="Brief overview of requirements, integrations, or operational goals..."
+                        className="w-full rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 px-3.5 py-2 text-xs text-zinc-900 dark:text-white focus:border-zinc-400 dark:focus:border-zinc-600 outline-none resize-none"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full rounded-full bg-blue-600 hover:bg-blue-500 text-white py-3.5 text-xs font-mono font-medium shadow-lg shadow-blue-500/25 border border-blue-500/30 disabled:opacity-50 transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <span>
+                      {isSubmitting ? 'Submitting...' : 'Request Architecture Proposal'}
+                    </span>
+                    <Send size={13} />
+                  </button>
+                </form>
+              )}
             </div>
           </Reveal>
         </div>

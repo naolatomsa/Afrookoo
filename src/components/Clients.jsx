@@ -36,7 +36,7 @@ export default function Clients() {
         eyebrow="Institutional Partners"
         eyebrowIcon={Award}
         title="Trusted by Ethiopia's leading enterprises and institutions."
-        intro="We collaborate with prominent financial institutions, research associations, agricultural conglomerates, and universities to build mission-critical digital systems."
+        intro="We collaborate with prominent financial institutions, research associations, agricultural conglomerates, and universities to build high-performance digital systems."
       />
 
       {/* Institutional Partner Grid - Only Partner Names & Profiles, No Testimonials */}

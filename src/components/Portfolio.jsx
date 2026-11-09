@@ -1,434 +1,240 @@
 import { useState } from 'react'
-import { Section, Heading, Modal } from '../ui.jsx'
+import { Section, Heading } from '../ui.jsx'
 import Reveal, { stagger } from './Reveal.jsx'
-import { projects } from '../data.js'
-import { ArrowUpRight, CheckCircle, Code, Layers, Shield, Cpu, Cloud, Sparkles, ArrowRight } from './Icons.jsx'
+import { caseStudies } from '../data.js'
+import { ArrowUpRight, Code, Database, Shield } from './Icons.jsx'
 
-// Architecture diagram for ORA POS & Inventory Intelligence
-function PosArchitectureDiagram() {
-  const steps = [
-    {
-      num: '01',
-      title: 'POS Terminal & Scanner',
-      subtitle: 'Touchscreen cashier UI, optical barcode scanners & thermal receipt printers.',
-      badge: 'Edge Hardware',
-      color: 'blue',
-    },
-    {
-      num: '02',
-      title: 'Offline Resilience Buffer',
-      subtitle: 'Local IndexedDB/SQLite transaction buffer ensuring zero-downtime offline continuity.',
-      badge: 'Edge Storage',
-      color: 'indigo',
-    },
-    {
-      num: '03',
-      title: 'Sync & Gateway Layer',
-      subtitle: 'WebSocket & REST API gateway with JWT authorization and automatic retry queue.',
-      badge: 'Ingestion Layer',
-      color: 'sky',
-    },
-    {
-      num: '04',
-      title: 'Atomic Inventory Core',
-      subtitle: 'ACID-compliant stock decrement engine preventing overselling across multi-branch registers.',
-      badge: 'Core Domain',
-      color: 'emerald',
-    },
-    {
-      num: '05',
-      title: 'Multi-Branch Cloud & BI',
-      subtitle: 'Consolidated database cluster with real-time managerial revenue and stock analytics.',
-      badge: 'Cloud Storage & BI',
-      color: 'cyan',
-    },
-  ]
+function CaseStudyCard({ cs }) {
+  const [activeTab, setActiveTab] = useState('metrics')
 
-  return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-4 sm:p-5">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400">
-            System Architecture Diagram
-          </span>
-        </div>
-        <span className="rounded-full border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2.5 py-0.5 font-mono text-[10px] font-bold text-blue-700 dark:text-blue-300">
-          OFFLINE-FIRST DISTRIBUTED FLOW
-        </span>
-      </div>
+  const architectureDetails = {
+    'ora-pos': [
+      { layer: '01 Edge Cashier Terminal', desc: 'Direct thermal receipt printer & optical barcode scanner integration via WebAssembly.' },
+      { layer: '02 Local ACID Persistence', desc: 'IndexedDB transaction buffer capturing checkouts with zero downtime during ISP cuts.' },
+      { layer: '03 WebSocket Gateway', desc: 'Sub-50ms bidirectional synchronization pipe with automatic exponential backoff retry.' },
+      { layer: '04 Distributed Cloud Ledger', desc: 'PostgreSQL multi-branch inventory engine with atomic balance reconciliation.' },
+    ],
+    'kerchanshe-erp': [
+      { layer: '01 Multi-Warehouse UI', desc: 'Next.js 15 & React management portals for regional commodity depot supervisors.' },
+      { layer: '02 Hexagonal Core API', desc: 'Spring Boot 3 & Nest.js decoupled microservices with strict transactional boundaries.' },
+      { layer: '03 Distributed Cache Tier', desc: 'Redis cluster handling high-speed lot reservation, freight dispatch, and SKU lookups.' },
+      { layer: '04 Relational Data Cluster', desc: 'High-availability PostgreSQL database with automated multi-AZ replication.' },
+    ],
+    'awash-gateway': [
+      { layer: '01 Partner API Ingestion', desc: 'FastAPI gateway terminating partner connections over mutual TLS (mTLS v1.3).' },
+      { layer: '02 Cryptographic Verifier', desc: 'Hardware-accelerated JWT signature verification, rate limiter, and payload audit.' },
+      { layer: '03 Settlement Message Queue', desc: 'Redis Streams message bus guaranteeing zero-loss transaction delivery.' },
+      { layer: '04 Core Banking Adapter', desc: 'Idempotent transactional connector to private financial ledger.' },
+    ],
+  }
 
-      <div className="grid gap-3 sm:grid-cols-5">
-        {steps.map((s, idx) => (
-          <div key={s.num} className="relative flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-3.5 shadow-2xs transition-all hover:border-blue-500/40 hover:shadow-xs">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
-                  {s.num}
-                </span>
-                <span className="rounded-md border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2 py-0.5 font-mono text-[9px] font-bold text-blue-700 dark:text-blue-300">
-                  {s.badge}
-                </span>
-              </div>
-              <h4 className="font-serif text-xs font-bold text-slate-900 dark:text-white mb-1">
-                {s.title}
-              </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug">
-                {s.subtitle}
-              </p>
-            </div>
+  const visualHeaders = {
+    'ora-pos': {
+      icon: Code,
+      badge: 'RETAIL ENGINE',
+      accentColor: 'text-blue-400',
+      tagline: 'Multi-Branch Distributed POS & Real-Time Stock Engine',
+      stat1: '1.8s Checkout',
+      stat2: '100% Offline Uptime',
+    },
+    'kerchanshe-erp': {
+      icon: Database,
+      badge: 'ENTERPRISE ERP',
+      accentColor: 'text-emerald-400',
+      tagline: 'Commodity Freight Logistics & Lot Serialization',
+      stat1: '4.2x Faster Manifests',
+      stat2: '38,000+ MT Audited',
+    },
+    'awash-gateway': {
+      icon: Shield,
+      badge: 'FINANCIAL GATEWAY',
+      accentColor: 'text-indigo-400',
+      tagline: 'Low-Latency Partner API & Cryptographic Settlement',
+      stat1: '< 45ms Response',
+      stat2: '100% Zero-Loss Ledger',
+    },
+  }
 
-            {idx < steps.length - 1 && (
-              <div className="hidden sm:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-blue-500 font-bold text-xs select-none">
-                →
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Architecture diagram for Afrookoo Custom Enterprise Platforms
-function EnterpriseArchitectureDiagram() {
-  const steps = [
-    {
-      num: '01',
-      title: 'Multi-Client Layer',
-      subtitle: 'Responsive React/Next.js Web Portals, Admin Consoles, and Partner REST/GraphQL APIs.',
-      badge: 'Access Layer',
-    },
-    {
-      num: '02',
-      title: 'API & Security Gateway',
-      subtitle: 'Cloudflare WAF, TLS termination, Rate Limiting, and Granular Role-Based Access Control (RBAC).',
-      badge: 'Security Gateway',
-    },
-    {
-      num: '03',
-      title: 'Hexagonal Domain Core',
-      subtitle: 'Isolated domain logic, event-driven business workflows, and modular ERP subsystems.',
-      badge: 'Core Engine',
-    },
-    {
-      num: '04',
-      title: 'Distributed State & Cache',
-      subtitle: 'Redis distributed cache cluster and asynchronous background task job processing.',
-      badge: 'Performance Cache',
-    },
-    {
-      num: '05',
-      title: 'Persistence & Cloud Infra',
-      subtitle: 'PostgreSQL relational cluster, automated daily backups, Docker orchestration, and CI/CD.',
-      badge: 'Storage & SRE',
-    },
-  ]
+  const archNodes = architectureDetails[cs.id] || []
+  const vHeader = visualHeaders[cs.id] || visualHeaders['ora-pos']
+  const HeaderIcon = vHeader.icon
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-4 sm:p-5">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
+    <div className="rounded-2xl border border-zinc-200/80 dark:border-white/10 bg-white dark:bg-zinc-900/40 shadow-lg dark:shadow-xl backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-xl overflow-hidden">
+      {/* Visual Header Banner */}
+      <div className="border-b border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950/70 p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-white shadow-xs">
+            <HeaderIcon size={16} />
+          </div>
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold block">
+              {vHeader.badge}
+            </span>
+            <span className="text-xs font-mono text-zinc-700 dark:text-zinc-300 font-medium">
+              {vHeader.tagline}
+            </span>
+          </div>
+        </div>
+
         <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400">
-            System Architecture Diagram
+          <span className="rounded-full bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 shadow-xs">
+            {vHeader.stat1}
+          </span>
+          <span className="rounded-full bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 shadow-xs">
+            {vHeader.stat2}
           </span>
         </div>
-        <span className="rounded-full border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2.5 py-0.5 font-mono text-[10px] font-bold text-blue-700 dark:text-blue-300">
-          HEXAGONAL ENTERPRISE PIPELINE
-        </span>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-5">
-        {steps.map((s, idx) => (
-          <div key={s.num} className="relative flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-3.5 shadow-2xs transition-all hover:border-blue-500/40 hover:shadow-xs">
+      {/* Main Case Study Content */}
+      <div className="p-6 sm:p-8 lg:p-10">
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+          {/* Left Column: Context, Problem & Solution */}
+          <div className="lg:col-span-7 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
-                  {s.num}
-                </span>
-                <span className="rounded-md border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2 py-0.5 font-mono text-[9px] font-bold text-blue-700 dark:text-blue-300">
-                  {s.badge}
-                </span>
+              {/* Meta info */}
+              <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-500 dark:text-zinc-400 mb-2">
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">{cs.client}</span>
+                <span className="text-zinc-300 dark:text-zinc-600">/</span>
+                <span>{cs.category}</span>
               </div>
-              <h4 className="font-serif text-xs font-bold text-slate-900 dark:text-white mb-1">
-                {s.title}
-              </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug">
-                {s.subtitle}
-              </p>
+
+              <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
+                {cs.title}
+              </h3>
+
+              {/* Challenge */}
+              <div className="mb-4">
+                <span className="block font-mono text-[11px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-medium">
+                  Challenge
+                </span>
+                <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                  {cs.problem}
+                </p>
+              </div>
+
+              {/* Solution */}
+              <div className="mb-6">
+                <span className="block font-mono text-[11px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-medium">
+                  Engineered Solution
+                </span>
+                <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                  {cs.built ? cs.built.join(' ') : cs.solution}
+                </p>
+              </div>
             </div>
 
-            {idx < steps.length - 1 && (
-              <div className="hidden sm:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-blue-500 font-bold text-xs select-none">
-                →
-              </div>
-            )}
+            {/* Tech Stack Pills */}
+            <div className="flex flex-wrap items-center gap-1.5 pt-4 border-t border-zinc-200/80 dark:border-white/10">
+              {(cs.tags || cs.techStack)?.map((t) => (
+                <span
+                  key={t}
+                  className="rounded-md border border-zinc-200 dark:border-white/10 bg-zinc-100/70 dark:bg-white/5 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 shadow-xs"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
           </div>
-        ))}
+
+          {/* Right Column: Interactive Specs (Metrics vs. Architecture) */}
+          <div className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950/70 p-5 sm:p-6 backdrop-blur-md">
+            <div>
+              {/* Tab switchers */}
+              <div className="flex items-center justify-between border-b border-zinc-200/80 dark:border-white/10 pb-3 mb-5">
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('metrics')}
+                    className={`font-mono text-xs uppercase tracking-wider cursor-pointer transition-colors pb-1 border-b-2 ${
+                      activeTab === 'metrics'
+                        ? 'border-blue-600 dark:border-blue-500 font-semibold text-zinc-900 dark:text-white'
+                        : 'border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                    }`}
+                  >
+                    Verified Outcomes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('arch')}
+                    className={`font-mono text-xs uppercase tracking-wider cursor-pointer transition-colors pb-1 border-b-2 ${
+                      activeTab === 'arch'
+                        ? 'border-blue-600 dark:border-blue-500 font-semibold text-zinc-900 dark:text-white'
+                        : 'border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+                    }`}
+                  >
+                    System Blueprint
+                  </button>
+                </div>
+                <span className="font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
+                  {cs.version || 'Production'}
+                </span>
+              </div>
+
+              {/* Tab 1: Hard Metrics */}
+              {activeTab === 'metrics' ? (
+                <div className="space-y-4">
+                  {cs.results.map((r) => (
+                    <div key={r.label} className="border-b border-zinc-200/80 dark:border-white/10 pb-3 last:border-0 last:pb-0">
+                      <div className="font-mono text-2xl font-bold text-zinc-900 dark:text-white">
+                        {r.value}
+                      </div>
+                      <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-0.5">
+                        {r.label}
+                      </div>
+                      <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
+                        {r.note}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                /* Tab 2: Architecture Layers */
+                <div className="space-y-2.5 font-mono text-xs">
+                  {archNodes.map((n) => (
+                    <div key={n.layer} className="p-3 rounded-lg bg-white dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 shadow-xs">
+                      <div className="font-semibold text-zinc-900 dark:text-white text-[11px]">
+                        {n.layer}
+                      </div>
+                      <div className="text-[10px] text-zinc-600 dark:text-zinc-400 mt-0.5 font-sans leading-snug">
+                        {n.desc}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-zinc-200/80 dark:border-white/10 flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
+              <span>Addis Ababa Deployment</span>
+              <span className="inline-flex items-center gap-1 text-zinc-900 dark:text-white font-medium">
+                <span>Verified SLA</span>
+                <ArrowUpRight size={13} />
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
 
 export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [activeTabs, setActiveTabs] = useState({ 'ora-pos': 'diagram', 'custom-enterprise': 'diagram' })
-
-  const setCardTab = (slug, tab) => {
-    setActiveTabs((prev) => ({ ...prev, [slug]: tab }))
-  }
-
   return (
-    <Section id="work" tone="default">
+    <Section id="work" tone="surface" pad="py-16 sm:py-20 lg:py-24">
       <Heading
-        eyebrow="Projects & Platforms"
-        eyebrowIcon={Layers}
-        title="Proven software platforms and digital enterprise systems."
-        intro="Production platforms and bespoke enterprise architectures engineered by the Afrookoo team, featuring full system architecture diagrams and measurable business outcomes."
+        title="Featured Work & Production Systems"
+        intro="Enterprise platforms, offline-first retail engines, and distributed architectures engineered for our partners."
       />
 
-      {/* Exactly 2 Projects as requested */}
-      <div className="grid gap-10 lg:gap-12">
-        {projects.map((proj, i) => (
-          <Reveal as="article" key={proj.slug} delay={stagger(i, 2, 100)}>
-            <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-card)] bg-[var(--bg-card)] shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl">
-              {/* Header Ribbon */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-subtle)] bg-[var(--bg-subtle)]/50 px-6 py-4">
-                <div className="flex items-center gap-3">
-                  <span className="rounded-full bg-blue-600 px-3 py-1 font-mono text-xs font-bold text-white shadow-xs">
-                    {proj.platform}
-                  </span>
-                  <span className="font-mono text-xs text-[var(--text-muted)] font-medium">
-                    {proj.client}
-                  </span>
-                </div>
-                <span className="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
-                  {proj.timeline}
-                </span>
-              </div>
-
-              {/* Main Content Area */}
-              <div className="p-6 sm:p-8 lg:p-10">
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
-                  <div className="max-w-3xl">
-                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--text-heading)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {proj.title}
-                    </h3>
-                    <p className="mt-2 font-mono text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium">
-                      {proj.subtitle}
-                    </p>
-                    <p className="mt-4 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed">
-                      {proj.summary}
-                    </p>
-                  </div>
-
-                  {/* Mode Selector (Diagram vs Details) */}
-                  <div className="flex items-center gap-1 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)] p-1 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setCardTab(proj.slug, 'diagram')}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                        activeTabs[proj.slug] === 'diagram'
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
-                      }`}
-                    >
-                      Architecture Diagram
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCardTab(proj.slug, 'details')}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                        activeTabs[proj.slug] === 'details'
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
-                      }`}
-                    >
-                      Case Breakdown
-                    </button>
-                  </div>
-                </div>
-
-                {/* Conditional Display: Architecture Diagram OR Case Breakdown */}
-                {activeTabs[proj.slug] === 'diagram' ? (
-                  <div className="mb-8">
-                    {proj.slug === 'ora-pos' ? (
-                      <PosArchitectureDiagram />
-                    ) : (
-                      <EnterpriseArchitectureDiagram />
-                    )}
-                  </div>
-                ) : (
-                  <div className="grid gap-6 md:grid-cols-2 mb-8">
-                    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]/60 p-5">
-                      <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-rose-500 mb-2">
-                        The Challenge &amp; Problem
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed">
-                        {proj.problem}
-                      </p>
-                    </div>
-
-                    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]/60 p-5">
-                      <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
-                        Engineering Solution
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed">
-                        {proj.approach}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Measurable Production Outcomes */}
-                <div className="mb-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]/40 p-5">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3">
-                    Measurable Production Outcomes &amp; Standards
-                  </h4>
-                  <div className="grid gap-2.5 sm:grid-cols-2">
-                    {proj.outcomes.map((out) => (
-                      <div key={out} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-body)]">
-                        <CheckCircle size={15} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{out}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tech Stack Chips & Action Link */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[var(--border-subtle)] pt-6">
-                  <div className="flex flex-wrap gap-1.5">
-                    {proj.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-800/80 px-2.5 py-1 font-mono text-[11px] font-semibold text-slate-800 dark:text-slate-200 shadow-2xs hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setSelectedProject(proj)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 transition-all cursor-pointer shrink-0"
-                  >
-                    <span>Read Architecture Spec</span>
-                    <ArrowUpRight size={14} />
-                  </button>
-                </div>
-              </div>
-            </div>
+      <div className="space-y-8 sm:space-y-10">
+        {caseStudies.map((cs, idx) => (
+          <Reveal key={cs.id} delay={stagger(idx, 3, 80)}>
+            <CaseStudyCard cs={cs} />
           </Reveal>
         ))}
       </div>
-
-      {/* Deep-Dive Technical Modal */}
-      <Modal
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-        title={selectedProject ? `${selectedProject.title} — System Specification` : ''}
-      >
-        {selectedProject && (
-          <div className="space-y-6">
-            {/* Header info */}
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-4 font-mono text-xs">
-              <span className="text-blue-600 dark:text-blue-400 font-bold uppercase">
-                {selectedProject.platform}
-              </span>
-              <span className="text-[var(--text-muted)]">
-                Client: {selectedProject.client}
-              </span>
-              <span className="text-emerald-500 font-semibold">
-                Status: Production Verified
-              </span>
-            </div>
-
-            {/* Architecture Diagram inside Modal */}
-            <div>
-              <h4 className="font-serif text-lg font-bold text-[var(--text-heading)] mb-3">
-                System Architectural Flow
-              </h4>
-              {selectedProject.slug === 'ora-pos' ? (
-                <PosArchitectureDiagram />
-              ) : (
-                <EnterpriseArchitectureDiagram />
-              )}
-            </div>
-
-            {/* Problem & Approach */}
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-5">
-                <h4 className="font-mono text-xs uppercase tracking-wider text-rose-500 font-semibold mb-2">
-                  The Problem &amp; Operational Challenge
-                </h4>
-                <p className="text-sm text-[var(--text-body)] leading-relaxed">
-                  {selectedProject.problem}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-5">
-                <h4 className="font-mono text-xs uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold mb-2">
-                  Engineering Architecture &amp; Solution
-                </h4>
-                <p className="text-sm text-[var(--text-body)] leading-relaxed">
-                  {selectedProject.approach}
-                </p>
-              </div>
-            </div>
-
-            {/* Measurable Outcomes */}
-            <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-5">
-              <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold mb-3">
-                Key Production Outcomes &amp; Standards
-              </h4>
-              <div className="space-y-2.5">
-                {selectedProject.outcomes.map((out) => (
-                  <div key={out} className="flex items-start gap-2.5 text-sm text-[var(--text-body)]">
-                    <CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                    <span>{out}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Tech Stack */}
-            <div>
-              <h4 className="font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] font-semibold mb-2">
-                Production Technology Stack
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {selectedProject.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1 font-mono text-xs text-slate-800 dark:text-slate-200 font-semibold shadow-2xs"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Modal CTA */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[var(--border-subtle)] pt-6">
-              <div>
-                <p className="text-xs text-[var(--text-muted)]">
-                  Need a similar system architecture engineered for your organization?
-                </p>
-              </div>
-              <a
-                href="#contact"
-                onClick={() => setSelectedProject(null)}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 shadow-md transition-colors"
-              >
-                <span>Discuss Your System Architecture</span>
-                <ArrowRight size={14} />
-              </a>
-            </div>
-          </div>
-        )}
-      </Modal>
     </Section>
   )
 }

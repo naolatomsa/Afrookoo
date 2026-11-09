@@ -1,108 +1,182 @@
-import { Section, Heading, Card, Button, cardTitle, TagBadge } from '../ui.jsx'
+import { useState } from 'react'
+import { Section, Heading } from '../ui.jsx'
 import Reveal, { stagger } from './Reveal.jsx'
-import { services, companyInfo } from '../data.js'
-import { Code, Smartphone, Cpu, Layers, Cloud, Zap, Check, ArrowRight } from './Icons.jsx'
-
-const iconMap = {
-  Code,
-  Smartphone,
-  Cpu,
-  Layers,
-  Cloud,
-  Zap,
-}
+import { Check, Code, Smartphone, Zap, Cloud } from './Icons.jsx'
 
 export default function Services() {
+  const [activeNetworkMode, setActiveNetworkMode] = useState('online')
+
+  const capabilities = [
+    {
+      id: 'enterprise-web',
+      num: '01',
+      title: 'Web Platforms & Distributed APIs',
+      tag: 'WEB & BACKEND',
+      icon: Code,
+      accentBg: 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+      description:
+        'High-concurrency web applications, microservices, and decoupled domain APIs engineered for speed, security, and zero downtime.',
+      techStack: ['React', 'Next.js', 'Nest.js', 'Spring Boot', 'PostgreSQL', 'Redis'],
+      highlights: [
+        'Sub-second page speeds & type-safe backend architectures',
+        'Scalable relational modeling and in-memory cache clustering',
+        'Responsive, accessible interfaces with light & dark theme excellence',
+      ],
+    },
+    {
+      id: 'native-mobile',
+      num: '02',
+      title: 'Native Mobile: iOS & Android',
+      tag: 'DUAL NATIVE PERFORMANCE',
+      icon: Smartphone,
+      accentBg: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+      description:
+        'Silky-smooth 120 FPS native mobile apps that harness device hardware directly with zero hybrid web-wrapper compromises.',
+      techStack: ['SwiftUI', 'SwiftData', 'Kotlin', 'Jetpack Compose', 'Room SQLite'],
+      highlights: [
+        'True native compilation for iOS (Swift) & Android (Kotlin)',
+        'Local SQLite persistence & background synchronization',
+        'Direct hardware access: camera scanners, sensors, and Bluetooth',
+      ],
+    },
+    {
+      id: 'pos-retail',
+      num: '03',
+      title: 'Offline-First POS & Commerce',
+      tag: 'EDGE RETAIL COMPUTING',
+      icon: Zap,
+      accentBg: 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400',
+      description:
+        'Resilient edge checkout terminals that continue sales without skipping a beat during internet cuts, reconciling atomically upon reconnect.',
+      techStack: ['IndexedDB', 'SQLite', 'WebSockets', 'Thermal Print', 'Barcode HW'],
+      hasSimulation: true,
+      highlights: [
+        '100% offline checkout continuity during total ISP blackouts',
+        'Automated multi-branch ledger reconciliation with zero data drift',
+        'Direct hardware drivers for scanners, scales, and thermal printers',
+      ],
+    },
+    {
+      id: 'cloud-devops',
+      num: '04',
+      title: 'Cloud Infrastructure & SRE',
+      tag: 'DEVOPS / RELIABILITY',
+      icon: Cloud,
+      accentBg: 'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-400',
+      description:
+        'Automated container orchestration, zero-downtime deployment pipelines, and continuous monitoring built for enterprise uptime.',
+      techStack: ['Docker', 'Kubernetes', 'AWS', 'GitHub Actions', 'Prometheus'],
+      highlights: [
+        'Automated blue/green zero-downtime release workflows',
+        'High-availability Kubernetes clusters with auto-scaling',
+        'End-to-end telemetry, distributed error tracing, and alerts',
+      ],
+    },
+  ]
+
   return (
-    <Section id="services" tone="default">
+    <Section id="capabilities" tone="default" pad="py-16 sm:py-20 lg:py-24">
       <Heading
-        eyebrow="Specialized Services"
-        eyebrowIcon={Code}
-        title="Engineering excellence across every tier of the modern technology stack."
-        intro="From foundational database schemas to fluid mobile screens and multi-agent AI loops, we deliver production-grade software engineered for reliability, security, and performance."
+        title="Engineering Capabilities & Architecture"
+        intro="We combine rigorous software architecture with pragmatic engineering to build dependable digital systems."
       />
 
-      {/* Grid of 6 Services */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((s, i) => {
-          const IconComponent = iconMap[s.iconName] || Code
+      <div className="grid gap-6 md:grid-cols-2">
+        {capabilities.map((cap, idx) => {
+          const IconComponent = cap.icon
           return (
-            <Reveal key={s.id} delay={stagger(i)}>
-              <Card lift className="h-full flex flex-col justify-between p-6 sm:p-8">
+            <Reveal key={cap.id} delay={stagger(idx, 2, 70)}>
+              <div className="rounded-2xl border border-zinc-200/80 dark:border-white/10 bg-white/90 dark:bg-zinc-900/40 p-6 sm:p-8 h-full flex flex-col justify-between backdrop-blur-xl shadow-lg dark:shadow-xl transition-all duration-300 hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-xl hover:-translate-y-1">
                 <div>
+                  {/* Top Bar: Icon & Category */}
                   <div className="flex items-center justify-between mb-5">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                      <IconComponent size={22} />
+                    <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${cap.accentBg}`}>
+                      <IconComponent size={20} />
                     </div>
-                    <span className="font-mono text-xs font-semibold text-[var(--text-muted)]">
-                      0{i + 1}
+                    <span className="font-mono text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                      {cap.num} // {cap.tag}
                     </span>
                   </div>
 
-                  <h3 className={`${cardTitle} mb-3`}>{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-[var(--text-muted)] mb-5">
-                    {s.description}
+                  {/* Title & 1-Line Benefit */}
+                  <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">
+                    {cap.title}
+                  </h3>
+
+                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-5">
+                    {cap.description}
                   </p>
 
-                  {/* Feature Checklist */}
-                  <div className="space-y-2 border-t border-[var(--border-subtle)] pt-4 mb-6">
-                    {s.features.map((f) => (
-                      <div key={f} className="flex items-start gap-2 text-xs text-[var(--text-body)]">
-                        <Check size={14} className="text-blue-500 shrink-0 mt-0.5" />
-                        <span>{f}</span>
-                      </div>
+                  {/* Visual Tech Stack Pills */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {cap.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-md border border-zinc-200 dark:border-white/10 bg-zinc-100/70 dark:bg-white/5 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 font-medium"
+                      >
+                        {tech}
+                      </span>
                     ))}
                   </div>
+
+                  {/* Interactive Failover Simulation (Only on POS card) */}
+                  {cap.hasSimulation && (
+                    <div className="mb-5 rounded-xl border border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950/70 p-3 font-mono text-xs">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-semibold">
+                          Live ISP Failover Test
+                        </span>
+                        <div className="flex gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => setActiveNetworkMode('online')}
+                            className={`px-2.5 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors ${
+                              activeNetworkMode === 'online'
+                                ? 'bg-blue-600 text-white shadow-xs'
+                                : 'bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                            }`}
+                          >
+                            Online
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setActiveNetworkMode('offline')}
+                            className={`px-2.5 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors ${
+                              activeNetworkMode === 'offline'
+                                ? 'bg-amber-600 text-white shadow-xs'
+                                : 'bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
+                            }`}
+                          >
+                            Network Cut
+                          </button>
+                        </div>
+                      </div>
+                      <div className="text-[11px] text-zinc-700 dark:text-zinc-300 font-sans flex items-center gap-2">
+                        <span className={`h-2 w-2 rounded-full shrink-0 ${activeNetworkMode === 'online' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                        <span>
+                          {activeNetworkMode === 'online'
+                            ? 'Cloud sync active · Bidirectional WebSocket stream running.'
+                            : 'ISP blackout active · Local IndexedDB engaged. Cashier checkout unaffected.'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Tech chips */}
-                <div className="flex flex-wrap gap-1.5 border-t border-[var(--border-subtle)] pt-4">
-                  {s.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md border border-[var(--border-card)] bg-slate-50 dark:bg-slate-800/80 px-2 py-0.5 font-mono text-[11px] text-[var(--text-muted)]"
-                    >
-                      {t}
-                    </span>
+                {/* Scannable Delivery Highlights */}
+                <div className="border-t border-zinc-200/80 dark:border-white/10 pt-4 space-y-2">
+                  {cap.highlights.map((h) => (
+                    <div key={h} className="flex items-start gap-2.5 text-xs text-zinc-700 dark:text-zinc-300">
+                      <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+                      <span>{h}</span>
+                    </div>
                   ))}
                 </div>
-              </Card>
+              </div>
             </Reveal>
           )
         })}
       </div>
-
-      {/* Bottom CTA Banner */}
-      <Reveal className="mt-12">
-        <div className="relative overflow-hidden rounded-3xl border border-blue-500/20 dark:border-blue-500/30 bg-gradient-to-br from-blue-50 via-sky-50/70 to-indigo-50/50 dark:from-blue-950/40 dark:via-slate-900/90 dark:to-blue-950/60 p-8 sm:p-10 shadow-xl backdrop-blur-md">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div className="max-w-2xl">
-              <span className="inline-block rounded-full border border-blue-500/20 bg-blue-100/70 dark:bg-blue-500/20 px-3 py-1 font-mono text-xs font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wider mb-2">
-                Tailored Engagements
-              </span>
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-                Have a specialized engineering or enterprise challenge?
-              </h3>
-              <p className="mt-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-                Whether you need a full greenfield build, legacy system modernization, or dedicated senior engineering augmentation, our team is ready to step in.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
-              <Button href="#contact" variant="primary">
-                <span>Start a Project</span>
-                <ArrowRight size={16} />
-              </Button>
-              <Button
-                href="#work"
-                variant="outline"
-                className="border-slate-300 bg-white dark:border-slate-700 dark:bg-transparent text-slate-800 dark:text-white hover:border-blue-500 hover:text-blue-600 dark:hover:border-white shadow-xs"
-              >
-                Explore Case Studies
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Reveal>
     </Section>
   )
 }

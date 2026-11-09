@@ -10,7 +10,7 @@ export default function Products() {
         eyebrow="Platforms & Systems"
         eyebrowIcon={Layers}
         title="Proven software platforms and digital enterprise systems."
-        intro="Centering around our flagship ORA POS &amp; Inventory Intelligence platform, systems consulting practice, and bespoke enterprise software builds."
+        intro="Centering around our flagship ORA POS &amp; Inventory Intelligence platform, systems consulting practice, and custom enterprise software builds."
       />
 
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">

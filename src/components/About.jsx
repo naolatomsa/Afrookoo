@@ -24,7 +24,7 @@ export default function About() {
 
           <Reveal delay={100}>
             <p>
-              We collaborate with commercial enterprises, growing retail businesses, and organizations to design bespoke platforms — including our flagship ORA POS &amp; Inventory Intelligence platform, enterprise digital systems consulting, and tailor-made business management software.
+              We collaborate with commercial enterprises, growing retail businesses, and organizations to design high-performance platforms — including our flagship ORA POS &amp; Inventory Intelligence platform, enterprise digital systems consulting, and tailor-made business management software.
             </p>
           </Reveal>
 

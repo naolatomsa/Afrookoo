@@ -2,9 +2,9 @@
 export const companyInfo = {
   name: 'Afrookoo Software',
   shortName: 'Afrookoo',
-  tagline: 'Building Intelligent Technology. Transforming Businesses.',
+  tagline: 'High-performance software systems for East African and global leaders.',
   subtitle:
-    'We engineer mission-critical enterprise systems, AI agent platforms, scalable web architectures, and native iOS applications from Addis Ababa to global enterprises.',
+    'We engineer high-performance custom software, offline-first POS systems, and intelligent business platforms from Addis Ababa to global enterprises.',
   location: '4 Kilo, Addis Ababa, Ethiopia · EAT (UTC+3)',
   address: '4 Kilo, Around Abrehot Library, Rift Valley University, Addis Ababa, Ethiopia',
   email: 'contact@afrookoo.com',
@@ -18,431 +18,310 @@ export const companyInfo = {
   instagram: 'https://instagram.com/afrookoo',
 }
 
+// 5 Main Chapters + secondary access modals
 export const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Services', href: '#services' },
-  { label: 'Projects', href: '#work' },
-  { label: 'Partners', href: '#clients' },
-  { label: 'Stack', href: '#technology' },
-  { label: 'Industries', href: '#industries' },
-  { label: 'Process', href: '#process' },
-  { label: 'Insights', href: '#insights' },
-  { label: 'Careers', href: '#careers' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Case Studies', href: '#work', type: 'anchor' },
+  { label: 'Capabilities', href: '#capabilities', type: 'anchor' },
+  { label: 'Engagement', href: '#engagement', type: 'anchor' },
+  { label: 'Estimate Project', href: '#contact', type: 'anchor' },
+]
+
+export const secondaryLinks = [
+  { id: 'about', label: 'About Afrookoo' },
+  { id: 'industries', label: 'Industries' },
+  { id: 'insights', label: 'Engineering Insights' },
+  { id: 'careers', label: 'Careers' },
 ]
 
 export const stats = [
-  { value: '10+', label: 'Products Shipped', detail: 'Enterprise, AI & iOS platforms' },
-  { value: '99.9%', label: 'System Reliability', detail: 'Production SLA & fault tolerance' },
-  { value: '3+ Yrs', label: 'Engineering Craft', detail: 'Full-stack & AI architecture' },
-  { value: '100%', label: 'Project Commitment', detail: 'Concept to production delivery' },
+  { value: '10+', label: 'Platforms Shipped', detail: 'Offline-first POS, ERP & iOS' },
+  { value: '99.99%', label: 'Uptime Standard', detail: 'Zero-drift production SLA' },
+  { value: '< 1.8s', label: 'Checkout Latency', detail: 'Sub-second edge transactions' },
+  { value: '100%', label: 'IP Ownership', detail: 'Full source code handover' },
 ]
 
-export const capabilities = [
-  'Custom Enterprise Software Development',
-  'Artificial Intelligence & Multi-Agent Systems',
-  'Scalable Web & Cloud-Native Platforms',
-  'Native iOS & High-Performance Mobile Apps',
-  'Cloud Infrastructure, Kubernetes & CI/CD',
-  'Hexagonal Architecture & Microservices',
-]
-
-export const aboutCards = [
+export const partners = [
   {
-    title: 'Our Vision',
-    text: 'To become a globally recognized technology partner from East Africa, celebrated for engineering rigor, AI innovation, and transformative digital systems that empower organizations.',
+    name: 'Awash Bank',
+    category: 'Commercial Banking & Financial Services',
+    shortCode: 'AB',
+    tagline: 'Leading Private Commercial Bank in Ethiopia',
   },
   {
-    title: 'Our Mission',
-    text: 'To engineer high-performance software that eliminates operational friction, solves complex industry problems, and creates sustainable competitive advantages for our partners.',
+    name: 'Oromo Research Association (ORA)',
+    category: 'Research & Institutional Systems',
+    shortCode: 'ORA',
+    tagline: 'Academic Research, Digital Archives & Retail Operations',
   },
   {
-    title: 'Core Values',
-    text: 'Engineering Integrity, Continuous Innovation, Radical Transparency, Customer Stewardship, and an obsession with clean, scalable architecture.',
-  },
-]
-
-export const services = [
-  {
-    id: 'custom-software',
-    title: 'Custom Web & Software Systems',
-    iconName: 'Code',
-    summary: 'Tailor-made web applications engineered for security, speed, and heavy concurrent workloads.',
-    description:
-      'We design and build bespoke web platforms with modern frontend frameworks and robust backend APIs, tailored precisely to your operational workflows and business rules.',
-    features: [
-      'Single-page & server-rendered applications (React, Angular, Vue)',
-      'High-throughput REST & GraphQL API backends (Node.js, Spring Boot)',
-      'Enterprise database modeling and query optimization (PostgreSQL, MongoDB)',
-      'Role-based access control (RBAC), multi-tenancy, and JWT authentication',
-    ],
-    tech: ['React', 'Node.js', 'Spring Boot', 'PostgreSQL', 'Tailwind CSS'],
+    name: 'Kerchanshe',
+    category: 'Commercial Enterprise & Agriculture',
+    shortCode: 'KC',
+    tagline: 'Global Agro-Commodity & Enterprise Producer',
   },
   {
-    id: 'native-ios',
-    title: 'Native iOS & Mobile Applications',
-    iconName: 'Smartphone',
-    summary: 'Fluid, responsive iOS apps built with Swift, SwiftUI, and native Apple ecosystem integrations.',
-    description:
-      'From intuitive consumer apps to mission-critical field tools, we craft pixel-perfect mobile experiences with native performance, offline support, and smooth gestures.',
-    features: [
-      'Modern SwiftUI & UIKit declarative interfaces',
-      'Local persistence with SwiftData & Core Data for offline resilience',
-      'HealthKit, CoreMotion, camera, and device sensor integration',
-      'App Store submission, TestFlight beta delivery, and CI/CD pipelines',
-    ],
-    tech: ['Swift', 'SwiftUI', 'UIKit', 'HealthKit', 'SwiftData', 'Flutter'],
-  },
-  {
-    id: 'ai-agents',
-    title: 'AI & Multi-Agent Systems',
-    iconName: 'Cpu',
-    summary: 'Intelligent automation, agentic workflows, predictive analytics, and enterprise LLM integrations.',
-    description:
-      'We leverage cutting-edge artificial intelligence to build collaborative multi-agent architectures that orchestrate complex multi-step reasoning, NLP document synthesis, and automated decisions.',
-    features: [
-      'Multi-agent orchestration and autonomous task execution',
-      'Enterprise retrieval-augmented generation (RAG) over private data',
-      'Predictive machine learning models and automated classification',
-      'Strict schema validation and safety guardrails for production LLMs',
-    ],
-    tech: ['Python', 'Multi-Agent Loops', 'LangChain', 'FastAPI', 'Vector DBs'],
-  },
-  {
-    id: 'enterprise-erp',
-    title: 'Enterprise ERP & Core Systems',
-    iconName: 'Layers',
-    summary: 'Integrated business systems connecting finance, inventory, HR, and real-time operations.',
-    description:
-      'We engineer modular enterprise platforms following Hexagonal Architecture and clean domain boundaries, giving organizations a unified source of truth across all operational facets.',
-    features: [
-      'Point-of-Sale (POS) and distributed multi-location inventory sync',
-      'Automated payroll, tax compliance, and human capital workflows',
-      'Double-entry ledger accounting and automated reconciliations',
-      'Comprehensive audit trails, event sourcing, and compliance logging',
-    ],
-    tech: ['Java / Spring Boot', 'Hexagonal Architecture', 'PostgreSQL', 'Redis'],
-  },
-  {
-    id: 'cloud-devops',
-    title: 'Cloud Infrastructure & DevOps',
-    iconName: 'Cloud',
-    summary: 'Resilient cloud architecture, automated CI/CD pipelines, container orchestration, and monitoring.',
-    description:
-      'We configure scalable cloud foundations designed for 99.9% uptime, zero-downtime blue/green deployments, automated scaling, and proactive telemetry.',
-    features: [
-      'Containerization with Docker and Kubernetes cluster management',
-      'Automated CI/CD build, test, and release pipelines (GitHub Actions)',
-      'Cloud environments on AWS, Google Cloud, and DigitalOcean',
-      'Observability with structured logging, Prometheus metrics, and alerts',
-    ],
-    tech: ['Docker', 'Kubernetes', 'AWS', 'GCP', 'GitHub Actions', 'Nginx'],
-  },
-  {
-    id: 'consulting',
-    title: 'Digital Transformation & Architecture Consulting',
-    iconName: 'Zap',
-    summary: 'Strategic technology advisory, system audits, modernization roadmaps, and fractional tech leadership.',
-    description:
-      'We help enterprise leaders, startups, and public agencies evaluate existing systems, eliminate technical debt, modernize legacy monoliths, and choose the right architectural paths.',
-    features: [
-      'Full architecture audits and technical debt assessment',
-      'Migration roadmaps from monoliths to decoupled microservices',
-      'Security posture reviews and API hardening benchmarks',
-      'Engineering mentorship, code quality standards, and SLA definition',
-    ],
-    tech: ['System Design', 'Microservices', 'Security Audits', 'API Specs'],
+    name: 'Rift Valley University',
+    category: 'Higher Education & Academic Systems',
+    shortCode: 'RVU',
+    tagline: 'Pioneering Higher Education Institution',
   },
 ]
 
-export const products = [
+export const techPills = [
+  { id: 'all', label: 'All Stack' },
+  { id: 'react', label: 'React / Next.js', category: 'frontend' },
+  { id: 'nestjs', label: 'Nest.js / TypeScript', category: 'backend' },
+  { id: 'spring', label: 'Spring Boot 3', category: 'backend' },
+  { id: 'ios-swift', label: 'iOS (Swift & SwiftUI)', category: 'mobile' },
+  { id: 'android-compose', label: 'Android (Kotlin & Compose)', category: 'mobile' },
+  { id: 'postgres', label: 'PostgreSQL & Redis', category: 'database' },
+  { id: 'docker', label: 'Docker & Kubernetes', category: 'devops' },
+]
+
+export const caseStudies = [
   {
     id: 'ora-pos',
-    title: 'ORA POS & Inventory Intelligence',
-    category: 'Retail & Multi-Branch Systems',
-    badge: 'Flagship Platform',
-    tagline: 'Multi-branch point-of-sale and real-time inventory synchronization engine.',
-    description:
-      'A comprehensive POS and inventory management system designed for fast checkouts, multi-location stock tracking, daily sales reconciliation, and automated low-inventory alerts.',
-    features: [
-      'Sub-2-second checkout with barcode scanner and thermal receipt printing',
-      'Real-time atomic inventory decrement across multiple retail locations',
-      'End-of-day sales reconciliation, profit margin tracking, and tax analytics',
-      'Offline-capable local storage with background cloud synchronization',
-    ],
-    image: 'https://media.base44.com/images/public/6a252a130a6d44cc87309d9e/3633ecbb8_generated_image.png',
-    stack: ['React', 'Node.js', 'Express', 'MongoDB', 'IndexedDB', 'WebSockets'],
-  },
-  {
-    id: 'custom-enterprise',
-    title: 'Afrookoo Custom Enterprise Platforms',
-    category: 'Enterprise Software & Cloud',
-    badge: 'Bespoke Architecture',
-    tagline: 'Tailor-made web applications, business portals, and resilient backends.',
-    description:
-      'We engineer bespoke web applications and core operational systems built from scratch around your organization’s unique workflows, data structures, and security requirements.',
-    features: [
-      'Modern, responsive web frontends (React, Next.js, TypeScript)',
-      'High-throughput REST and GraphQL backend microservices',
-      'Relational & document database architecture (PostgreSQL, Redis)',
-      'Strict role-based authentication, multi-tenancy, and audit logs',
-    ],
-    image: 'https://media.base44.com/images/public/6a252a130a6d44cc87309d9e/3633ecbb8_generated_image.png',
-    stack: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'Redis', 'CI/CD'],
-  },
-]
-
-export const projects = [
-  {
     slug: 'ora-pos',
-    title: 'ORA POS & Inventory Intelligence',
-    subtitle: 'Multi-Branch POS & Retail Inventory Engine',
-    category: 'Production Platform',
-    platform: 'RETAIL POS & INVENTORY PLATFORM',
-    role: 'Full-Stack Software Engineering & System Architecture · Afrookoo Team',
-    timeline: 'Production Deployment',
-    tags: ['REACT', 'NODE.JS', 'EXPRESS', 'MONGODB', 'OFFLINE-FIRST', 'WEBSOCKETS', 'BARCODE SCANNING'],
-    image: 'https://media.base44.com/images/public/6a252a130a6d44cc87309d9e/3633ecbb8_generated_image.png',
-    summary:
-      'A point-of-sale and inventory intelligence system enabling real-time stock tracking, sub-2-second cashier checkouts, offline-first continuity, and consolidated multi-branch analytics.',
+    title: 'ORA POS & Retail Inventory Intelligence',
+    subtitle: 'Offline-First Multi-Branch Retail Engine',
+    category: 'Retail & Multi-Branch Commerce',
+    client: 'Oromo Research Association (ORA)',
+    platform: 'DISTRIBUTED POS & ATOMIC INVENTORY LEDGER',
     problem:
-      'Multi-branch retail operations experienced chronic inventory drift, slow cashier queues during peak shopping rushes, and business disruption whenever network connectivity failed.',
-    approach:
-      'Engineered an offline-first cashier terminal with local queue caching, atomic database operations for zero-drift stock decrements, instant barcode scanning workflows, and an automated background synchronization engine that reconciles transactions seamlessly upon reconnection.',
-    outcomes: [
-      'Sub-2-second checkout speed with barcode scanner & thermal printer integration.',
-      '100% accurate branch inventory levels without manual end-of-shift audits.',
-      'Zero-downtime offline mode: cashiers continue ringing sales during full network outages.',
-      'Automated low-inventory notifications preventing stockout lost revenue.',
+      'Frequent ISP network blackouts froze cashier checkouts and caused inventory drift across retail branches.',
+    built: [
+      'Engineered an offline-first POS terminal running on local IndexedDB with sub-second barcode scans and automatic zero-loss WebSocket cloud sync upon reconnect.',
     ],
-    client: 'Oromo Research Association (ORA) Commercial System',
-    industry: 'Retail & Multi-Branch Commerce',
-    diagramNodes: [
-      { step: '01', title: 'POS Terminal & Scanner', desc: 'Cashier UI, barcode scanner & thermal printer integration', badge: 'Edge Terminal' },
-      { step: '02', title: 'Local Offline Buffer', desc: 'IndexedDB / SQLite local queue for network-failure resilience', badge: 'Edge Resilience' },
-      { step: '03', title: 'Sync & Gateway Layer', desc: 'Secure WebSocket & REST gateway with JWT authentication', badge: 'Gateway' },
-      { step: '04', title: 'Atomic Inventory Engine', desc: 'ACID-compliant stock decrement ledger and pricing rules', badge: 'Core Domain' },
-      { step: '05', title: 'Cloud DB & Analytics', desc: 'Central store database and real-time executive dashboard', badge: 'Cloud & BI' },
+    results: [
+      { label: 'Checkout Velocity', value: '1.8s', note: 'Barcode scan to printed receipt' },
+      { label: 'Offline Uptime', value: '100%', note: 'Zero cashier disruption during cuts' },
+      { label: 'Stock Drift', value: '0.0%', note: 'Automated atomic reconciliation' },
     ],
+    tags: ['REACT', 'NODE.JS', 'INDEXEDDB', 'WEBSOCKETS', 'POSTGRESQL', 'OFFLINE-FIRST'],
+    techCategory: ['react', 'node', 'postgres'],
+    version: 'v2.8.4 production',
+    deployTarget: '4 Retail Locations · Addis Ababa',
+    previewType: 'pos-mockup',
   },
   {
-    slug: 'custom-enterprise',
-    title: 'Afrookoo Custom Enterprise Platforms',
-    subtitle: 'Scalable Enterprise Web Applications, Portals & Backends',
-    category: 'Enterprise Software',
-    platform: 'BESPOKE ENTERPRISE ARCHITECTURE',
-    role: 'Full-Stack Software Engineering & Architecture · Afrookoo Team',
-    timeline: 'Enterprise Engagement',
-    tags: ['REACT', 'NODE.JS', 'POSTGRESQL', 'DOCKER', 'HEXAGONAL ARCHITECTURE', 'RBAC', 'MICROSERVICES'],
-    image: 'https://media.base44.com/images/public/6a252a130a6d44cc87309d9e/3633ecbb8_generated_image.png',
-    summary:
-      'Tailor-made enterprise software platforms engineered to eliminate operational fragmentation, automate complex administrative workflows, and unify multi-department data with strict access controls.',
+    id: 'kerchanshe-erp',
+    slug: 'kerchanshe-erp',
+    title: 'Kerchanshe Global Logistics & Commodity ERP',
+    subtitle: 'Centralized Multi-Warehouse Freight & Stock Intelligence',
+    category: 'Commercial Enterprise & Agro-Export',
+    client: 'Kerchanshe Trading',
+    platform: 'ENTERPRISE ERP & COMMODITY LEDGER',
     problem:
-      'Enterprises struggled with rigid off-the-shelf software and chaotic manual spreadsheets, resulting in data silos, costly subscription fees, and an inability to adapt to custom business requirements.',
-    approach:
-      'Architected a modular, domain-driven enterprise platform utilizing clean hexagonal architecture, fine-grained role-based access control (RBAC), high-throughput REST APIs, relational database modeling, and real-time executive dashboards.',
-    outcomes: [
-      'Unified disparate branch and department workflows into a single high-performance portal.',
-      'Full intellectual property ownership with zero recurring third-party seat license costs.',
-      'Sub-50ms API response latency with containerized Docker deployments and automated CI/CD.',
-      'Enterprise-grade security with audit logging, encrypted data stores, and role-based permissions.',
+      'Fragmented regional spreadsheets delayed export shipping manifests and hindered real-time lot tracking.',
+    built: [
+      'Built a decoupled Hexagonal ERP platform with Spring Boot and PostgreSQL, automating export paperwork and multi-warehouse freight dispatch.',
     ],
-    client: 'Enterprise Client Engagements',
-    industry: 'Commercial & Enterprise Systems',
-    diagramNodes: [
-      { step: '01', title: 'Client Portals & Apps', desc: 'Responsive React web frontends, mobile clients, and partner APIs', badge: 'Access Layer' },
-      { step: '02', title: 'API & Security Gateway', desc: 'WAF, rate limiting, TLS termination, and role-based authorization', badge: 'Security Gateway' },
-      { step: '03', title: 'Modular Domain Core', desc: 'Hexagonal business logic, automated workflows, and ERP modules', badge: 'Core Engine' },
-      { step: '04', title: 'Distributed State & Cache', desc: 'Redis distributed cache and asynchronous event queues', badge: 'Performance Layer' },
-      { step: '05', title: 'Clustered DB & Cloud Infra', desc: 'PostgreSQL cluster, Docker/K8s orchestration, and CI/CD pipelines', badge: 'Storage & Cloud' },
+    results: [
+      { label: 'Manifest Speed', value: '4.2x Faster', note: 'Instant automated export clearance' },
+      { label: 'Volume Tracked', value: '38,000+ MT', note: 'Coffee commodities audited annually' },
+      { label: 'Audit Accuracy', value: '99.98%', note: 'Eliminated discrepancy leakages' },
     ],
+    tags: ['SPRING BOOT', 'JAVA 21', 'POSTGRESQL', 'REDIS', 'DOCKER', 'HEXAGONAL'],
+    techCategory: ['spring', 'postgres', 'docker'],
+    version: 'v3.1.2 enterprise',
+    deployTarget: 'Regional Warehouses & Head Office',
+    previewType: 'erp-mockup',
+  },
+  {
+    id: 'awash-gateway',
+    slug: 'awash-gateway',
+    title: 'Awash Bank Commercial Microservice Gateway',
+    subtitle: 'Low-Latency Partner API & Settlement Engine',
+    category: 'Financial Services & Banking Systems',
+    client: 'Awash Bank Integration Layer',
+    platform: 'FINANCIAL TRANSACTION MICROSERVICE',
+    problem:
+      'Branch banking systems required high-speed, secure interoperability with external retail partners without exposing the core ledger.',
+    built: [
+      'Delivered a hardened API gateway with mTLS v1.3 encryption, sub-45ms responses, and a fault-tolerant Redis streams settlement queue.',
+    ],
+    results: [
+      { label: 'API Latency', value: '< 45ms', note: 'Roundtrip p99 response time' },
+      { label: 'Reconciliation', value: '100.0%', note: 'Zero failed settlement records' },
+      { label: 'Security Standard', value: 'mTLS v1.3', note: 'Hardened cryptographic transport' },
+    ],
+    tags: ['TYPESCRIPT', 'FASTAPI', 'REDIS', 'DOCKER', 'KUBERNETES', 'MTLS'],
+    techCategory: ['node', 'python', 'docker', 'postgres'],
+    version: 'v1.9.0 banking core',
+    deployTarget: 'Private Cloud Infrastructure',
+    previewType: 'gateway-mockup',
   },
 ]
 
-export const testimonials = []
-
-export const industries = [
+export const engagementModels = [
   {
-    name: 'Government & Public Sector',
-    desc: 'Digital public services, customs intelligence systems, and secure citizen portals engineered with strict data sovereignty.',
-    iconName: 'Shield',
-    examples: 'Customs platforms, e-governance portals, automated triage',
+    id: 'sprint',
+    title: 'Sprint Delivery',
+    duration: '2–4 Weeks',
+    scopeName: 'Sprint Delivery (2–4 Weeks)',
+    tagline: 'MVPs, technical audits, and rapid product prototyping.',
+    bestFor: 'Founders launching new products or enterprise teams requiring rapid prototype validation.',
+    priceNote: 'Fixed Scope · Immediate Kickoff',
+    features: [
+      'Kickoff within 48 hours of scope agreement',
+      'Bi-weekly production sprint demos',
+      'Full source code repository handover',
+      'Automated CI/CD pipeline & cloud deployment',
+    ],
+    deliverables: ['Production MVP Code', 'API Specifications', 'Automated CI/CD Pipeline'],
+    badge: 'Rapid Validation',
+    popular: false,
   },
   {
-    name: 'Banking & Financial Services',
-    desc: 'Core payment processing, POS integrations, microfinance ledgers, and PCI-compliant financial microservices.',
-    iconName: 'BarChart',
-    examples: 'Digital ledgers, transaction engines, branch reconciliation',
+    id: 'turnkey',
+    title: 'Turnkey Product',
+    duration: '6–12 Weeks',
+    scopeName: 'Turnkey Product (6–12 Weeks)',
+    tagline: 'End-to-end custom web and mobile platforms from architecture to release.',
+    bestFor: 'Established businesses replacing legacy tools with high-performance web, mobile, and ERP platforms.',
+    priceNote: 'Milestone-Based · Full Architecture',
+    features: [
+      'Decoupled Hexagonal architecture & database modeling',
+      'Responsive web frontend + native iOS mobile application',
+      'Comprehensive QA, load testing, and security hardening',
+      '60-day post-launch warranty and production SLA support',
+    ],
+    deliverables: ['Full Production Platform', 'Admin Dashboard & Telemetry', '60-Day SLA Warranty'],
+    badge: 'Most Popular',
+    popular: true,
   },
   {
-    name: 'Healthcare & HealthTech',
-    desc: 'Patient record systems, clinical scheduling workflows, biometric sync, and secure tele-health architectures.',
-    iconName: 'Zap',
-    examples: 'Mobile patient companion, clinic records, HealthKit sync',
-  },
-  {
-    name: 'Logistics & Supply Chain',
-    desc: 'Fleet tracking, inventory visibility across warehouses, dispatch routing, and automated audit documentation.',
-    iconName: 'Layers',
-    examples: 'Real-time stock balance, cargo manifests, barcode scanning',
-  },
-  {
-    name: 'Retail & E-Commerce',
-    desc: 'High-speed point-of-sale, omnichannel product catalogs, automated receipt generation, and branch analytics.',
-    iconName: 'Code',
-    examples: 'Multi-branch POS, customer loyalty, stock alerts',
-  },
-  {
-    name: 'Agriculture & AgTech',
-    desc: 'Supply chain transparency for agricultural commodities, cooperative member tracking, and market price portals.',
-    iconName: 'Cloud',
-    examples: 'Cooperative inventory, farmer ledger, price intelligence',
-  },
-  {
-    name: 'Legal & Compliance',
-    desc: 'Structured case workflow engines, regulatory compliance audits, legal document versioning, and SLA timers.',
-    iconName: 'FileText',
-    examples: 'Workflow automation tracker, audit trails, document authorization',
-  },
-  {
-    name: 'International NGOs & Development',
-    desc: 'Field data collection, grant disbursement monitoring, real-time KPI visualization, and multi-lingual portals.',
-    iconName: 'Users',
-    examples: 'Field reporting, donor dashboards, impact analytics',
+    id: 'pod',
+    title: 'Dedicated Engineering Pod',
+    duration: 'Monthly Retainer',
+    scopeName: 'Dedicated Engineering Pod',
+    tagline: 'Monthly full-stack engineering team embedded into your workflows.',
+    bestFor: 'Scale-ups needing sustained development velocity without internal recruiting overhead.',
+    priceNote: 'Flexible Monthly · Scalable Capacity',
+    features: [
+      'Senior full-stack developers + technical architecture lead',
+      'Direct collaboration in your Slack / Teams channels',
+      'Flexible monthly capacity scaling',
+      'Continuous feature delivery and cloud infrastructure maintenance',
+    ],
+    deliverables: ['Dedicated Sprint Velocity', 'Daily Async Standups', 'Technical Leadership'],
+    badge: 'Scale Team',
+    popular: false,
   },
 ]
 
-export const process = [
+export const shippingSteps = [
   {
     step: '01',
-    title: 'Discovery & Requirements',
-    desc: 'We conduct deep technical discovery into your operational bottlenecks, business objectives, and technical constraints.',
-    deliverable: 'Technical Roadmap & Scope Specification',
+    name: 'Discovery & Spec',
+    timing: 'Days 1–3',
+    desc: 'We map operational bottlenecks, data boundaries, and API requirements into an actionable spec.',
   },
   {
     step: '02',
-    title: 'Architecture & Design System',
-    desc: 'We architect decoupled database schemas, API contracts, and high-fidelity interactive user interface prototypes.',
-    deliverable: 'System Architecture & Interactive Figma Prototypes',
+    name: 'Architecture & Schema',
+    timing: 'Week 1',
+    desc: 'We design decoupled database schemas, Ports & Adapters interfaces, and interactive Figma prototypes.',
   },
   {
     step: '03',
-    title: 'Agile Engineering & Sprints',
-    desc: 'Clean code development following Domain-Driven Design, Hexagonal Architecture, and bi-weekly production sprint demos.',
-    deliverable: 'Working Software Sprints & Testable Builds',
+    name: 'Bi-Weekly Sprints',
+    timing: 'Weeks 2–8',
+    desc: 'Clean code development following Domain-Driven Design with live staging demos every two weeks.',
   },
   {
     step: '04',
-    title: 'QA, Security & Performance',
-    desc: 'Automated integration tests, stress tests for high concurrent traffic, and rigorous security posture validation.',
-    deliverable: 'Security & QA Sign-off Report',
+    name: 'Stress & Security QA',
+    timing: 'Pre-Release',
+    desc: 'Automated integration tests, edge latency verification, and penetration hardening before launch.',
   },
   {
     step: '05',
-    title: 'Deployment & CI/CD Setup',
-    desc: 'Zero-downtime containerized production releases on AWS or GCP with automated staging and production deployment gates.',
-    deliverable: 'Production Launch & Automated CI/CD Pipelines',
-  },
-  {
-    step: '06',
-    title: 'Maintenance, SLAs & Evolution',
-    desc: 'Continuous telemetry, uptime monitoring, scheduled security patches, and forward-looking feature enhancements.',
-    deliverable: 'Dedicated SLA Support & Evolution Cycles',
+    name: 'Zero-Downtime Deploy',
+    timing: 'Launch Day',
+    desc: 'Blue/green containerized production release on AWS or GCP with automated telemetry and alerting.',
   },
 ]
 
-export const stack = [
+export const projectTypes = [
+  { id: 'web-nest', title: 'Web Platforms & Nest.js Core', desc: 'Enterprise portals, NestJS APIs, and PostgreSQL distributed systems' },
+  { id: 'native-mobile', title: 'Native Mobile (iOS & Android)', desc: 'Swift & SwiftUI for iOS, Kotlin & Jetpack Compose for Android' },
+  { id: 'pos-retail', title: 'Offline-First POS & Commerce', desc: 'Sub-second cash registers and atomic stock tracking' },
+  { id: 'cloud-infra', title: 'Cloud Infrastructure & DevOps', desc: 'Docker, Kubernetes, CI/CD, and high-availability SRE' },
+]
+
+export const timelines = [
+  { id: 'immediate', title: 'Immediate Sprint', detail: '2–4 Weeks (Fast-track MVP)' },
+  { id: 'standard', title: 'Standard Turnkey', detail: '6–12 Weeks (Full production platform)' },
+  { id: 'continuous', title: 'Dedicated Pod', detail: 'Monthly embedded engineering team' },
+]
+
+// Secondary modal content (About, Industries, Insights, Careers)
+export const aboutDetails = {
+  title: 'Engineering Craftsmanship in Addis Ababa',
+  story:
+    'Afrookoo Software was established with a singular objective: to build software systems that compete at the highest tier of international engineering rigor while solving critical operational realities in East Africa.',
+  principles: [
+    {
+      title: 'Real-World Resilience',
+      desc: 'We design for network instability, power cuts, and heavy concurrency using local-first storage and conflict-free data structures.',
+    },
+    {
+      title: 'Decoupled Domain Architecture',
+      desc: 'We structure backends using Hexagonal Architecture (Ports and Adapters) so domain logic remains untouched when external libraries evolve.',
+    },
+    {
+      title: 'Transparent Code Ownership',
+      desc: 'Our partners receive 100% intellectual property ownership, zero vendor lock-in, and fully documented source repositories.',
+    },
+    {
+      title: 'Production Rigor',
+      desc: 'We enforce automated testing, strict architectural boundaries, and performance benchmarks on every release.',
+    },
+  ],
+}
+
+export const industriesData = [
   {
-    category: 'Frontend & Web',
-    label: 'Frontend',
-    items: ['React 18', 'Next.js', 'Angular', 'Vue.js', 'Tailwind CSS', 'TypeScript'],
-    highlight: 'Responsive, accessible, sub-second interactive frontends.',
+    name: 'Banking & Financial Services',
+    desc: 'API gateways, settlement queues, reconciliation engines, and core payment processors.',
+    iconName: 'BarChart',
+    highlight: 'Sub-45ms transaction latency with mTLS v1.3 encryption.',
   },
   {
-    category: 'Backend & APIs',
-    label: 'Backend',
-    items: ['Java / Spring Boot', 'Node.js', 'Express', 'Python / FastAPI', 'REST & GraphQL'],
-    highlight: 'Fault-tolerant, high-concurrency microservices and APIs.',
+    name: 'Agriculture & Agro-Export',
+    desc: 'Multi-warehouse commodity tracking, container dispatch certification, and export manifest automation.',
+    iconName: 'Layers',
+    highlight: 'Over 38,000 MT of export commodities tracked with zero audit leakage.',
   },
   {
-    category: 'Mobile & iOS',
-    label: 'Mobile',
-    items: ['Swift', 'SwiftUI', 'UIKit', 'Apple HealthKit', 'Flutter', 'SwiftData'],
-    highlight: 'Native iOS performance with fluid 60fps animations.',
+    name: 'Retail & Multi-Branch Commerce',
+    desc: 'Offline-first POS registers, barcode scanner integrations, and multi-store atomic inventory sync.',
+    iconName: 'Code',
+    highlight: '100% offline uptime with sub-2s checkout speed.',
   },
   {
-    category: 'AI & Data Science',
-    label: 'AI & Data',
-    items: ['Multi-Agent Systems', 'Python', 'LangChain', 'Vector DBs', 'Machine Learning', 'NLP'],
-    highlight: 'Autonomous reasoning, structured tool use, and enterprise RAG.',
-  },
-  {
-    category: 'Databases & Cache',
-    label: 'Databases',
-    items: ['PostgreSQL', 'MongoDB', 'Redis', 'MySQL', 'SQLite'],
-    highlight: 'ACID transactional integrity and low-latency in-memory caching.',
-  },
-  {
-    category: 'Cloud & DevOps',
-    label: 'Cloud & DevOps',
-    items: ['Docker', 'Kubernetes', 'AWS', 'Google Cloud', 'GitHub Actions', 'Nginx'],
-    highlight: 'Automated CI/CD, container orchestration, and zero-downtime deploys.',
+    name: 'Higher Education & Research',
+    desc: 'Digital academic archives, institutional publishing systems, and faculty operations management.',
+    iconName: 'Shield',
+    highlight: 'Decoupled role-based access for multi-department organizations.',
   },
 ]
 
-export const architecture =
-  'Hexagonal Architecture (Ports & Adapters), Microservices, Event-Driven Systems, API-First Design, Clean Architecture'
-
-export const architecturePrinciples = [
+export const insightsData = [
   {
-    name: 'Hexagonal Architecture',
-    desc: 'Ports and adapters decouple business logic from external frameworks, databases, and UI layers for effortless testability.',
-  },
-  {
-    name: 'Microservices & Modular Monoliths',
-    desc: 'Right-sized architectural boundaries tailored to organizational scaling requirements without premature over-engineering.',
-  },
-  {
-    name: 'Event-Driven & Reactive Systems',
-    desc: 'Asynchronous event streaming ensures high responsiveness under massive sudden traffic surges.',
-  },
-  {
-    name: 'API-First & Strict Typing',
-    desc: 'Formally documented OpenAPI/REST specifications ensure rock-solid interoperability across frontend, mobile, and third parties.',
-  },
-]
-
-export const insightTopics = [
-  'Artificial Intelligence',
-  'Software Architecture',
-  'Hexagonal Design',
-  'Offline-First POS',
-  'Native iOS & Swift',
-  'Multi-Agent Workflows',
-  'Enterprise Scale',
-]
-
-export const careerCards = [
-  'Senior Full-Stack Engineer',
-  'AI & Multi-Agent Engineer',
-  'iOS Software Engineer',
-  'UI/UX Product Designer',
-]
-
-export const insights = [
-  {
-    slug: 'multi-agent-enterprise-ai',
-    title: 'Architecting Multi-Agent AI Systems for Enterprise Automation',
-    category: 'AI & Machine Learning',
-    readTime: '6 min read',
+    slug: 'offline-first-pos-emerging-markets',
+    title: 'Building Offline-First POS & Inventory Engines for High Reliability',
+    category: 'Distributed Systems',
+    readTime: '7 min read',
     date: 'Oct 2026',
     author: 'Afrookoo Engineering Team',
     summary:
-      'Why single-prompt LLM wrappers fail in enterprise settings, and how multi-agent loops with specialized roles and schema validation produce deterministic results.',
-    highlights: [
-      'Decomposing monolithic prompts into Planner, Researcher, and Verifier agent roles',
-      'Preventing hallucinations using strict JSON schema validation and retry boundaries',
-      'Implementing Human-in-the-Loop approval checkpoints for irreversible actions',
+      'Designing point-of-sale architectures that survive unstable network connectivity without risking double sales or inventory desynchronization.',
+    points: [
+      'Local IndexedDB transaction queues with conflict-free vector clocks',
+      'Optimistic cashier checkout with background server reconciliation upon reconnect',
+      'Preventing negative stock counts across multi-location retail branches',
     ],
   },
   {
@@ -453,170 +332,82 @@ export const insights = [
     date: 'Aug 2026',
     author: 'Afrookoo Engineering Team',
     summary:
-      'A practical guide to implementing Ports & Adapters in Spring Boot and Node.js microservices to protect core domain logic from framework obsolescence.',
-    highlights: [
+      'A practical guide to implementing Ports & Adapters in Spring Boot microservices to protect core domain logic from framework churn.',
+    points: [
       'Separating domain entities and use cases from database adapters',
       'Unit testing complex business rules in milliseconds without booting databases',
-      'Real-world lessons from public sector customs and warehouse systems',
+      'Lessons learned from high-throughput warehouse logistics systems',
     ],
   },
   {
-    slug: 'offline-first-pos-emerging-markets',
-    title: 'Building Offline-First POS & Inventory Engines for High Reliability',
-    category: 'Engineering & Systems',
-    readTime: '7 min read',
-    date: 'Jun 2026',
+    slug: 'multi-agent-enterprise-ai',
+    title: 'Architecting Multi-Agent AI Systems for Enterprise Automation',
+    category: 'AI & Data Systems',
+    readTime: '6 min read',
+    date: 'Jul 2026',
     author: 'Afrookoo Engineering Team',
     summary:
-      'Designing point-of-sale architectures that survive unstable network connectivity without risking double sales or inventory desynchronization.',
-    highlights: [
-      'Local IndexedDB / SQLite transaction queues with conflict-free vector clocks',
-      'Optimistic UI checkouts with atomic server reconciliation upon reconnect',
-      'Preventing negative stock counts across multi-location retail branches',
+      'Why single-prompt LLM wrappers fail in enterprise settings, and how multi-agent loops with specialized roles and schema validation produce deterministic results.',
+    points: [
+      'Decomposing workflows into Planner, Researcher, and Verifier agent roles',
+      'Preventing hallucinations using strict JSON schema validation and retry boundaries',
+      'Human-in-the-loop approval checkpoints for irreversible actions',
     ],
   },
   {
     slug: 'swiftui-vs-cross-platform-2026',
-    title: 'Native SwiftUI vs. Cross-Platform Frameworks in 2026: An Engineering Analysis',
+    title: 'Native SwiftUI vs. Cross-Platform Frameworks: An Engineering Analysis',
     category: 'Mobile Engineering',
     readTime: '4 min read',
-    date: 'Apr 2026',
+    date: 'May 2026',
     author: 'Afrookoo Engineering Team',
     summary:
       'When to choose native Swift/SwiftUI over Flutter or React Native for iOS products demanding device sensor precision and fluid 120Hz gestures.',
-    highlights: [
+    points: [
       'Deep Apple ecosystem integration: HealthKit, Widgets, and CoreMotion',
-      'Memory footprint and battery efficiency comparisons in continuous tracking',
+      'Memory footprint and battery efficiency in continuous background tasks',
       'Structuring hybrid teams for cross-platform web and native mobile excellence',
     ],
   },
 ]
 
-export const careerOpenings = [
-  {
-    id: 'senior-fullstack',
-    title: 'Senior Full-Stack Engineer',
-    department: 'Engineering',
-    type: 'Full-time',
-    location: 'Addis Ababa (Hybrid)',
-    experience: '3+ Years',
-    desc: 'Build scalable React and Node.js/Spring Boot services powering our enterprise platforms and SaaS products.',
-    skills: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'REST APIs'],
-  },
-  {
-    id: 'ai-ml-engineer',
-    title: 'AI & Multi-Agent Systems Engineer',
-    department: 'Artificial Intelligence',
-    type: 'Full-time',
-    location: 'Addis Ababa / Remote',
-    experience: '2+ Years',
-    desc: 'Architect autonomous agent loops, retrieval-augmented generation pipelines, and predictive ML systems.',
-    skills: ['Python', 'FastAPI', 'LangChain', 'Vector DBs', 'LLMs'],
-  },
-  {
-    id: 'ios-engineer',
-    title: 'iOS Software Engineer',
-    department: 'Mobile Engineering',
-    type: 'Full-time',
-    location: 'Addis Ababa (Hybrid)',
-    experience: '2+ Years',
-    desc: 'Craft polished, native SwiftUI and UIKit applications with HealthKit and device hardware integrations.',
-    skills: ['Swift', 'SwiftUI', 'UIKit', 'SwiftData', 'REST'],
-  },
-  {
-    id: 'product-designer',
-    title: 'UI/UX Product Designer',
-    department: 'Product & Design',
-    type: 'Full-time',
-    location: 'Addis Ababa / Hybrid',
-    experience: '2+ Years',
-    desc: 'Design beautiful, intuitive enterprise software interfaces and design systems with obsessive detail.',
-    skills: ['Figma', 'Design Systems', 'User Research', 'Prototyping'],
-  },
-]
+export const careerOpenings = []
 
-export const careerPerks = [
-  {
-    title: 'Ethiopian Buna Culture',
-    desc: 'Daily freshly brewed traditional Ethiopian coffee breaks to spark creativity and team camaraderie.',
-    iconName: 'Coffee',
-  },
-  {
-    title: 'High-Impact Work',
-    desc: 'Work on foundational enterprise platforms, AI systems, and products serving national institutions.',
-    iconName: 'Award',
-  },
-  {
-    title: 'Modern Hardware & Tools',
-    desc: 'High-performance machines, top-tier cloud subscriptions, and cutting-edge developer toolchains.',
-    iconName: 'Cpu',
-  },
-  {
-    title: 'Continuous Learning Stipend',
-    desc: 'Dedicated budget for conferences, specialized certifications, online courses, and technical books.',
-    iconName: 'GraduationCap',
-  },
-  {
-    title: 'Flexible Hybrid Work',
-    desc: 'Balanced in-office collaboration in Addis Ababa with flexible remote work autonomy.',
-    iconName: 'Clock',
-  },
-  {
-    title: 'Competitive Compensation',
-    desc: 'Industry-leading salary packages with milestone performance bonuses and career advancement.',
-    iconName: 'Briefcase',
-  },
-]
-
-export const serviceOptions = [
-  'Custom Web & Software Development',
-  'Native iOS & Mobile Application',
-  'Artificial Intelligence & Multi-Agent Systems',
-  'Enterprise ERP & Operations System',
-  'Cloud Infrastructure & DevOps CI/CD',
-  'Digital Transformation & Architecture Consulting',
-]
+export const careerPerks = []
 
 export const footerColumns = [
   {
-    title: 'Company',
+    title: 'Navigation',
     links: [
-      ['About Afrookoo', '#about'],
-      ['Leadership & Mission', '#about'],
-      ['Careers (We are hiring!)', '#careers'],
-      ['Insights & Research', '#insights'],
-      ['Contact Us', '#contact'],
+      { label: 'Case Studies', href: '#work', type: 'anchor' },
+      { label: 'Capabilities Bento', href: '#capabilities', type: 'anchor' },
+      { label: 'Engagement Models', href: '#engagement', type: 'anchor' },
+      { label: 'Project Estimator', href: '#contact', type: 'anchor' },
     ],
   },
   {
-    title: 'Services',
+    title: 'Deep Dives',
     links: [
-      ['Custom Software & Web', '#services'],
-      ['Native iOS & Mobile', '#services'],
-      ['AI & Agentic Systems', '#services'],
-      ['Enterprise ERP & Core', '#services'],
-      ['Cloud & DevOps', '#services'],
-      ['Architecture Advisory', '#services'],
+      { label: 'About Afrookoo', modalId: 'about', type: 'modal' },
+      { label: 'Industries Served', modalId: 'industries', type: 'modal' },
+      { label: 'Engineering Insights', modalId: 'insights', type: 'modal' },
+      { label: 'Careers', modalId: 'careers', type: 'modal' },
     ],
   },
   {
-    title: 'Projects & Platforms',
+    title: 'Case Studies',
     links: [
-      ['ORA POS & Inventory Intelligence', '#work'],
-      ['Afrookoo Custom Enterprise Platforms', '#work'],
-      ['System Architecture & Advisory', '#services'],
-      ['Cloud & Database Engineering', '#services'],
+      { label: 'ORA POS & Retail Engine', href: '#work', type: 'anchor' },
+      { label: 'Kerchanshe Commodity ERP', href: '#work', type: 'anchor' },
+      { label: 'Awash Bank API Gateway', href: '#work', type: 'anchor' },
     ],
   },
   {
-    title: 'Solutions & Industries',
+    title: 'Contact & Legal',
     links: [
-      ['Government & Public Sector', '#industries'],
-      ['Banking & Financial Services', '#industries'],
-      ['Healthcare & Life Sciences', '#industries'],
-      ['Retail & E-Commerce', '#industries'],
-      ['Logistics & Supply Chain', '#industries'],
-      ['Technology & Architecture', '#technology'],
+      { label: 'contact@afrookoo.com', href: 'mailto:contact@afrookoo.com', type: 'external' },
+      { label: 'Telegram: @afrookoo', href: 'https://t.me/afrookoo', type: 'external' },
+      { label: 'Addis Ababa, Ethiopia', href: '#contact', type: 'anchor' },
     ],
   },
 ]
