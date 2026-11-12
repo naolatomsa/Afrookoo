@@ -1,239 +1,183 @@
-import { useState } from 'react'
 import { Section, Heading } from '../ui.jsx'
-import Reveal, { stagger } from './Reveal.jsx'
+import Reveal from './Reveal.jsx'
 import { caseStudies } from '../data.js'
-import { ArrowUpRight, Code, Database, Shield } from './Icons.jsx'
-
-function CaseStudyCard({ cs }) {
-  const [activeTab, setActiveTab] = useState('metrics')
-
-  const architectureDetails = {
-    'ora-pos': [
-      { layer: '01 Edge Cashier Terminal', desc: 'Direct thermal receipt printer & optical barcode scanner integration via WebAssembly.' },
-      { layer: '02 Local ACID Persistence', desc: 'IndexedDB transaction buffer capturing checkouts with zero downtime during ISP cuts.' },
-      { layer: '03 WebSocket Gateway', desc: 'Sub-50ms bidirectional synchronization pipe with automatic exponential backoff retry.' },
-      { layer: '04 Distributed Cloud Ledger', desc: 'PostgreSQL multi-branch inventory engine with atomic balance reconciliation.' },
-    ],
-    'kerchanshe-erp': [
-      { layer: '01 Multi-Warehouse UI', desc: 'Next.js 15 & React management portals for regional commodity depot supervisors.' },
-      { layer: '02 Hexagonal Core API', desc: 'Spring Boot 3 & Nest.js decoupled microservices with strict transactional boundaries.' },
-      { layer: '03 Distributed Cache Tier', desc: 'Redis cluster handling high-speed lot reservation, freight dispatch, and SKU lookups.' },
-      { layer: '04 Relational Data Cluster', desc: 'High-availability PostgreSQL database with automated multi-AZ replication.' },
-    ],
-    'awash-gateway': [
-      { layer: '01 Partner API Ingestion', desc: 'FastAPI gateway terminating partner connections over mutual TLS (mTLS v1.3).' },
-      { layer: '02 Cryptographic Verifier', desc: 'Hardware-accelerated JWT signature verification, rate limiter, and payload audit.' },
-      { layer: '03 Settlement Message Queue', desc: 'Redis Streams message bus guaranteeing zero-loss transaction delivery.' },
-      { layer: '04 Core Banking Adapter', desc: 'Idempotent transactional connector to private financial ledger.' },
-    ],
-  }
-
-  const visualHeaders = {
-    'ora-pos': {
-      icon: Code,
-      badge: 'RETAIL ENGINE',
-      accentColor: 'text-blue-400',
-      tagline: 'Multi-Branch Distributed POS & Real-Time Stock Engine',
-      stat1: '1.8s Checkout',
-      stat2: '100% Offline Uptime',
-    },
-    'kerchanshe-erp': {
-      icon: Database,
-      badge: 'ENTERPRISE ERP',
-      accentColor: 'text-emerald-400',
-      tagline: 'Commodity Freight Logistics & Lot Serialization',
-      stat1: '4.2x Faster Manifests',
-      stat2: '38,000+ MT Audited',
-    },
-    'awash-gateway': {
-      icon: Shield,
-      badge: 'FINANCIAL GATEWAY',
-      accentColor: 'text-indigo-400',
-      tagline: 'Low-Latency Partner API & Cryptographic Settlement',
-      stat1: '< 45ms Response',
-      stat2: '100% Zero-Loss Ledger',
-    },
-  }
-
-  const archNodes = architectureDetails[cs.id] || []
-  const vHeader = visualHeaders[cs.id] || visualHeaders['ora-pos']
-  const HeaderIcon = vHeader.icon
-
-  return (
-    <div className="rounded-2xl border border-zinc-200/80 dark:border-white/10 bg-white dark:bg-zinc-900/40 shadow-lg dark:shadow-xl backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-xl overflow-hidden">
-      {/* Visual Header Banner */}
-      <div className="border-b border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950/70 p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 text-zinc-800 dark:text-white shadow-xs">
-            <HeaderIcon size={16} />
-          </div>
-          <div>
-            <span className="font-mono text-[10px] uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold block">
-              {vHeader.badge}
-            </span>
-            <span className="text-xs font-mono text-zinc-700 dark:text-zinc-300 font-medium">
-              {vHeader.tagline}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="rounded-full bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 shadow-xs">
-            {vHeader.stat1}
-          </span>
-          <span className="rounded-full bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 shadow-xs">
-            {vHeader.stat2}
-          </span>
-        </div>
-      </div>
-
-      {/* Main Case Study Content */}
-      <div className="p-6 sm:p-8 lg:p-10">
-        <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* Left Column: Context, Problem & Solution */}
-          <div className="lg:col-span-7 flex flex-col justify-between">
-            <div>
-              {/* Meta info */}
-              <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-zinc-500 dark:text-zinc-400 mb-2">
-                <span className="font-medium text-zinc-700 dark:text-zinc-300">{cs.client}</span>
-                <span className="text-zinc-300 dark:text-zinc-600">/</span>
-                <span>{cs.category}</span>
-              </div>
-
-              <h3 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
-                {cs.title}
-              </h3>
-
-              {/* Challenge */}
-              <div className="mb-4">
-                <span className="block font-mono text-[11px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-medium">
-                  Challenge
-                </span>
-                <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                  {cs.problem}
-                </p>
-              </div>
-
-              {/* Solution */}
-              <div className="mb-6">
-                <span className="block font-mono text-[11px] uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-medium">
-                  Engineered Solution
-                </span>
-                <p className="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
-                  {cs.built ? cs.built.join(' ') : cs.solution}
-                </p>
-              </div>
-            </div>
-
-            {/* Tech Stack Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-4 border-t border-zinc-200/80 dark:border-white/10">
-              {(cs.tags || cs.techStack)?.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-md border border-zinc-200 dark:border-white/10 bg-zinc-100/70 dark:bg-white/5 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 shadow-xs"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Column: Interactive Specs (Metrics vs. Architecture) */}
-          <div className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950/70 p-5 sm:p-6 backdrop-blur-md">
-            <div>
-              {/* Tab switchers */}
-              <div className="flex items-center justify-between border-b border-zinc-200/80 dark:border-white/10 pb-3 mb-5">
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('metrics')}
-                    className={`font-mono text-xs uppercase tracking-wider cursor-pointer transition-colors pb-1 border-b-2 ${
-                      activeTab === 'metrics'
-                        ? 'border-blue-600 dark:border-blue-500 font-semibold text-zinc-900 dark:text-white'
-                        : 'border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-                    }`}
-                  >
-                    Verified Outcomes
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab('arch')}
-                    className={`font-mono text-xs uppercase tracking-wider cursor-pointer transition-colors pb-1 border-b-2 ${
-                      activeTab === 'arch'
-                        ? 'border-blue-600 dark:border-blue-500 font-semibold text-zinc-900 dark:text-white'
-                        : 'border-transparent text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-                    }`}
-                  >
-                    System Blueprint
-                  </button>
-                </div>
-                <span className="font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
-                  {cs.version || 'Production'}
-                </span>
-              </div>
-
-              {/* Tab 1: Hard Metrics */}
-              {activeTab === 'metrics' ? (
-                <div className="space-y-4">
-                  {cs.results.map((r) => (
-                    <div key={r.label} className="border-b border-zinc-200/80 dark:border-white/10 pb-3 last:border-0 last:pb-0">
-                      <div className="font-mono text-2xl font-bold text-zinc-900 dark:text-white">
-                        {r.value}
-                      </div>
-                      <div className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-0.5">
-                        {r.label}
-                      </div>
-                      <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5">
-                        {r.note}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                /* Tab 2: Architecture Layers */
-                <div className="space-y-2.5 font-mono text-xs">
-                  {archNodes.map((n) => (
-                    <div key={n.layer} className="p-3 rounded-lg bg-white dark:bg-zinc-900/80 border border-zinc-200 dark:border-white/10 shadow-xs">
-                      <div className="font-semibold text-zinc-900 dark:text-white text-[11px]">
-                        {n.layer}
-                      </div>
-                      <div className="text-[10px] text-zinc-600 dark:text-zinc-400 mt-0.5 font-sans leading-snug">
-                        {n.desc}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 pt-4 border-t border-zinc-200/80 dark:border-white/10 flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
-              <span>Addis Ababa Deployment</span>
-              <span className="inline-flex items-center gap-1 text-zinc-900 dark:text-white font-medium">
-                <span>Verified SLA</span>
-                <ArrowUpRight size={13} />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export default function Portfolio() {
+  const cs = caseStudies[0]
+
+  const branches = [
+    { num: '01', name: '4 Kilo Store & Head Office', role: 'Central Depot & Retail' },
+    { num: '02', name: 'Piazza Distribution Center', role: 'High-Volume Book Depot' },
+    { num: '03', name: 'Bole Retail Branch', role: 'Commercial Retail Point' },
+    { num: '04', name: 'Sarbet Depository', role: 'Academic Publishing Archive' },
+  ]
+
   return (
-    <Section id="work" tone="surface" pad="py-16 sm:py-20 lg:py-24">
+    <Section id="work" pad="py-24 sm:py-32 lg:py-40">
       <Heading
-        title="Featured Work & Production Systems"
-        intro="Enterprise platforms, offline-first retail engines, and distributed architectures engineered for our partners."
+        title="Featured Case Study"
+        subtitle="A retail platform engineered for high operational reliability."
       />
 
-      <div className="space-y-8 sm:space-y-10">
-        {caseStudies.map((cs, idx) => (
-          <Reveal key={cs.id} delay={stagger(idx, 3, 80)}>
-            <CaseStudyCard cs={cs} />
-          </Reveal>
-        ))}
+      {/* Editorial Headline & Overview */}
+      <div className="space-y-16">
+        <Reveal>
+          <div className="max-w-4xl space-y-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold block">
+              Flagship Production Platform · {cs.client}
+            </span>
+
+            <div className="text-mask">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[var(--text-heading)] leading-[1.1] text-slide-up">
+                A high-velocity retail POS and unified multi-branch inventory engine.
+              </h3>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Two-Column Open Editorial Spread */}
+        <Reveal delay={80}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 text-base text-[var(--text-body)] leading-relaxed border-t border-[var(--border-primary)] pt-10">
+            <div>
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--text-heading)] mb-3">
+                The Operational Reality
+              </h4>
+              <p>
+                The Oromo Research Association (ORA) operates multiple retail bookstores and publication centers. Disconnected counter registers and manual stock updates caused checkout queues to stall, leading to inventory discrepancies and zero real-time visibility across branch sales.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--text-heading)] mb-3">
+                The Engineering Solution
+              </h4>
+              <p>
+                We engineered a high-velocity POS and multi-branch retail inventory platform. Cashiers scan barcodes, process orders, and print thermal receipts with sub-second response times. All branch terminals connect directly to a centralized inventory core, providing automated stock reconciliation, instant audit trails, and consistent catalog control across every store.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Compact Stats Strip: Light and Dark Mode Adaptive */}
+        <Reveal delay={120}>
+          <div className="w-full max-w-[1152px]">
+            <section
+              className="rounded-[20px] overflow-hidden bg-white dark:bg-[#0E0E10] border border-zinc-200/90 dark:border-[#2A2A30] grid grid-cols-2 md:grid-cols-4 shadow-sm dark:shadow-2xl transition-colors duration-300"
+              aria-label="ORA POS Impact Statistics"
+            >
+              {/* Stat 1 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0 border-r border-b md:border-b-0 border-zinc-200/80 dark:border-[#2A2A30]">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  <span className="text-zinc-400 dark:text-[#8A8A87]">&lt;</span> 1.8<span className="text-blue-600 dark:text-[#8FA2FF]">s</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    Checkout Velocity
+                  </h3>
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Barcode scan to printed receipt
+                </p>
+              </div>
+
+              {/* Stat 2 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0 md:border-r border-b md:border-b-0 border-zinc-200/80 dark:border-[#2A2A30]">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  99.9<span className="text-blue-600 dark:text-[#8FA2FF]">%</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    System Uptime
+                  </h3>
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-[#8FA2FF] inline-block shrink-0" aria-hidden="true" />
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Continuous high-availability counters
+                </p>
+              </div>
+
+              {/* Stat 3 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0 border-r border-zinc-200/80 dark:border-[#2A2A30]">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  4 <span className="text-blue-600 dark:text-[#8FA2FF] text-[32px]">Stores</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    Multi-Branch Network
+                  </h3>
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Synchronized retail locations
+                </p>
+              </div>
+
+              {/* Stat 4 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  0.0<span className="text-blue-600 dark:text-[#8FA2FF]">%</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    Inventory Drift
+                  </h3>
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Automated atomic reconciliation
+                </p>
+              </div>
+            </section>
+          </div>
+        </Reveal>
+
+        {/* Multi-Branch Deployment Ledger */}
+        <Reveal delay={160}>
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[var(--border-primary)] pb-4">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-heading)]">
+                Active Store Deployments
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {branches.map((b) => (
+                <div
+                  key={b.num}
+                  className="group/branch p-3.5 -mx-2 rounded-2xl transition-all duration-200 hover:bg-zinc-50/90 dark:hover:bg-[#121216] hover:-translate-y-0.5 space-y-1 cursor-default border border-transparent hover:border-zinc-200/60 dark:hover:border-zinc-800/80"
+                >
+                  <div className="font-mono text-xs text-[var(--accent)] font-semibold transition-transform duration-200 group-hover/branch:translate-x-0.5">
+                    {b.num}
+                  </div>
+                  <div className="text-sm font-semibold text-[var(--text-heading)] transition-colors">
+                    {b.name}
+                  </div>
+                  <div className="text-xs text-[var(--text-muted)]">
+                    {b.role}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-6 border-t border-[var(--border-primary)] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[var(--text-muted)]">
+              <span>Production Version: v2.8.4 Enterprise</span>
+              <div className="flex items-center gap-2">
+                <span>Core Stack:</span>
+                <span className="text-[var(--text-heading)]">React, Node.js, PostgreSQL, WebSockets</span>
+              </div>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </Section>
   )

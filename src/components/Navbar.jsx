@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { navLinks } from '../data.js'
 import { Button, Container } from '../ui.jsx'
 import { Sun, Moon, MenuIcon, CloseIcon } from './Icons.jsx'
+import AfrookooBrand from './AfrookooBrand.jsx'
 
 export default function Navbar({ onOpenModal }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [theme, setTheme] = useState('dark')
-  const [activeSection, setActiveSection] = useState('#work')
+  const [activeSection, setActiveSection] = useState('')
   const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 })
 
   const navContainerRef = useRef(null)
@@ -21,7 +22,27 @@ export default function Navbar({ onOpenModal }) {
 
     const sectionIds = ['work', 'capabilities', 'engagement', 'contact']
 
-    // If user manually scrolls with mouse wheel, touchpad, or touch drag, re-enable natural scroll tracking
+    // On initial refresh/load, sync with URL hash or start at top cleanly
+    const initialHash = window.location.hash
+    if (initialHash && sectionIds.map((id) => `#${id}`).includes(initialHash)) {
+      setActiveSection(initialHash)
+      isClickNavigatingRef.current = true
+      setTimeout(() => {
+        const targetId = initialHash.replace('#', '')
+        const targetEl = document.getElementById(targetId)
+        if (targetEl) {
+          const navbarOffset = 80
+          const elementPosition = targetEl.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - navbarOffset
+          window.scrollTo({ top: offsetPosition, behavior: 'auto' })
+        }
+        isClickNavigatingRef.current = false
+      }, 50)
+    } else {
+      setActiveSection('')
+      setPillStyle((prev) => ({ ...prev, opacity: 0 }))
+    }
+
     const handleUserInteraction = () => {
       if (isClickNavigatingRef.current) {
         isClickNavigatingRef.current = false
@@ -30,20 +51,24 @@ export default function Navbar({ onOpenModal }) {
     }
 
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      setScrolled(window.scrollY > 15)
 
-      // When the user clicked a nav link to travel to a distant section, DO NOT let intermediate sections hijack the pill!
       if (isClickNavigatingRef.current) return
 
-      // Robust bottom-of-page check: if near the page bottom, active section is always #contact
+      // Near the top of the page / Hero section: clear active section completely
+      if (window.scrollY < 200) {
+        setActiveSection('')
+        return
+      }
+
+      // Check if at the absolute bottom of the document
       const scrollBottom = window.innerHeight + window.scrollY
       const totalHeight = document.documentElement.scrollHeight
-      if (totalHeight - scrollBottom < 220) {
+      if (totalHeight - scrollBottom < 80) {
         setActiveSection('#contact')
         return
       }
 
-      // Check section crossing 35% of screen height
       const targetLine = window.scrollY + window.innerHeight * 0.35
       let current = ''
 
@@ -61,7 +86,7 @@ export default function Navbar({ onOpenModal }) {
 
       if (current) {
         setActiveSection(current)
-      } else if (window.scrollY < 200) {
+      } else {
         setActiveSection('')
       }
     }
@@ -79,7 +104,7 @@ export default function Navbar({ onOpenModal }) {
     }
   }, [])
 
-  // Update sliding fluid glass pill position whenever activeSection changes
+  // Position fluid sliding glass pill
   useEffect(() => {
     if (!activeSection) {
       setPillStyle((prev) => ({ ...prev, opacity: 0 }))
@@ -101,28 +126,57 @@ export default function Navbar({ onOpenModal }) {
     }
   }, [activeSection, scrolled])
 
-  const handleNavClick = (e, href) => {
-    e.preventDefault()
+  const handleLogoClick = (e) => {
+    if (e && e.preventDefault) e.preventDefault()
     close()
 
-    // 1. Instantly set the destination as active so the pill glides directly to it in one fluid motion
-    setActiveSection(href)
-
-    // 2. Lock scroll listener so intermediate sections during smooth scroll are ignored
+    setActiveSection('')
     isClickNavigatingRef.current = true
     if (navLockTimeoutRef.current) clearTimeout(navLockTimeoutRef.current)
 
-    // 3. Smooth scroll to the target section
+    // Smoothly scroll to the very top
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    // Clean up hash from URL cleanly without reload
+    if (window.location.hash) {
+      try {
+        history.replaceState(null, '', window.location.pathname + window.location.search)
+      } catch (err) {}
+    }
+
+    navLockTimeoutRef.current = setTimeout(() => {
+      isClickNavigatingRef.current = false
+    }, 800)
+  }
+
+  const handleNavClick = (e, href) => {
+    if (e && e.preventDefault) e.preventDefault()
+    close()
+
+    setActiveSection(href)
+    isClickNavigatingRef.current = true
+    if (navLockTimeoutRef.current) clearTimeout(navLockTimeoutRef.current)
+
     const targetId = href.replace('#', '')
     const targetEl = document.getElementById(targetId)
     if (targetEl) {
-      targetEl.scrollIntoView({ behavior: 'smooth' })
+      const navbarOffset = 80
+      const elementPosition = targetEl.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navbarOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+
+      try {
+        history.pushState(null, '', href)
+      } catch (err) {}
     }
 
-    // 4. Release scroll lock after smooth scroll settles (1400ms is safe for even long page distances)
     navLockTimeoutRef.current = setTimeout(() => {
       isClickNavigatingRef.current = false
-    }, 1400)
+    }, 1000)
   }
 
   const toggleTheme = () => {
@@ -137,48 +191,30 @@ export default function Navbar({ onOpenModal }) {
 
   const handleModalClick = (modalId) => {
     close()
-    if (onOpenModal) {
-      onOpenModal(modalId)
-    }
+    if (onOpenModal) onOpenModal(modalId)
   }
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 inset-x-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'bg-white/85 dark:bg-zinc-950/85 backdrop-blur-2xl border-b border-zinc-200/80 dark:border-white/10 py-3 shadow-sm dark:shadow-2xl'
+          ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border-b border-black/[0.06] dark:border-white/[0.08] py-3.5 shadow-sm dark:shadow-2xl'
           : 'bg-transparent py-5'
       }`}
     >
-      <Container className="flex items-center justify-between gap-4">
+      <Container className="flex items-center justify-between gap-3 xl:gap-6">
         {/* Brand */}
-        <a
-          href="#top"
-          onClick={close}
-          className="flex items-center gap-2.5 text-decoration-none group"
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 text-white font-mono font-bold text-xs shadow-md shadow-blue-500/25 group-hover:scale-105 transition-transform">
-            A
-          </div>
-          <div className="flex items-baseline gap-1.5">
-            <span className="font-mono text-sm font-semibold tracking-tight text-zinc-900 dark:text-white">
-              AFROOKOO
-            </span>
-            <span className="text-[10px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider font-semibold">
-              SOFTWARE
-            </span>
-          </div>
-        </a>
+        <AfrookooBrand onClick={handleLogoClick} />
 
-        {/* Fluid Glass Navigation Pill */}
+        {/* Modern Frosted Glass Floating Navigation Capsule */}
         <nav
           ref={navContainerRef}
           aria-label="Main navigation"
-          className="relative hidden lg:flex items-center gap-1 rounded-full border border-zinc-200/80 dark:border-white/10 bg-zinc-100/70 dark:bg-zinc-900/60 p-1 backdrop-blur-xl shadow-inner"
+          className="relative hidden lg:flex items-center gap-0.5 xl:gap-1 rounded-full border border-black/[0.07] dark:border-white/[0.1] bg-white/70 dark:bg-zinc-900/60 p-1 backdrop-blur-2xl shadow-xs shrink-0"
         >
-          {/* Animated Fluid Glass Capsule Pill */}
+          {/* Animated Fluid Glass Highlight Capsule */}
           <span
-            className="absolute top-1 bottom-1 rounded-full bg-white dark:bg-white/15 backdrop-blur-md border border-zinc-300/80 dark:border-white/25 shadow-sm pointer-events-none transition-all duration-500 cubic-bezier(0.22, 1, 0.36, 1)"
+            className="absolute top-1 bottom-1 rounded-full bg-white dark:bg-white/15 backdrop-blur-md border border-black/5 dark:border-white/20 shadow-xs pointer-events-none transition-all duration-400 ease-out"
             style={{
               left: `${pillStyle.left}px`,
               width: `${pillStyle.width}px`,
@@ -194,10 +230,10 @@ export default function Navbar({ onOpenModal }) {
                 href={l.href}
                 ref={(el) => (linkRefs.current[l.href] = el)}
                 onClick={(e) => handleNavClick(e, l.href)}
-                className={`relative z-10 px-4 py-1.5 rounded-full text-xs font-mono transition-colors duration-200 select-none ${
+                className={`relative z-10 whitespace-nowrap px-3 xl:px-4 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 select-none ${
                   isActive
-                    ? 'text-zinc-950 dark:text-white font-semibold'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
+                    ? 'text-[var(--text-heading)] font-semibold'
+                    : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
                 }`}
               >
                 {l.label}
@@ -205,48 +241,49 @@ export default function Navbar({ onOpenModal }) {
             )
           })}
 
-          <div className="h-3 w-px bg-zinc-300 dark:bg-white/10 mx-1.5" />
+          <div className="hidden xl:block h-3 w-px bg-black/[0.08] dark:bg-white/[0.12] mx-1" />
 
           <button
             type="button"
             onClick={() => handleModalClick('about')}
-            className="relative z-10 px-3 py-1.5 rounded-full text-xs font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors cursor-pointer"
+            className="relative z-10 hidden xl:inline-block whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] transition-colors cursor-pointer"
           >
             About
           </button>
           <button
             type="button"
             onClick={() => handleModalClick('insights')}
-            className="relative z-10 px-3 py-1.5 rounded-full text-xs font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors cursor-pointer"
+            className="relative z-10 hidden xl:inline-block whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] transition-colors cursor-pointer"
           >
             Insights
           </button>
           <button
             type="button"
             onClick={() => handleModalClick('careers')}
-            className="relative z-10 px-3 py-1.5 rounded-full text-xs font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors cursor-pointer"
+            className="relative z-10 hidden xl:inline-block whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] transition-colors cursor-pointer"
           >
             Careers
           </button>
         </nav>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-2.5">
-          {/* Theme toggle */}
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle Button */}
           <button
             type="button"
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="rounded-full p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
+            className="rounded-full p-2.5 text-[var(--text-body)] hover:text-[var(--text-heading)] hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-300 hover:rotate-45 active:scale-90 cursor-pointer"
           >
             {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
           </button>
 
+          {/* Start a Project CTA Button */}
           <Button
             href="#contact"
             onClick={(e) => handleNavClick(e, '#contact')}
             variant="primary"
-            className="hidden sm:inline-flex rounded-full text-xs py-2 px-5 min-h-[36px] bg-blue-600 hover:bg-blue-500 text-white font-medium shadow-md shadow-blue-600/30 border border-blue-500/40"
+            className="hidden sm:inline-flex rounded-full text-xs h-9 px-5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-md shadow-blue-500/20"
           >
             <span>Start a Project</span>
           </Button>
@@ -256,7 +293,7 @@ export default function Navbar({ onOpenModal }) {
             type="button"
             onClick={() => setOpen(!open)}
             aria-label="Toggle mobile menu"
-            className="rounded-full p-2 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-white/10 lg:hidden cursor-pointer"
+            className="rounded-full p-2 text-[var(--text-heading)] hover:bg-black/5 dark:hover:bg-white/10 lg:hidden cursor-pointer"
           >
             {open ? <CloseIcon size={18} /> : <MenuIcon size={18} />}
           </button>
@@ -265,7 +302,7 @@ export default function Navbar({ onOpenModal }) {
 
       {/* Mobile Drawer */}
       {open && (
-        <div className="lg:hidden border-b border-zinc-200 dark:border-white/10 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-6 py-6 shadow-2xl">
+        <div className="lg:hidden border-b border-black/[0.06] dark:border-white/[0.1] bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-6 py-6 shadow-2xl animate-fade">
           <div className="flex flex-col space-y-3">
             {navLinks.map((l) => {
               const isActive = activeSection === l.href
@@ -274,10 +311,10 @@ export default function Navbar({ onOpenModal }) {
                   key={l.label}
                   href={l.href}
                   onClick={(e) => handleNavClick(e, l.href)}
-                  className={`py-2 px-3 rounded-lg text-sm font-mono transition-colors ${
+                  className={`py-2 px-3 rounded-xl text-sm font-medium transition-colors ${
                     isActive
-                      ? 'bg-blue-600/15 text-blue-600 dark:text-blue-400 font-semibold border border-blue-500/30'
-                      : 'text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white'
+                      ? 'bg-[var(--accent-muted)] text-[var(--accent)] font-semibold'
+                      : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
                   }`}
                 >
                   {l.label}
@@ -285,32 +322,37 @@ export default function Navbar({ onOpenModal }) {
               )
             })}
 
-            <div className="h-px bg-zinc-200 dark:bg-white/10 my-2" />
+            <div className="h-px bg-black/[0.06] dark:bg-white/[0.08] my-2" />
 
             <button
               type="button"
               onClick={() => handleModalClick('about')}
-              className="py-1 text-left text-sm font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white"
+              className="py-1 px-3 text-left text-sm text-[var(--text-body)] hover:text-[var(--text-heading)] cursor-pointer"
             >
               About Studio
             </button>
             <button
               type="button"
               onClick={() => handleModalClick('insights')}
-              className="py-1 text-left text-sm font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white"
+              className="py-1 px-3 text-left text-sm text-[var(--text-body)] hover:text-[var(--text-heading)] cursor-pointer"
             >
               Engineering Insights
             </button>
             <button
               type="button"
               onClick={() => handleModalClick('careers')}
-              className="py-1 text-left text-sm font-mono text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white"
+              className="py-1 px-3 text-left text-sm text-[var(--text-body)] hover:text-[var(--text-heading)] cursor-pointer"
             >
               Careers
             </button>
 
             <div className="pt-2">
-              <Button href="#contact" onClick={(e) => handleNavClick(e, '#contact')} variant="primary" className="w-full text-xs rounded-full bg-blue-600 hover:bg-blue-500 text-white">
+              <Button
+                href="#contact"
+                onClick={(e) => handleNavClick(e, '#contact')}
+                variant="primary"
+                className="w-full text-xs rounded-full h-10"
+              >
                 <span>Start a Project</span>
               </Button>
             </div>

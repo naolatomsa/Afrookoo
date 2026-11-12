@@ -28,7 +28,7 @@ export default function Careers() {
       <div className="mb-14">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-serif text-2xl font-bold text-[var(--text-heading)]">
-            Open Roles in Addis Ababa &amp; Hybrid
+            Open Roles &amp; Hybrid Opportunities
           </h3>
           <span className="rounded-full bg-emerald-500/10 px-3 py-1 font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400">
             ● 4 Roles Available

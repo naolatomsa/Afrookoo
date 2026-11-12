@@ -2,15 +2,15 @@
 export const companyInfo = {
   name: 'Afrookoo Software',
   shortName: 'Afrookoo',
-  tagline: 'High-performance software systems for East African and global leaders.',
+  tagline: 'High-performance software systems for commercial and global leaders.',
   subtitle:
-    'We engineer high-performance custom software, offline-first POS systems, and intelligent business platforms from Addis Ababa to global enterprises.',
-  location: '4 Kilo, Addis Ababa, Ethiopia · EAT (UTC+3)',
-  address: '4 Kilo, Around Abrehot Library, Rift Valley University, Addis Ababa, Ethiopia',
+    'We engineer high-performance custom software, multi-branch POS platforms, and intelligent business systems for commercial and global enterprises.',
+  location: '4 Kilo, Ethiopia · EAT (UTC+3)',
+  address: '4 Kilo, Around Abrehot Library, Rift Valley University, Ethiopia',
   email: 'contact@afrookoo.com',
   workEmail: 'contact@afrookoo.com',
   phone: '+251 91 234 5678',
-  hours: 'Mon – Fri: 8:30 AM – 6:00 PM EAT (UTC+3)',
+  hours: 'Mon to Fri: 8:30 AM to 6:00 PM EAT (UTC+3)',
   github: 'https://github.com/afrookoo',
   linkedin: 'https://www.linkedin.com/company/afrookoo',
   telegram: 'https://t.me/afrookoo',
@@ -23,7 +23,7 @@ export const navLinks = [
   { label: 'Case Studies', href: '#work', type: 'anchor' },
   { label: 'Capabilities', href: '#capabilities', type: 'anchor' },
   { label: 'Engagement', href: '#engagement', type: 'anchor' },
-  { label: 'Estimate Project', href: '#contact', type: 'anchor' },
+  { label: 'Estimate', href: '#contact', type: 'anchor' },
 ]
 
 export const secondaryLinks = [
@@ -34,7 +34,7 @@ export const secondaryLinks = [
 ]
 
 export const stats = [
-  { value: '10+', label: 'Platforms Shipped', detail: 'Offline-first POS, ERP & iOS' },
+  { value: '10+', label: 'Platforms Shipped', detail: 'Multi-branch POS, ERP & iOS systems' },
   { value: '99.99%', label: 'Uptime Standard', detail: 'Zero-drift production SLA' },
   { value: '< 1.8s', label: 'Checkout Latency', detail: 'Sub-second edge transactions' },
   { value: '100%', label: 'IP Ownership', detail: 'Full source code handover' },
@@ -78,78 +78,31 @@ export const techPills = [
   { id: 'docker', label: 'Docker & Kubernetes', category: 'devops' },
 ]
 
+// Shipped Case Studies
 export const caseStudies = [
   {
     id: 'ora-pos',
     slug: 'ora-pos',
     title: 'ORA POS & Retail Inventory Intelligence',
-    subtitle: 'Offline-First Multi-Branch Retail Engine',
+    subtitle: 'Multi-Branch Retail Inventory & POS Engine',
     category: 'Retail & Multi-Branch Commerce',
     client: 'Oromo Research Association (ORA)',
     platform: 'DISTRIBUTED POS & ATOMIC INVENTORY LEDGER',
     problem:
-      'Frequent ISP network blackouts froze cashier checkouts and caused inventory drift across retail branches.',
+      'Fragmented counter systems and manual stock updates caused checkout bottlenecks and inventory desynchronization across multi-location retail branches.',
     built: [
-      'Engineered an offline-first POS terminal running on local IndexedDB with sub-second barcode scans and automatic zero-loss WebSocket cloud sync upon reconnect.',
+      'Engineered a high-speed POS terminal with sub-second barcode scanning and real-time WebSocket inventory synchronization across all branch registers.',
     ],
     results: [
       { label: 'Checkout Velocity', value: '1.8s', note: 'Barcode scan to printed receipt' },
-      { label: 'Offline Uptime', value: '100%', note: 'Zero cashier disruption during cuts' },
+      { label: 'System Uptime', value: '99.9%', note: 'High-availability retail counter uptime' },
       { label: 'Stock Drift', value: '0.0%', note: 'Automated atomic reconciliation' },
     ],
-    tags: ['REACT', 'NODE.JS', 'INDEXEDDB', 'WEBSOCKETS', 'POSTGRESQL', 'OFFLINE-FIRST'],
+    tags: ['REACT', 'NODE.JS', 'WEBSOCKETS', 'POSTGRESQL', 'RETAIL COMMERCE'],
     techCategory: ['react', 'node', 'postgres'],
     version: 'v2.8.4 production',
-    deployTarget: '4 Retail Locations · Addis Ababa',
+    deployTarget: '4 Retail Locations',
     previewType: 'pos-mockup',
-  },
-  {
-    id: 'kerchanshe-erp',
-    slug: 'kerchanshe-erp',
-    title: 'Kerchanshe Global Logistics & Commodity ERP',
-    subtitle: 'Centralized Multi-Warehouse Freight & Stock Intelligence',
-    category: 'Commercial Enterprise & Agro-Export',
-    client: 'Kerchanshe Trading',
-    platform: 'ENTERPRISE ERP & COMMODITY LEDGER',
-    problem:
-      'Fragmented regional spreadsheets delayed export shipping manifests and hindered real-time lot tracking.',
-    built: [
-      'Built a decoupled Hexagonal ERP platform with Spring Boot and PostgreSQL, automating export paperwork and multi-warehouse freight dispatch.',
-    ],
-    results: [
-      { label: 'Manifest Speed', value: '4.2x Faster', note: 'Instant automated export clearance' },
-      { label: 'Volume Tracked', value: '38,000+ MT', note: 'Coffee commodities audited annually' },
-      { label: 'Audit Accuracy', value: '99.98%', note: 'Eliminated discrepancy leakages' },
-    ],
-    tags: ['SPRING BOOT', 'JAVA 21', 'POSTGRESQL', 'REDIS', 'DOCKER', 'HEXAGONAL'],
-    techCategory: ['spring', 'postgres', 'docker'],
-    version: 'v3.1.2 enterprise',
-    deployTarget: 'Regional Warehouses & Head Office',
-    previewType: 'erp-mockup',
-  },
-  {
-    id: 'awash-gateway',
-    slug: 'awash-gateway',
-    title: 'Awash Bank Commercial Microservice Gateway',
-    subtitle: 'Low-Latency Partner API & Settlement Engine',
-    category: 'Financial Services & Banking Systems',
-    client: 'Awash Bank Integration Layer',
-    platform: 'FINANCIAL TRANSACTION MICROSERVICE',
-    problem:
-      'Branch banking systems required high-speed, secure interoperability with external retail partners without exposing the core ledger.',
-    built: [
-      'Delivered a hardened API gateway with mTLS v1.3 encryption, sub-45ms responses, and a fault-tolerant Redis streams settlement queue.',
-    ],
-    results: [
-      { label: 'API Latency', value: '< 45ms', note: 'Roundtrip p99 response time' },
-      { label: 'Reconciliation', value: '100.0%', note: 'Zero failed settlement records' },
-      { label: 'Security Standard', value: 'mTLS v1.3', note: 'Hardened cryptographic transport' },
-    ],
-    tags: ['TYPESCRIPT', 'FASTAPI', 'REDIS', 'DOCKER', 'KUBERNETES', 'MTLS'],
-    techCategory: ['node', 'python', 'docker', 'postgres'],
-    version: 'v1.9.0 banking core',
-    deployTarget: 'Private Cloud Infrastructure',
-    previewType: 'gateway-mockup',
   },
 ]
 
@@ -244,9 +197,9 @@ export const shippingSteps = [
 ]
 
 export const projectTypes = [
-  { id: 'web-nest', title: 'Web Platforms & Nest.js Core', desc: 'Enterprise portals, NestJS APIs, and PostgreSQL distributed systems' },
+  { id: 'web-nest', title: 'Web Platforms & Distributed Core', desc: 'Enterprise portals, APIs, and PostgreSQL distributed systems' },
   { id: 'native-mobile', title: 'Native Mobile (iOS & Android)', desc: 'Swift & SwiftUI for iOS, Kotlin & Jetpack Compose for Android' },
-  { id: 'pos-retail', title: 'Offline-First POS & Commerce', desc: 'Sub-second cash registers and atomic stock tracking' },
+  { id: 'pos-retail', title: 'Retail POS & Commerce Systems', desc: 'Sub-second cash registers and multi-branch stock tracking' },
   { id: 'cloud-infra', title: 'Cloud Infrastructure & DevOps', desc: 'Docker, Kubernetes, CI/CD, and high-availability SRE' },
 ]
 
@@ -254,17 +207,18 @@ export const timelines = [
   { id: 'immediate', title: 'Immediate Sprint', detail: '2–4 Weeks (Fast-track MVP)' },
   { id: 'standard', title: 'Standard Turnkey', detail: '6–12 Weeks (Full production platform)' },
   { id: 'continuous', title: 'Dedicated Pod', detail: 'Monthly embedded engineering team' },
+  { id: 'custom', title: 'Custom Timeline', detail: 'Specify launch date or deadline' },
 ]
 
 // Secondary modal content (About, Industries, Insights, Careers)
 export const aboutDetails = {
-  title: 'Engineering Craftsmanship in Addis Ababa',
+  title: 'Engineering Craftsmanship and Rigor',
   story:
-    'Afrookoo Software was established with a singular objective: to build software systems that compete at the highest tier of international engineering rigor while solving critical operational realities in East Africa.',
+    'Afrookoo Software was established with a singular objective: to build software systems that compete at the highest tier of international engineering rigor while solving critical operational realities.',
   principles: [
     {
-      title: 'Real-World Resilience',
-      desc: 'We design for network instability, power cuts, and heavy concurrency using local-first storage and conflict-free data structures.',
+      title: 'Operational Reliability',
+      desc: 'We design for high concurrency, continuous availability, and strict data consistency across distributed business environments.',
     },
     {
       title: 'Decoupled Domain Architecture',
@@ -296,9 +250,9 @@ export const industriesData = [
   },
   {
     name: 'Retail & Multi-Branch Commerce',
-    desc: 'Offline-first POS registers, barcode scanner integrations, and multi-store atomic inventory sync.',
+    desc: 'High-speed POS registers, barcode scanner integrations, and multi-store real-time inventory synchronization.',
     iconName: 'Code',
-    highlight: '100% offline uptime with sub-2s checkout speed.',
+    highlight: 'Sub-1.8s checkout velocity with automated inventory reconciliation.',
   },
   {
     name: 'Higher Education & Research',
@@ -310,17 +264,17 @@ export const industriesData = [
 
 export const insightsData = [
   {
-    slug: 'offline-first-pos-emerging-markets',
-    title: 'Building Offline-First POS & Inventory Engines for High Reliability',
+    slug: 'high-performance-pos-retail-inventory',
+    title: 'Building High-Performance POS & Multi-Branch Inventory Engines',
     category: 'Distributed Systems',
     readTime: '7 min read',
     date: 'Oct 2026',
     author: 'Afrookoo Engineering Team',
     summary:
-      'Designing point-of-sale architectures that survive unstable network connectivity without risking double sales or inventory desynchronization.',
+      'Designing retail architectures that provide sub-second cashier checkout velocity and real-time stock synchronization across distributed stores.',
     points: [
-      'Local IndexedDB transaction queues with conflict-free vector clocks',
-      'Optimistic cashier checkout with background server reconciliation upon reconnect',
+      'Optimized barcode scanning and instant thermal receipt printing',
+      'Real-time WebSocket data stream to centralized PostgreSQL engine',
       'Preventing negative stock counts across multi-location retail branches',
     ],
   },
@@ -340,21 +294,6 @@ export const insightsData = [
     ],
   },
   {
-    slug: 'multi-agent-enterprise-ai',
-    title: 'Architecting Multi-Agent AI Systems for Enterprise Automation',
-    category: 'AI & Data Systems',
-    readTime: '6 min read',
-    date: 'Jul 2026',
-    author: 'Afrookoo Engineering Team',
-    summary:
-      'Why single-prompt LLM wrappers fail in enterprise settings, and how multi-agent loops with specialized roles and schema validation produce deterministic results.',
-    points: [
-      'Decomposing workflows into Planner, Researcher, and Verifier agent roles',
-      'Preventing hallucinations using strict JSON schema validation and retry boundaries',
-      'Human-in-the-loop approval checkpoints for irreversible actions',
-    ],
-  },
-  {
     slug: 'swiftui-vs-cross-platform-2026',
     title: 'Native SwiftUI vs. Cross-Platform Frameworks: An Engineering Analysis',
     category: 'Mobile Engineering',
@@ -371,16 +310,12 @@ export const insightsData = [
   },
 ]
 
-export const careerOpenings = []
-
-export const careerPerks = []
-
 export const footerColumns = [
   {
     title: 'Navigation',
     links: [
       { label: 'Case Studies', href: '#work', type: 'anchor' },
-      { label: 'Capabilities Bento', href: '#capabilities', type: 'anchor' },
+      { label: 'Capabilities', href: '#capabilities', type: 'anchor' },
       { label: 'Engagement Models', href: '#engagement', type: 'anchor' },
       { label: 'Project Estimator', href: '#contact', type: 'anchor' },
     ],
@@ -395,19 +330,11 @@ export const footerColumns = [
     ],
   },
   {
-    title: 'Case Studies',
-    links: [
-      { label: 'ORA POS & Retail Engine', href: '#work', type: 'anchor' },
-      { label: 'Kerchanshe Commodity ERP', href: '#work', type: 'anchor' },
-      { label: 'Awash Bank API Gateway', href: '#work', type: 'anchor' },
-    ],
-  },
-  {
-    title: 'Contact & Legal',
+    title: 'Contact',
     links: [
       { label: 'contact@afrookoo.com', href: 'mailto:contact@afrookoo.com', type: 'external' },
       { label: 'Telegram: @afrookoo', href: 'https://t.me/afrookoo', type: 'external' },
-      { label: 'Addis Ababa, Ethiopia', href: '#contact', type: 'anchor' },
+      { label: 'Project Inquiries', href: '#contact', type: 'anchor' },
     ],
   },
 ]

@@ -1,181 +1,136 @@
-import { useState } from 'react'
-import { Section, Heading } from '../ui.jsx'
+import { Section } from '../ui.jsx'
 import Reveal, { stagger } from './Reveal.jsx'
-import { Check, Code, Smartphone, Zap, Cloud } from './Icons.jsx'
+import { Code, Smartphone, Zap, Cloud, ArrowRight } from './Icons.jsx'
+
+const capabilities = [
+  {
+    id: 'enterprise-web',
+    num: '01',
+    title: 'Web Platforms & APIs',
+    description:
+      'High-concurrency applications and distributed APIs engineered for speed, security, and zero downtime.',
+    tech: ['React', 'Next.js', 'Nest.js', 'Spring Boot', 'PostgreSQL'],
+    icon: Code,
+  },
+  {
+    id: 'native-mobile',
+    num: '02',
+    title: 'Native Mobile',
+    description:
+      'Silky-smooth native apps that harness device hardware directly, with zero hybrid compromises.',
+    tech: ['Swift', 'SwiftUI', 'Kotlin', 'Jetpack Compose'],
+    icon: Smartphone,
+  },
+  {
+    id: 'pos-retail',
+    num: '03',
+    title: 'Retail POS & Commerce Systems',
+    description:
+      'High-speed checkout terminals and synchronized multi-branch inventory engines with instant audit trails.',
+    tech: ['React', 'WebSockets', 'PostgreSQL', 'Thermal Print'],
+    icon: Zap,
+  },
+  {
+    id: 'cloud-devops',
+    num: '04',
+    title: 'Cloud Infrastructure & SRE',
+    description:
+      'Automated orchestration, zero-downtime pipelines, and continuous monitoring for enterprise uptime.',
+    tech: ['Docker', 'Kubernetes', 'CI/CD', 'Prometheus'],
+    icon: Cloud,
+  },
+]
+
+function CapabilityRow({ cap, index, isLast }) {
+  return (
+    <Reveal delay={stagger(index, 1, 120)}>
+      <div
+        className={`group py-10 sm:py-14 transition-colors duration-300 ${
+          !isLast ? 'border-b border-[var(--border-primary)]' : ''
+        }`}
+      >
+        {/* Number and Title with Micro Slide */}
+        <div className="flex items-baseline justify-between mb-4">
+          <div className="flex items-baseline gap-4 sm:gap-6">
+            <span
+              className="font-mono text-sm text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-1 tabular-nums select-none transition-all duration-300 inline-block"
+              aria-hidden="true"
+            >
+              {cap.num}
+            </span>
+            <h3
+              className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-heading)] leading-tight transition-colors duration-200"
+              style={{ fontFamily: 'var(--font-serif)' }}
+            >
+              {cap.title}
+            </h3>
+          </div>
+
+          <span
+            className="hidden sm:inline-flex opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-[var(--text-muted)] group-hover:text-[var(--accent)]"
+            aria-hidden="true"
+          >
+            <ArrowRight size={18} />
+          </span>
+        </div>
+
+        {/* Description */}
+        <p className="text-[var(--text-body)] text-base sm:text-lg leading-relaxed max-w-xl sm:pl-[2.75rem]">
+          {cap.description}
+        </p>
+
+        {/* Tech Pills with Micro Hover */}
+        <div className="flex flex-wrap gap-2 mt-5 sm:pl-[2.75rem]">
+          {cap.tech.map((t) => (
+            <span
+              key={t}
+              className="rounded-full border border-[var(--border-primary)] group-hover:border-zinc-300 dark:group-hover:border-zinc-700 bg-transparent px-3 py-1 font-mono text-[11px] text-[var(--text-muted)] group-hover:text-[var(--text-heading)] tracking-wide transition-colors duration-200"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  )
+}
 
 export default function Services() {
-  const [activeNetworkMode, setActiveNetworkMode] = useState('online')
-
-  const capabilities = [
-    {
-      id: 'enterprise-web',
-      num: '01',
-      title: 'Web Platforms & Distributed APIs',
-      tag: 'WEB & BACKEND',
-      icon: Code,
-      accentBg: 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
-      description:
-        'High-concurrency web applications, microservices, and decoupled domain APIs engineered for speed, security, and zero downtime.',
-      techStack: ['React', 'Next.js', 'Nest.js', 'Spring Boot', 'PostgreSQL', 'Redis'],
-      highlights: [
-        'Sub-second page speeds & type-safe backend architectures',
-        'Scalable relational modeling and in-memory cache clustering',
-        'Responsive, accessible interfaces with light & dark theme excellence',
-      ],
-    },
-    {
-      id: 'native-mobile',
-      num: '02',
-      title: 'Native Mobile: iOS & Android',
-      tag: 'DUAL NATIVE PERFORMANCE',
-      icon: Smartphone,
-      accentBg: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400',
-      description:
-        'Silky-smooth 120 FPS native mobile apps that harness device hardware directly with zero hybrid web-wrapper compromises.',
-      techStack: ['SwiftUI', 'SwiftData', 'Kotlin', 'Jetpack Compose', 'Room SQLite'],
-      highlights: [
-        'True native compilation for iOS (Swift) & Android (Kotlin)',
-        'Local SQLite persistence & background synchronization',
-        'Direct hardware access: camera scanners, sensors, and Bluetooth',
-      ],
-    },
-    {
-      id: 'pos-retail',
-      num: '03',
-      title: 'Offline-First POS & Commerce',
-      tag: 'EDGE RETAIL COMPUTING',
-      icon: Zap,
-      accentBg: 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400',
-      description:
-        'Resilient edge checkout terminals that continue sales without skipping a beat during internet cuts, reconciling atomically upon reconnect.',
-      techStack: ['IndexedDB', 'SQLite', 'WebSockets', 'Thermal Print', 'Barcode HW'],
-      hasSimulation: true,
-      highlights: [
-        '100% offline checkout continuity during total ISP blackouts',
-        'Automated multi-branch ledger reconciliation with zero data drift',
-        'Direct hardware drivers for scanners, scales, and thermal printers',
-      ],
-    },
-    {
-      id: 'cloud-devops',
-      num: '04',
-      title: 'Cloud Infrastructure & SRE',
-      tag: 'DEVOPS / RELIABILITY',
-      icon: Cloud,
-      accentBg: 'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-400',
-      description:
-        'Automated container orchestration, zero-downtime deployment pipelines, and continuous monitoring built for enterprise uptime.',
-      techStack: ['Docker', 'Kubernetes', 'AWS', 'GitHub Actions', 'Prometheus'],
-      highlights: [
-        'Automated blue/green zero-downtime release workflows',
-        'High-availability Kubernetes clusters with auto-scaling',
-        'End-to-end telemetry, distributed error tracing, and alerts',
-      ],
-    },
-  ]
-
   return (
-    <Section id="capabilities" tone="default" pad="py-16 sm:py-20 lg:py-24">
-      <Heading
-        title="Engineering Capabilities & Architecture"
-        intro="We combine rigorous software architecture with pragmatic engineering to build dependable digital systems."
-      />
-
-      <div className="grid gap-6 md:grid-cols-2">
-        {capabilities.map((cap, idx) => {
-          const IconComponent = cap.icon
-          return (
-            <Reveal key={cap.id} delay={stagger(idx, 2, 70)}>
-              <div className="rounded-2xl border border-zinc-200/80 dark:border-white/10 bg-white/90 dark:bg-zinc-900/40 p-6 sm:p-8 h-full flex flex-col justify-between backdrop-blur-xl shadow-lg dark:shadow-xl transition-all duration-300 hover:border-blue-500/40 dark:hover:border-blue-500/40 hover:shadow-xl hover:-translate-y-1">
-                <div>
-                  {/* Top Bar: Icon & Category */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${cap.accentBg}`}>
-                      <IconComponent size={20} />
-                    </div>
-                    <span className="font-mono text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-                      {cap.num} // {cap.tag}
-                    </span>
-                  </div>
-
-                  {/* Title & 1-Line Benefit */}
-                  <h3 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white mb-2">
-                    {cap.title}
-                  </h3>
-
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-5">
-                    {cap.description}
-                  </p>
-
-                  {/* Visual Tech Stack Pills */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {cap.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-md border border-zinc-200 dark:border-white/10 bg-zinc-100/70 dark:bg-white/5 px-2.5 py-1 font-mono text-[11px] text-zinc-700 dark:text-zinc-300 font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Interactive Failover Simulation (Only on POS card) */}
-                  {cap.hasSimulation && (
-                    <div className="mb-5 rounded-xl border border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950/70 p-3 font-mono text-xs">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-semibold">
-                          Live ISP Failover Test
-                        </span>
-                        <div className="flex gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => setActiveNetworkMode('online')}
-                            className={`px-2.5 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors ${
-                              activeNetworkMode === 'online'
-                                ? 'bg-blue-600 text-white shadow-xs'
-                                : 'bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                            }`}
-                          >
-                            Online
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setActiveNetworkMode('offline')}
-                            className={`px-2.5 py-0.5 rounded text-[10px] font-semibold cursor-pointer transition-colors ${
-                              activeNetworkMode === 'offline'
-                                ? 'bg-amber-600 text-white shadow-xs'
-                                : 'bg-zinc-200 dark:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                            }`}
-                          >
-                            Network Cut
-                          </button>
-                        </div>
-                      </div>
-                      <div className="text-[11px] text-zinc-700 dark:text-zinc-300 font-sans flex items-center gap-2">
-                        <span className={`h-2 w-2 rounded-full shrink-0 ${activeNetworkMode === 'online' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                        <span>
-                          {activeNetworkMode === 'online'
-                            ? 'Cloud sync active · Bidirectional WebSocket stream running.'
-                            : 'ISP blackout active · Local IndexedDB engaged. Cashier checkout unaffected.'}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Scannable Delivery Highlights */}
-                <div className="border-t border-zinc-200/80 dark:border-white/10 pt-4 space-y-2">
-                  {cap.highlights.map((h) => (
-                    <div key={h} className="flex items-start gap-2.5 text-xs text-zinc-700 dark:text-zinc-300">
-                      <Check size={14} className="text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-                      <span>{h}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+    <Section id="capabilities" pad="py-24 sm:py-32 lg:py-40">
+      <div className="lg:grid lg:grid-cols-12 lg:gap-16 xl:gap-24">
+        {/* Left Column: Sticky Header */}
+        <div className="lg:col-span-4 mb-12 lg:mb-0">
+          <div className="lg:sticky lg:top-32">
+            <Reveal>
+              <p className="font-mono text-xs uppercase tracking-widest text-[var(--accent)] mb-4">
+                Capabilities
+              </p>
+              <h2
+                className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold tracking-tight text-[var(--text-heading)] leading-[1.05]"
+              >
+                What We
+                <br />
+                Build
+              </h2>
+              <div className="h-px w-16 bg-[var(--accent)] mt-8 opacity-40" />
             </Reveal>
-          )
-        })}
+          </div>
+        </div>
+
+        {/* Right Column: Scrollable Capabilities */}
+        <div className="lg:col-span-8">
+          <div className="border-t border-[var(--border-primary)]">
+            {capabilities.map((cap, i) => (
+              <CapabilityRow
+                key={cap.id}
+                cap={cap}
+                index={i}
+                isLast={i === capabilities.length - 1}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </Section>
   )

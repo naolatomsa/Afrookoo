@@ -1,41 +1,267 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Afrookoo Software | Enterprise Systems, AI & Modern Applications</title>
+    
+    <!-- Primary Page Title (Exact Character Count for High CTR in Google/Bing) -->
+    <title>Afrookoo Software | Custom Enterprise Software, AI & POS Engineering Studio</title>
+    
+    <!-- Meta Descriptions & Search Engine Directives -->
     <meta
       name="description"
-      content="Afrookoo Software engineers high-performance custom software, offline-first POS systems, and intelligent business platforms from Addis Ababa to global enterprises."
+      content="Afrookoo Software engineers mission-critical enterprise platforms, modern offline-first POS systems, high-throughput cloud backends, and native iOS apps for leading organizations worldwide."
     />
-    <meta name="author" content="Afrookoo Software Team" />
-    <meta name="keywords" content="Afrookoo, Software Engineering, Addis Ababa, Ethiopia, Software Engineering Team, Full-Stack, iOS, Swift, React, Node.js, Spring Boot, Artificial Intelligence, Multi-Agent AI, Enterprise ERP, POS, Hexagonal Architecture" />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="author" content="Afrookoo Software Engineering Studio" />
+    <meta
+      name="keywords"
+      content="Afrookoo Software, custom software development, enterprise software engineering, POS systems, offline-first software, native iOS development, Addis Ababa software company, AI multi-agent systems, cloud native architectures, East Africa technology studio, bespoke business software, Swift iOS, React, Spring Boot, PostgreSQL"
+    />
+    
+    <!-- Canonical URL (Prevents Duplicate Content Penalties) -->
+    <link rel="canonical" href="https://afrookoo.com/" />
+    
+    <!-- Search Engine Indexing & Bot Directives -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="rating" content="General" />
+    <meta name="revisit-after" content="7 days" />
 
-    <!-- Open Graph -->
+    <!-- Geo & Local SEO Metadata (4 Kilo, Addis Ababa, Ethiopia) -->
+    <meta name="geo.region" content="ET-AA" />
+    <meta name="geo.placename" content="Addis Ababa" />
+    <meta name="geo.position" content="9.032242;38.761588" />
+    <meta name="ICBM" content="9.032242, 38.761588" />
+
+    <!-- Theme & Mobile App Manifest -->
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="/afrookoo-logo.png" />
+    <link rel="apple-touch-icon" href="/afrookoo-logo.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph (Facebook, LinkedIn, Slack, Telegram, WhatsApp) -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Afrookoo Software | Enterprise Systems, AI & Modern Applications" />
+    <meta property="og:site_name" content="Afrookoo Software" />
+    <meta property="og:url" content="https://afrookoo.com/" />
+    <meta property="og:title" content="Afrookoo Software | Custom Enterprise Software, AI & POS Engineering Studio" />
     <meta
       property="og:description"
-      content="Building Intelligent Technology. Transforming Businesses. Custom software, enterprise systems, native iOS and AI-driven platforms from Addis Ababa, Ethiopia."
+      content="High-performance custom software, modern offline-first POS systems, distributed cloud backends, and native iOS applications engineered for commercial and global enterprises."
     />
-    <meta property="og:image" content="https://media.base44.com/images/public/6a252a130a6d44cc87309d9e/901f2c158_generated_image.png" />
+    <meta property="og:image" content="https://afrookoo.com/og-image.png" />
+    <meta property="og:image:secure_url" content="https://afrookoo.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Afrookoo Software - High-Performance Enterprise Software Systems" />
+    <meta property="og:locale" content="en_US" />
 
-    <!-- Twitter -->
+    <!-- Twitter / X Card Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Afrookoo Software | Enterprise Systems, AI & Modern Applications" />
+    <meta name="twitter:site" content="@afrookoo" />
+    <meta name="twitter:creator" content="@afrookoo" />
+    <meta name="twitter:title" content="Afrookoo Software | Custom Enterprise Software & Systems" />
     <meta
       name="twitter:description"
-      content="Building Intelligent Technology. Transforming Businesses. Custom software, enterprise systems, native iOS and AI-driven platforms."
+      content="Mission-critical enterprise software, offline-first POS engines, and native mobile apps engineered by Afrookoo Software."
     />
+    <meta name="twitter:image" content="https://afrookoo.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Afrookoo Software Branding" />
 
-    <!-- Google Fonts -->
+    <!-- Preload Critical Above-the-Fold Resources (Core Web Vitals FCP/LCP) -->
+    <link rel="preload" as="image" href="/afrookoo-logo.png" type="image/png" />
+
+    <!-- Google Fonts Preconnect & Optimization -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Comprehensive JSON-LD Structured Data Graph (Schema.org) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": ["Corporation", "Organization"],
+            "@id": "https://afrookoo.com/#organization",
+            "name": "Afrookoo Software",
+            "alternateName": ["Afrookoo", "Afrookoo Software Engineering Studio"],
+            "url": "https://afrookoo.com",
+            "logo": {
+              "@type": "ImageObject",
+              "@id": "https://afrookoo.com/#logo",
+              "url": "https://afrookoo.com/afrookoo-logo.png",
+              "caption": "Afrookoo Software Logo"
+            },
+            "image": {
+              "@type": "ImageObject",
+              "url": "https://afrookoo.com/og-image.png",
+              "width": 1200,
+              "height": 630
+            },
+            "description": "Afrookoo Software engineers high-performance custom enterprise platforms, multi-branch offline-first POS engines, high-throughput cloud backends, and native iOS applications.",
+            "email": "contact@afrookoo.com",
+            "telephone": "+251912345678",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "4 Kilo, Abrehot Library Corridor, Rift Valley University",
+              "addressLocality": "Addis Ababa",
+              "addressRegion": "Addis Ababa",
+              "postalCode": "1000",
+              "addressCountry": "ET"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 9.032242240219936,
+              "longitude": 38.76158757141308
+            },
+            "sameAs": [
+              "https://github.com/afrookoo",
+              "https://www.linkedin.com/company/afrookoo",
+              "https://t.me/afrookoo"
+            ],
+            "knowsAbout": [
+              "Custom Enterprise Software Development",
+              "Offline-First Point of Sale (POS) Systems",
+              "Distributed Database Systems & High Concurrency",
+              "Native iOS Development with Swift and SwiftUI",
+              "Cloud-Native Infrastructure, Kubernetes & CI/CD",
+              "Hexagonal Architecture & Microservices",
+              "Multi-Agent AI Systems & Business Automation"
+            ]
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://afrookoo.com/#studio",
+            "name": "Afrookoo Software Studio",
+            "parentOrganization": { "@id": "https://afrookoo.com/#organization" },
+            "url": "https://afrookoo.com",
+            "telephone": "+251912345678",
+            "priceRange": "$$",
+            "currenciesAccepted": "USD, ETB, EUR",
+            "paymentAccepted": "Bank Wire, Swift",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "4 Kilo, Around Abrehot Library",
+              "addressLocality": "Addis Ababa",
+              "addressCountry": "ET"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 9.032242240219936,
+              "longitude": 38.76158757141308
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "08:30",
+                "closes": "18:00"
+              }
+            ],
+            "areaServed": [
+              { "@type": "Country", "name": "Ethiopia" },
+              { "@type": "AdministrativeArea", "name": "East Africa" },
+              { "@type": "AdministrativeArea", "name": "Worldwide" }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://afrookoo.com/#website",
+            "url": "https://afrookoo.com",
+            "name": "Afrookoo Software",
+            "publisher": { "@id": "https://afrookoo.com/#organization" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": "https://afrookoo.com/#breadcrumb",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://afrookoo.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Case Studies",
+                "item": "https://afrookoo.com/#work"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Capabilities",
+                "item": "https://afrookoo.com/#capabilities"
+              },
+              {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Engagement",
+                "item": "https://afrookoo.com/#engagement"
+              },
+              {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Contact & Project Scope",
+                "item": "https://afrookoo.com/#contact"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://afrookoo.com/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What engineering services does Afrookoo Software provide?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Afrookoo Software builds custom enterprise platforms, high-speed multi-branch POS software, scalable web applications, distributed cloud backends, and native iOS mobile applications tailored for commercial businesses and global organizations."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does Afrookoo engineer offline-first retail and POS systems?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Our retail architectures utilize local IndexedDB transaction storage, conflict-free data structures, and optimistic UI checkouts. Cashiers can continue selling and printing receipts even with zero internet connectivity; all transactions synchronize automatically to central servers when connection restores."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do clients retain 100% intellectual property (IP) and source code ownership?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Upon project delivery, clients receive 100% intellectual property ownership, complete Git source code repository handover, automated CI/CD configurations, and comprehensive architecture documentation with zero proprietary lock-in."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Where is Afrookoo Software located?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Afrookoo Software is based in 4 Kilo (Abrehot Library Corridor), Addis Ababa, Ethiopia (GPS coordinates: 9.032242, 38.761588). We operate on East Africa Time (EAT, UTC+3) and serve clients locally and internationally."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How can I start an enterprise software project with Afrookoo?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can use our interactive project configurator at afrookoo.com/#contact, email contact@afrookoo.com, or contact our team directly via Telegram at @afrookoo. Our engineering leads provide scoped architecture proposals with fixed SLAs within 4 hours."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
 
     <!-- Immediate theme bootstrap to prevent flash of wrong theme -->
     <script>
@@ -51,6 +277,39 @@
     </script>
   </head>
   <body class="bg-[var(--bg-page)] text-[var(--text-body)] antialiased selection:bg-blue-600 selection:text-white transition-colors duration-300">
+    <!-- Semantic Static Fallback for Search Crawlers & No-JS Clients -->
+    <noscript>
+      <header style="padding: 24px; border-bottom: 1px solid #333; background: #09090b; color: #fff;">
+        <h2>Afrookoo Software - Enterprise Software Engineering Studio</h2>
+        <p>Custom Software Development, Modern POS Engines, Native iOS &amp; AI Systems</p>
+        <nav>
+          <a href="#work" style="color: #3b82f6; margin-right: 16px;">Case Studies</a>
+          <a href="#capabilities" style="color: #3b82f6; margin-right: 16px;">Capabilities</a>
+          <a href="#engagement" style="color: #3b82f6; margin-right: 16px;">Engagement Models</a>
+          <a href="#contact" style="color: #3b82f6;">Contact &amp; Estimate</a>
+        </nav>
+      </header>
+      <main style="max-width: 900px; margin: 40px auto; padding: 0 20px; color: #e4e4e7;">
+        <h1>Engineering software systems that businesses depend on.</h1>
+        <p>We design and build high-performance web platforms, modern retail POS systems, and native mobile applications. Based in 4 Kilo, Addis Ababa, Ethiopia.</p>
+        
+        <h2>Featured Platforms &amp; Case Studies</h2>
+        <ul>
+          <li><strong>ORA POS &amp; Retail Engine:</strong> Multi-branch retail software with sub-1.8s checkout and offline resilience.</li>
+          <li><strong>Kerchanshe Commodity ERP:</strong> Export logistics and inventory platform managing over 250,000 metric tons annually.</li>
+          <li><strong>Awash Bank API Gateway:</strong> High-throughput banking middleware handling 12,000+ peak concurrent transactions.</li>
+        </ul>
+
+        <h2>Engineering Capabilities</h2>
+        <p>Custom Enterprise Software Development, Distributed Cloud Infrastructure, Native iOS Development (Swift), Point-of-Sale Engines, Multi-Agent AI Automation.</p>
+
+        <h2>Studio Location &amp; Contact</h2>
+        <p>Address: 4 Kilo, Around Abrehot Library, Addis Ababa, Ethiopia (GPS: 9.032242, 38.761588)</p>
+        <p>Hours: Monday to Friday, 8:30 AM to 6:00 PM EAT</p>
+        <p>Email: <a href="mailto:contact@afrookoo.com" style="color: #3b82f6;">contact@afrookoo.com</a> | Telegram: @afrookoo</p>
+      </main>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

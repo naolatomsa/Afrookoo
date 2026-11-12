@@ -1,6 +1,6 @@
 import { Container } from '../ui.jsx'
 import { footerColumns, companyInfo } from '../data.js'
-import { GitHub, LinkedIn, Telegram, Mail } from './Icons.jsx'
+import { GitHub, LinkedIn, Telegram, Mail, ArrowUpRight } from './Icons.jsx'
 
 export default function Footer({ onOpenModal }) {
   const currentYear = new Date().getFullYear()
@@ -13,106 +13,117 @@ export default function Footer({ onOpenModal }) {
   }
 
   return (
-    <footer className="border-t border-zinc-200/80 dark:border-white/10 bg-zinc-50 dark:bg-zinc-950 pt-16 pb-12 text-zinc-600 dark:text-zinc-300">
+    <footer className="border-t border-[var(--border-primary)] bg-[var(--bg-page)] pt-20 pb-12 transition-colors duration-300">
       <Container>
-        <div className="grid grid-cols-2 gap-10 lg:grid-cols-5 lg:gap-8 mb-12">
-          {/* Brand Column */}
-          <div className="col-span-2">
-            <a href="#top" className="flex items-center gap-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-600 font-mono font-bold text-xs text-white shadow-md shadow-blue-500/25">
-                A
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 mb-16">
+          {/* Brand & Positioning */}
+          <div className="lg:col-span-5 space-y-6">
+            <a href="#top" className="inline-flex items-center gap-3 group">
+              <div className="relative w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 border border-black/[0.08] dark:border-white/[0.12] p-1 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <img
+                  src="/afrookoo-logo.png"
+                  alt="Afrookoo Logo"
+                  className="w-full h-full object-contain filter drop-shadow-sm select-none"
+                  loading="lazy"
+                />
               </div>
               <div className="flex items-baseline gap-1.5">
-                <span className="font-mono text-sm font-semibold tracking-tight text-zinc-900 dark:text-white">
-                  AFROOKOO
+                <span className="text-xl font-semibold tracking-tight text-[var(--text-heading)] group-hover:text-[var(--accent)] transition-colors">
+                  Afrookoo
                 </span>
-                <span className="text-[10px] font-mono text-blue-600 dark:text-blue-400 uppercase tracking-wider font-semibold">
-                  SOFTWARE
+                <span className="text-[10px] font-mono font-semibold tracking-widest text-[var(--accent)] uppercase">
+                  Software
                 </span>
               </div>
             </a>
 
-            <p className="max-w-sm text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed mb-5">
-              Custom software systems, offline-first POS engines, and enterprise web architectures engineered in Addis Ababa for East African and global leaders.
+            <p className="text-sm text-[var(--text-body)] leading-relaxed max-w-sm">
+              High-performance software systems, modern retail commerce engines, and custom applications for ambitious teams.
             </p>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 pt-2">
               <a
                 href={companyInfo.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded border border-zinc-300 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-primary)] text-[var(--text-muted)] hover:text-[var(--text-heading)] hover:border-zinc-400 dark:hover:border-zinc-600 hover:-translate-y-1 active:scale-95 transition-all duration-200"
                 title="GitHub"
               >
-                <GitHub size={13} />
+                <GitHub size={15} />
               </a>
               <a
                 href={companyInfo.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded border border-zinc-300 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-primary)] text-[var(--text-muted)] hover:text-[var(--text-heading)] hover:border-zinc-400 dark:hover:border-zinc-600 hover:-translate-y-1 active:scale-95 transition-all duration-200"
                 title="LinkedIn"
               >
-                <LinkedIn size={13} />
+                <LinkedIn size={15} />
               </a>
               <a
                 href={companyInfo.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-7 w-7 items-center justify-center rounded border border-zinc-300 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-primary)] text-[var(--text-muted)] hover:text-[var(--text-heading)] hover:border-zinc-400 dark:hover:border-zinc-600 hover:-translate-y-1 active:scale-95 transition-all duration-200"
                 title="Telegram"
               >
-                <Telegram size={13} />
+                <Telegram size={15} />
               </a>
               <a
                 href={`mailto:${companyInfo.email}`}
-                className="flex h-7 w-7 items-center justify-center rounded border border-zinc-300 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-primary)] text-[var(--text-muted)] hover:text-[var(--text-heading)] hover:border-zinc-400 dark:hover:border-zinc-600 hover:-translate-y-1 active:scale-95 transition-all duration-200"
                 title="Email"
               >
-                <Mail size={13} />
+                <Mail size={15} />
               </a>
             </div>
           </div>
 
-          {/* Navigation Columns */}
-          {footerColumns.map((col) => (
-            <div key={col.title} className="col-span-1">
-              <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-900 dark:text-zinc-100 mb-3.5">
-                {col.title}
-              </h4>
-              <ul className="space-y-2 text-xs font-mono text-zinc-600 dark:text-zinc-400">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    {link.type === 'modal' ? (
-                      <button
-                        type="button"
-                        onClick={(e) => handleLinkClick(e, link)}
-                        className="hover:text-zinc-950 dark:hover:text-white transition-colors text-left cursor-pointer"
-                      >
-                        {link.label}
-                      </button>
-                    ) : (
-                      <a
-                        href={link.href}
-                        className="hover:text-zinc-950 dark:hover:text-white transition-colors"
-                      >
-                        {link.label}
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Navigation Links Columns */}
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            {footerColumns.map((col) => (
+              <div key={col.title}>
+                <h4 className="text-xs font-semibold uppercase tracking-wider text-[var(--text-heading)] mb-4">
+                  {col.title}
+                </h4>
+                <ul className="space-y-3 text-sm text-[var(--text-body)]">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      {link.type === 'modal' ? (
+                        <button
+                          type="button"
+                          onClick={(e) => handleLinkClick(e, link)}
+                          className="hover:text-[var(--text-heading)] transition-colors text-left cursor-pointer"
+                        >
+                          {link.label}
+                        </button>
+                      ) : (
+                        <a
+                          href={link.href}
+                          className="hover:text-[var(--text-heading)] transition-colors inline-flex items-center gap-1 group"
+                        >
+                          <span>{link.label}</span>
+                          {link.type === 'external' && (
+                            <ArrowUpRight size={11} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                          )}
+                        </a>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-zinc-200/80 dark:border-zinc-800/80 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-zinc-500 dark:text-zinc-500">
+        {/* Bottom Utility Bar */}
+        <div className="border-t border-[var(--border-primary)] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-muted)]">
           <div>
             &copy; {currentYear} {companyInfo.name}. All rights reserved.
           </div>
-          <div>
-            Addis Ababa, Ethiopia · 4 Kilo
+          <div className="flex items-center gap-6">
+            <span>Enterprise Software Systems</span>
           </div>
         </div>
       </Container>

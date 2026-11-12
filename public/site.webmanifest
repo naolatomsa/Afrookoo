@@ -1,0 +1,17 @@
+{
+  "name": "Afrookoo Software",
+  "short_name": "Afrookoo",
+  "description": "High-performance enterprise software systems, offline-first POS engines, and native mobile applications.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/afrookoo-logo.png",
+      "sizes": "372x428",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

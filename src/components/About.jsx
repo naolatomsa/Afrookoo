@@ -18,13 +18,13 @@ export default function About() {
         <div className="lg:col-span-7 space-y-5 text-base sm:text-lg leading-relaxed text-[var(--text-body)]">
           <Reveal>
             <p className="font-medium text-[var(--text-heading)]">
-              Headquartered in Addis Ababa, Ethiopia, <strong className="text-blue-600 dark:text-blue-400">Afrookoo Software</strong> was built with a singular conviction: that modern enterprises require software engineered with relentless attention to architectural clarity, high availability, and measurable business impact.
+              <strong className="text-blue-600 dark:text-blue-400">Afrookoo Software</strong> was built with a singular conviction: that modern enterprises require software engineered with relentless attention to architectural clarity, high availability, and measurable business impact.
             </p>
           </Reveal>
 
           <Reveal delay={100}>
             <p>
-              We collaborate with commercial enterprises, growing retail businesses, and organizations to design high-performance platforms — including our flagship ORA POS &amp; Inventory Intelligence platform, enterprise digital systems consulting, and tailor-made business management software.
+              We collaborate with commercial enterprises, growing retail businesses, and organizations to design high-performance platforms, including our flagship ORA POS &amp; Inventory Intelligence platform, enterprise digital systems consulting, and tailor-made business management software.
             </p>
           </Reveal>
 
@@ -74,13 +74,13 @@ export default function About() {
                     Software &amp; Digital Systems Collective
                   </p>
                   <p className="text-xs text-[var(--text-muted)] mt-0.5">
-                    4 Kilo (Abrehot Library / RVU), Addis Ababa · EAT (UTC+3)
+                    4 Kilo (Abrehot Library / RVU), Ethiopia · EAT (UTC+3)
                   </p>
                 </div>
               </div>
 
               <p className="text-sm text-[var(--text-body)] leading-relaxed mb-5">
-                A dedicated software engineering and systems consulting team based in Addis Ababa, experienced in building scalable retail point-of-sale platforms, enterprise inventory synchronization, and custom digital business systems.
+                A dedicated software engineering and systems consulting team experienced in building scalable retail point-of-sale platforms, real-time multi-branch inventory systems, and custom digital enterprise software.
               </p>
 
               <div className="space-y-2 border-t border-[var(--border-subtle)] pt-4 text-xs text-[var(--text-muted)]">

@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 
-// Stagger helper: items in the same row appear one after another.
-export const stagger = (i, cols = 3, step = 90) => (i % cols) * step
+export const stagger = (i, cols = 3, step = 60) => (i % cols) * step
 
-// Fades and lifts its children in the first time they scroll into view.
-export default function Reveal({ as: Tag = 'div', delay = 0, className = '', children, ...rest }) {
+export default function Reveal({
+  as: Tag = 'div',
+  delay = 0,
+  type = 'up',
+  className = '',
+  children,
+  ...rest
+}) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
 
@@ -14,26 +19,40 @@ export default function Reveal({ as: Tag = 'div', delay = 0, className = '', chi
       setVisible(true)
       return
     }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      setVisible(true)
+      return
+    }
+
+    // Smooth initial mount: if already inside viewport on page load, reveal smoothly without initial blank flash
+    const rect = el.getBoundingClientRect()
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setVisible(true)
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true)
-          io.disconnect()
-        }
+        setVisible(entry.isIntersecting)
       },
-      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.05, rootMargin: '80px 0px 80px 0px' }
     )
     io.observe(el)
     return () => io.disconnect()
   }, [])
 
+  const typeClass = {
+    up: 'reveal-up',
+    fade: 'reveal-fade',
+    scale: 'reveal-scale',
+  }[type] || 'reveal-up'
+
   return (
     <Tag
       ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-[opacity,translate] duration-700 ease-out motion-reduce:transition-none ${
-        visible ? 'translate-y-0 opacity-100' : 'translate-y-7 opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100'
-      } ${className}`}
+      style={{ transitionDelay: visible ? `${delay}ms` : '0ms' }}
+      className={`${typeClass} ${visible ? 'revealed' : ''} ${className}`}
       {...rest}
     >
       {children}
