@@ -1,108 +1,137 @@
-import { Section, Heading, Card, Button, cardTitle, TagBadge } from '../ui.jsx'
+import { Section } from '../ui.jsx'
 import Reveal, { stagger } from './Reveal.jsx'
-import { services, companyInfo } from '../data.js'
-import { Code, Smartphone, Cpu, Layers, Cloud, Zap, Check, ArrowRight } from './Icons.jsx'
+import { Code, Smartphone, Zap, Cloud, ArrowRight } from './Icons.jsx'
 
-const iconMap = {
-  Code,
-  Smartphone,
-  Cpu,
-  Layers,
-  Cloud,
-  Zap,
+const capabilities = [
+  {
+    id: 'enterprise-web',
+    num: '01',
+    title: 'Web Platforms & APIs',
+    description:
+      'High-concurrency applications and distributed APIs engineered for speed, security, and zero downtime.',
+    tech: ['React', 'Next.js', 'Nest.js', 'Spring Boot', 'PostgreSQL'],
+    icon: Code,
+  },
+  {
+    id: 'native-mobile',
+    num: '02',
+    title: 'Native Mobile',
+    description:
+      'Silky-smooth native apps that harness device hardware directly, with zero hybrid compromises.',
+    tech: ['Swift', 'SwiftUI', 'Kotlin', 'Jetpack Compose'],
+    icon: Smartphone,
+  },
+  {
+    id: 'pos-retail',
+    num: '03',
+    title: 'Retail POS & Commerce Systems',
+    description:
+      'High-speed checkout terminals and synchronized multi-branch inventory engines with instant audit trails.',
+    tech: ['React', 'WebSockets', 'PostgreSQL', 'Thermal Print'],
+    icon: Zap,
+  },
+  {
+    id: 'cloud-devops',
+    num: '04',
+    title: 'Cloud Infrastructure & SRE',
+    description:
+      'Automated orchestration, zero-downtime pipelines, and continuous monitoring for enterprise uptime.',
+    tech: ['Docker', 'Kubernetes', 'CI/CD', 'Prometheus'],
+    icon: Cloud,
+  },
+]
+
+function CapabilityRow({ cap, index, isLast }) {
+  return (
+    <Reveal delay={stagger(index, 1, 120)}>
+      <div
+        className={`group py-10 sm:py-14 transition-colors duration-300 ${
+          !isLast ? 'border-b border-[var(--border-primary)]' : ''
+        }`}
+      >
+        {/* Number and Title with Micro Slide */}
+        <div className="flex items-baseline justify-between mb-4">
+          <div className="flex items-baseline gap-4 sm:gap-6">
+            <span
+              className="font-mono text-sm text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-1 tabular-nums select-none transition-all duration-300 inline-block"
+              aria-hidden="true"
+            >
+              {cap.num}
+            </span>
+            <h3
+              className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-heading)] leading-tight transition-colors duration-200"
+              style={{ fontFamily: 'var(--font-serif)' }}
+            >
+              {cap.title}
+            </h3>
+          </div>
+
+          <span
+            className="hidden sm:inline-flex opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-[var(--text-muted)] group-hover:text-[var(--accent)]"
+            aria-hidden="true"
+          >
+            <ArrowRight size={18} />
+          </span>
+        </div>
+
+        {/* Description */}
+        <p className="text-[var(--text-body)] text-base sm:text-lg leading-relaxed max-w-xl sm:pl-[2.75rem]">
+          {cap.description}
+        </p>
+
+        {/* Tech Pills with Micro Hover */}
+        <div className="flex flex-wrap gap-2 mt-5 sm:pl-[2.75rem]">
+          {cap.tech.map((t) => (
+            <span
+              key={t}
+              className="rounded-full border border-[var(--border-primary)] group-hover:border-zinc-300 dark:group-hover:border-zinc-700 bg-transparent px-3 py-1 font-mono text-[11px] text-[var(--text-muted)] group-hover:text-[var(--text-heading)] tracking-wide transition-colors duration-200"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Reveal>
+  )
 }
 
 export default function Services() {
   return (
-    <Section id="services" tone="default">
-      <Heading
-        eyebrow="Specialized Services"
-        eyebrowIcon={Code}
-        title="Engineering excellence across every tier of the modern technology stack."
-        intro="From foundational database schemas to fluid mobile screens and multi-agent AI loops, we deliver production-grade software engineered for reliability, security, and performance."
-      />
-
-      {/* Grid of 6 Services */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((s, i) => {
-          const IconComponent = iconMap[s.iconName] || Code
-          return (
-            <Reveal key={s.id} delay={stagger(i)}>
-              <Card lift className="h-full flex flex-col justify-between p-6 sm:p-8">
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                      <IconComponent size={22} />
-                    </div>
-                    <span className="font-mono text-xs font-semibold text-[var(--text-muted)]">
-                      0{i + 1}
-                    </span>
-                  </div>
-
-                  <h3 className={`${cardTitle} mb-3`}>{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-[var(--text-muted)] mb-5">
-                    {s.description}
-                  </p>
-
-                  {/* Feature Checklist */}
-                  <div className="space-y-2 border-t border-[var(--border-subtle)] pt-4 mb-6">
-                    {s.features.map((f) => (
-                      <div key={f} className="flex items-start gap-2 text-xs text-[var(--text-body)]">
-                        <Check size={14} className="text-blue-500 shrink-0 mt-0.5" />
-                        <span>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tech chips */}
-                <div className="flex flex-wrap gap-1.5 border-t border-[var(--border-subtle)] pt-4">
-                  {s.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-md border border-[var(--border-card)] bg-slate-50 dark:bg-slate-800/80 px-2 py-0.5 font-mono text-[11px] text-[var(--text-muted)]"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            </Reveal>
-          )
-        })}
-      </div>
-
-      {/* Bottom CTA Banner */}
-      <Reveal className="mt-12">
-        <div className="relative overflow-hidden rounded-3xl border border-blue-500/20 dark:border-blue-500/30 bg-gradient-to-br from-blue-50 via-sky-50/70 to-indigo-50/50 dark:from-blue-950/40 dark:via-slate-900/90 dark:to-blue-950/60 p-8 sm:p-10 shadow-xl backdrop-blur-md">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div className="max-w-2xl">
-              <span className="inline-block rounded-full border border-blue-500/20 bg-blue-100/70 dark:bg-blue-500/20 px-3 py-1 font-mono text-xs font-bold text-blue-700 dark:text-blue-300 uppercase tracking-wider mb-2">
-                Tailored Engagements
-              </span>
-              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">
-                Have a specialized engineering or enterprise challenge?
-              </h3>
-              <p className="mt-2 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-                Whether you need a full greenfield build, legacy system modernization, or dedicated senior engineering augmentation, our team is ready to step in.
+    <Section id="capabilities" pad="py-24 sm:py-32 lg:py-40">
+      <div className="lg:grid lg:grid-cols-12 lg:gap-16 xl:gap-24">
+        {/* Left Column: Sticky Header */}
+        <div className="lg:col-span-4 mb-12 lg:mb-0">
+          <div className="lg:sticky lg:top-32">
+            <Reveal>
+              <p className="font-mono text-xs uppercase tracking-widest text-[var(--accent)] mb-4">
+                Capabilities
               </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
-              <Button href="#contact" variant="primary">
-                <span>Start a Project</span>
-                <ArrowRight size={16} />
-              </Button>
-              <Button
-                href="#work"
-                variant="outline"
-                className="border-slate-300 bg-white dark:border-slate-700 dark:bg-transparent text-slate-800 dark:text-white hover:border-blue-500 hover:text-blue-600 dark:hover:border-white shadow-xs"
+              <h2
+                className="text-4xl sm:text-5xl lg:text-[3.5rem] font-semibold tracking-tight text-[var(--text-heading)] leading-[1.05]"
               >
-                Explore Case Studies
-              </Button>
-            </div>
+                What We
+                <br />
+                Build
+              </h2>
+              <div className="h-px w-16 bg-[var(--accent)] mt-8 opacity-40" />
+            </Reveal>
           </div>
         </div>
-      </Reveal>
+
+        {/* Right Column: Scrollable Capabilities */}
+        <div className="lg:col-span-8">
+          <div className="border-t border-[var(--border-primary)]">
+            {capabilities.map((cap, i) => (
+              <CapabilityRow
+                key={cap.id}
+                cap={cap}
+                index={i}
+                isLast={i === capabilities.length - 1}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </Section>
   )
 }

@@ -1,434 +1,184 @@
-import { useState } from 'react'
-import { Section, Heading, Modal } from '../ui.jsx'
-import Reveal, { stagger } from './Reveal.jsx'
-import { projects } from '../data.js'
-import { ArrowUpRight, CheckCircle, Code, Layers, Shield, Cpu, Cloud, Sparkles, ArrowRight } from './Icons.jsx'
-
-// Architecture diagram for ORA POS & Inventory Intelligence
-function PosArchitectureDiagram() {
-  const steps = [
-    {
-      num: '01',
-      title: 'POS Terminal & Scanner',
-      subtitle: 'Touchscreen cashier UI, optical barcode scanners & thermal receipt printers.',
-      badge: 'Edge Hardware',
-      color: 'blue',
-    },
-    {
-      num: '02',
-      title: 'Offline Resilience Buffer',
-      subtitle: 'Local IndexedDB/SQLite transaction buffer ensuring zero-downtime offline continuity.',
-      badge: 'Edge Storage',
-      color: 'indigo',
-    },
-    {
-      num: '03',
-      title: 'Sync & Gateway Layer',
-      subtitle: 'WebSocket & REST API gateway with JWT authorization and automatic retry queue.',
-      badge: 'Ingestion Layer',
-      color: 'sky',
-    },
-    {
-      num: '04',
-      title: 'Atomic Inventory Core',
-      subtitle: 'ACID-compliant stock decrement engine preventing overselling across multi-branch registers.',
-      badge: 'Core Domain',
-      color: 'emerald',
-    },
-    {
-      num: '05',
-      title: 'Multi-Branch Cloud & BI',
-      subtitle: 'Consolidated database cluster with real-time managerial revenue and stock analytics.',
-      badge: 'Cloud Storage & BI',
-      color: 'cyan',
-    },
-  ]
-
-  return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-4 sm:p-5">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400">
-            System Architecture Diagram
-          </span>
-        </div>
-        <span className="rounded-full border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2.5 py-0.5 font-mono text-[10px] font-bold text-blue-700 dark:text-blue-300">
-          OFFLINE-FIRST DISTRIBUTED FLOW
-        </span>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-5">
-        {steps.map((s, idx) => (
-          <div key={s.num} className="relative flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-3.5 shadow-2xs transition-all hover:border-blue-500/40 hover:shadow-xs">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
-                  {s.num}
-                </span>
-                <span className="rounded-md border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2 py-0.5 font-mono text-[9px] font-bold text-blue-700 dark:text-blue-300">
-                  {s.badge}
-                </span>
-              </div>
-              <h4 className="font-serif text-xs font-bold text-slate-900 dark:text-white mb-1">
-                {s.title}
-              </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug">
-                {s.subtitle}
-              </p>
-            </div>
-
-            {idx < steps.length - 1 && (
-              <div className="hidden sm:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-blue-500 font-bold text-xs select-none">
-                →
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Architecture diagram for Afrookoo Custom Enterprise Platforms
-function EnterpriseArchitectureDiagram() {
-  const steps = [
-    {
-      num: '01',
-      title: 'Multi-Client Layer',
-      subtitle: 'Responsive React/Next.js Web Portals, Admin Consoles, and Partner REST/GraphQL APIs.',
-      badge: 'Access Layer',
-    },
-    {
-      num: '02',
-      title: 'API & Security Gateway',
-      subtitle: 'Cloudflare WAF, TLS termination, Rate Limiting, and Granular Role-Based Access Control (RBAC).',
-      badge: 'Security Gateway',
-    },
-    {
-      num: '03',
-      title: 'Hexagonal Domain Core',
-      subtitle: 'Isolated domain logic, event-driven business workflows, and modular ERP subsystems.',
-      badge: 'Core Engine',
-    },
-    {
-      num: '04',
-      title: 'Distributed State & Cache',
-      subtitle: 'Redis distributed cache cluster and asynchronous background task job processing.',
-      badge: 'Performance Cache',
-    },
-    {
-      num: '05',
-      title: 'Persistence & Cloud Infra',
-      subtitle: 'PostgreSQL relational cluster, automated daily backups, Docker orchestration, and CI/CD.',
-      badge: 'Storage & SRE',
-    },
-  ]
-
-  return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/60 p-4 sm:p-5">
-      <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3 mb-4">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-blue-500 animate-pulse" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-blue-700 dark:text-blue-400">
-            System Architecture Diagram
-          </span>
-        </div>
-        <span className="rounded-full border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2.5 py-0.5 font-mono text-[10px] font-bold text-blue-700 dark:text-blue-300">
-          HEXAGONAL ENTERPRISE PIPELINE
-        </span>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-5">
-        {steps.map((s, idx) => (
-          <div key={s.num} className="relative flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-3.5 shadow-2xs transition-all hover:border-blue-500/40 hover:shadow-xs">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs font-bold text-blue-600 dark:text-blue-400">
-                  {s.num}
-                </span>
-                <span className="rounded-md border border-blue-500/20 bg-blue-50 dark:border-blue-900/60 dark:bg-blue-950/60 px-2 py-0.5 font-mono text-[9px] font-bold text-blue-700 dark:text-blue-300">
-                  {s.badge}
-                </span>
-              </div>
-              <h4 className="font-serif text-xs font-bold text-slate-900 dark:text-white mb-1">
-                {s.title}
-              </h4>
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 leading-snug">
-                {s.subtitle}
-              </p>
-            </div>
-
-            {idx < steps.length - 1 && (
-              <div className="hidden sm:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-blue-500 font-bold text-xs select-none">
-                →
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+import { Section, Heading } from '../ui.jsx'
+import Reveal from './Reveal.jsx'
+import { caseStudies } from '../data.js'
 
 export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState(null)
-  const [activeTabs, setActiveTabs] = useState({ 'ora-pos': 'diagram', 'custom-enterprise': 'diagram' })
+  const cs = caseStudies[0]
 
-  const setCardTab = (slug, tab) => {
-    setActiveTabs((prev) => ({ ...prev, [slug]: tab }))
-  }
+  const branches = [
+    { num: '01', name: '4 Kilo Store & Head Office', role: 'Central Depot & Retail' },
+    { num: '02', name: 'Piazza Distribution Center', role: 'High-Volume Book Depot' },
+    { num: '03', name: 'Bole Retail Branch', role: 'Commercial Retail Point' },
+    { num: '04', name: 'Sarbet Depository', role: 'Academic Publishing Archive' },
+  ]
 
   return (
-    <Section id="work" tone="default">
+    <Section id="work" pad="py-24 sm:py-32 lg:py-40">
       <Heading
-        eyebrow="Projects & Platforms"
-        eyebrowIcon={Layers}
-        title="Proven software platforms and digital enterprise systems."
-        intro="Production platforms and bespoke enterprise architectures engineered by the Afrookoo team, featuring full system architecture diagrams and measurable business outcomes."
+        title="Featured Case Study"
+        subtitle="A retail platform engineered for high operational reliability."
       />
 
-      {/* Exactly 2 Projects as requested */}
-      <div className="grid gap-10 lg:gap-12">
-        {projects.map((proj, i) => (
-          <Reveal as="article" key={proj.slug} delay={stagger(i, 2, 100)}>
-            <div className="group relative overflow-hidden rounded-3xl border border-[var(--border-card)] bg-[var(--bg-card)] shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl">
-              {/* Header Ribbon */}
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-subtle)] bg-[var(--bg-subtle)]/50 px-6 py-4">
-                <div className="flex items-center gap-3">
-                  <span className="rounded-full bg-blue-600 px-3 py-1 font-mono text-xs font-bold text-white shadow-xs">
-                    {proj.platform}
-                  </span>
-                  <span className="font-mono text-xs text-[var(--text-muted)] font-medium">
-                    {proj.client}
-                  </span>
-                </div>
-                <span className="font-mono text-xs font-semibold text-blue-600 dark:text-blue-400">
-                  {proj.timeline}
-                </span>
-              </div>
+      {/* Editorial Headline & Overview */}
+      <div className="space-y-16">
+        <Reveal>
+          <div className="max-w-4xl space-y-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold block">
+              Flagship Production Platform · {cs.client}
+            </span>
 
-              {/* Main Content Area */}
-              <div className="p-6 sm:p-8 lg:p-10">
-                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
-                  <div className="max-w-3xl">
-                    <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--text-heading)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {proj.title}
-                    </h3>
-                    <p className="mt-2 font-mono text-xs sm:text-sm text-blue-600 dark:text-blue-400 font-medium">
-                      {proj.subtitle}
-                    </p>
-                    <p className="mt-4 text-sm sm:text-base text-[var(--text-muted)] leading-relaxed">
-                      {proj.summary}
-                    </p>
-                  </div>
-
-                  {/* Mode Selector (Diagram vs Details) */}
-                  <div className="flex items-center gap-1 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)] p-1 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() => setCardTab(proj.slug, 'diagram')}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                        activeTabs[proj.slug] === 'diagram'
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
-                      }`}
-                    >
-                      Architecture Diagram
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setCardTab(proj.slug, 'details')}
-                      className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-                        activeTabs[proj.slug] === 'details'
-                          ? 'bg-blue-600 text-white shadow-sm'
-                          : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
-                      }`}
-                    >
-                      Case Breakdown
-                    </button>
-                  </div>
-                </div>
-
-                {/* Conditional Display: Architecture Diagram OR Case Breakdown */}
-                {activeTabs[proj.slug] === 'diagram' ? (
-                  <div className="mb-8">
-                    {proj.slug === 'ora-pos' ? (
-                      <PosArchitectureDiagram />
-                    ) : (
-                      <EnterpriseArchitectureDiagram />
-                    )}
-                  </div>
-                ) : (
-                  <div className="grid gap-6 md:grid-cols-2 mb-8">
-                    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]/60 p-5">
-                      <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-rose-500 mb-2">
-                        The Challenge &amp; Problem
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed">
-                        {proj.problem}
-                      </p>
-                    </div>
-
-                    <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]/60 p-5">
-                      <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
-                        Engineering Solution
-                      </h4>
-                      <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed">
-                        {proj.approach}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Measurable Production Outcomes */}
-                <div className="mb-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-subtle)]/40 p-5">
-                  <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-3">
-                    Measurable Production Outcomes &amp; Standards
-                  </h4>
-                  <div className="grid gap-2.5 sm:grid-cols-2">
-                    {proj.outcomes.map((out) => (
-                      <div key={out} className="flex items-start gap-2.5 text-xs sm:text-sm text-[var(--text-body)]">
-                        <CheckCircle size={15} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{out}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tech Stack Chips & Action Link */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[var(--border-subtle)] pt-6">
-                  <div className="flex flex-wrap gap-1.5">
-                    {proj.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-800/80 px-2.5 py-1 font-mono text-[11px] font-semibold text-slate-800 dark:text-slate-200 shadow-2xs hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={() => setSelectedProject(proj)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md shadow-blue-500/20 hover:bg-blue-500 transition-all cursor-pointer shrink-0"
-                  >
-                    <span>Read Architecture Spec</span>
-                    <ArrowUpRight size={14} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-
-      {/* Deep-Dive Technical Modal */}
-      <Modal
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-        title={selectedProject ? `${selectedProject.title} — System Specification` : ''}
-      >
-        {selectedProject && (
-          <div className="space-y-6">
-            {/* Header info */}
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-4 font-mono text-xs">
-              <span className="text-blue-600 dark:text-blue-400 font-bold uppercase">
-                {selectedProject.platform}
-              </span>
-              <span className="text-[var(--text-muted)]">
-                Client: {selectedProject.client}
-              </span>
-              <span className="text-emerald-500 font-semibold">
-                Status: Production Verified
-              </span>
-            </div>
-
-            {/* Architecture Diagram inside Modal */}
-            <div>
-              <h4 className="font-serif text-lg font-bold text-[var(--text-heading)] mb-3">
-                System Architectural Flow
-              </h4>
-              {selectedProject.slug === 'ora-pos' ? (
-                <PosArchitectureDiagram />
-              ) : (
-                <EnterpriseArchitectureDiagram />
-              )}
-            </div>
-
-            {/* Problem & Approach */}
-            <div className="grid gap-6 md:grid-cols-2">
-              <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-5">
-                <h4 className="font-mono text-xs uppercase tracking-wider text-rose-500 font-semibold mb-2">
-                  The Problem &amp; Operational Challenge
-                </h4>
-                <p className="text-sm text-[var(--text-body)] leading-relaxed">
-                  {selectedProject.problem}
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-5">
-                <h4 className="font-mono text-xs uppercase tracking-wider text-blue-600 dark:text-blue-400 font-semibold mb-2">
-                  Engineering Architecture &amp; Solution
-                </h4>
-                <p className="text-sm text-[var(--text-body)] leading-relaxed">
-                  {selectedProject.approach}
-                </p>
-              </div>
-            </div>
-
-            {/* Measurable Outcomes */}
-            <div className="rounded-xl border border-[var(--border-card)] bg-[var(--bg-subtle)] p-5">
-              <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold mb-3">
-                Key Production Outcomes &amp; Standards
-              </h4>
-              <div className="space-y-2.5">
-                {selectedProject.outcomes.map((out) => (
-                  <div key={out} className="flex items-start gap-2.5 text-sm text-[var(--text-body)]">
-                    <CheckCircle size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                    <span>{out}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Tech Stack */}
-            <div>
-              <h4 className="font-mono text-xs uppercase tracking-wider text-[var(--text-muted)] font-semibold mb-2">
-                Production Technology Stack
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {selectedProject.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1 font-mono text-xs text-slate-800 dark:text-slate-200 font-semibold shadow-2xs"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Modal CTA */}
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-[var(--border-subtle)] pt-6">
-              <div>
-                <p className="text-xs text-[var(--text-muted)]">
-                  Need a similar system architecture engineered for your organization?
-                </p>
-              </div>
-              <a
-                href="#contact"
-                onClick={() => setSelectedProject(null)}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-blue-500 shadow-md transition-colors"
-              >
-                <span>Discuss Your System Architecture</span>
-                <ArrowRight size={14} />
-              </a>
+            <div className="text-mask">
+              <h3 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[var(--text-heading)] leading-[1.1] text-slide-up">
+                A high-velocity retail POS and unified multi-branch inventory engine.
+              </h3>
             </div>
           </div>
-        )}
-      </Modal>
+        </Reveal>
+
+        {/* Two-Column Open Editorial Spread */}
+        <Reveal delay={80}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 text-base text-[var(--text-body)] leading-relaxed border-t border-[var(--border-primary)] pt-10">
+            <div>
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--text-heading)] mb-3">
+                The Operational Reality
+              </h4>
+              <p>
+                The Oromo Research Association (ORA) operates multiple retail bookstores and publication centers. Disconnected counter registers and manual stock updates caused checkout queues to stall, leading to inventory discrepancies and zero real-time visibility across branch sales.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--text-heading)] mb-3">
+                The Engineering Solution
+              </h4>
+              <p>
+                We engineered a high-velocity POS and multi-branch retail inventory platform. Cashiers scan barcodes, process orders, and print thermal receipts with sub-second response times. All branch terminals connect directly to a centralized inventory core, providing automated stock reconciliation, instant audit trails, and consistent catalog control across every store.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Compact Stats Strip: Light and Dark Mode Adaptive */}
+        <Reveal delay={120}>
+          <div className="w-full max-w-[1152px]">
+            <section
+              className="rounded-[20px] overflow-hidden bg-white dark:bg-[#0E0E10] border border-zinc-200/90 dark:border-[#2A2A30] grid grid-cols-2 md:grid-cols-4 shadow-sm dark:shadow-2xl transition-colors duration-300"
+              aria-label="ORA POS Impact Statistics"
+            >
+              {/* Stat 1 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0 border-r border-b md:border-b-0 border-zinc-200/80 dark:border-[#2A2A30]">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  <span className="text-zinc-400 dark:text-[#8A8A87]">&lt;</span> 1.8<span className="text-blue-600 dark:text-[#8FA2FF]">s</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    Checkout Velocity
+                  </h3>
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Barcode scan to printed receipt
+                </p>
+              </div>
+
+              {/* Stat 2 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0 md:border-r border-b md:border-b-0 border-zinc-200/80 dark:border-[#2A2A30]">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  99.9<span className="text-blue-600 dark:text-[#8FA2FF]">%</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    System Uptime
+                  </h3>
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-[#8FA2FF] inline-block shrink-0" aria-hidden="true" />
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Continuous high-availability counters
+                </p>
+              </div>
+
+              {/* Stat 3 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0 border-r border-zinc-200/80 dark:border-[#2A2A30]">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  4 <span className="text-blue-600 dark:text-[#8FA2FF] text-[32px]">Stores</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    Multi-Branch Network
+                  </h3>
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Synchronized retail locations
+                </p>
+              </div>
+
+              {/* Stat 4 */}
+              <div className="p-[20px_24px] sm:p-[20px_28px] flex flex-col justify-center min-w-0">
+                <p
+                  className="font-medium text-[40px] leading-none tracking-[-0.04em] text-zinc-950 dark:text-white whitespace-nowrap"
+                  style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                >
+                  0.0<span className="text-blue-600 dark:text-[#8FA2FF]">%</span>
+                </p>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <h3 className="font-medium text-[14px] leading-tight text-zinc-900 dark:text-white whitespace-nowrap">
+                    Inventory Drift
+                  </h3>
+                </div>
+                <p className="font-normal text-[13px] leading-snug text-zinc-500 dark:text-[#A3A3A0] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
+                  Automated atomic reconciliation
+                </p>
+              </div>
+            </section>
+          </div>
+        </Reveal>
+
+        {/* Multi-Branch Deployment Ledger */}
+        <Reveal delay={160}>
+          <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-[var(--border-primary)] pb-4">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-heading)]">
+                Active Store Deployments
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {branches.map((b) => (
+                <div
+                  key={b.num}
+                  className="group/branch p-3.5 -mx-2 rounded-2xl transition-all duration-200 hover:bg-zinc-50/90 dark:hover:bg-[#121216] hover:-translate-y-0.5 space-y-1 cursor-default border border-transparent hover:border-zinc-200/60 dark:hover:border-zinc-800/80"
+                >
+                  <div className="font-mono text-xs text-[var(--accent)] font-semibold transition-transform duration-200 group-hover/branch:translate-x-0.5">
+                    {b.num}
+                  </div>
+                  <div className="text-sm font-semibold text-[var(--text-heading)] transition-colors">
+                    {b.name}
+                  </div>
+                  <div className="text-xs text-[var(--text-muted)]">
+                    {b.role}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-6 border-t border-[var(--border-primary)] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-[var(--text-muted)]">
+              <span>Production Version: v2.8.4 Enterprise</span>
+              <div className="flex items-center gap-2">
+                <span>Core Stack:</span>
+                <span className="text-[var(--text-heading)]">React, Node.js, PostgreSQL, WebSockets</span>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
     </Section>
   )
 }

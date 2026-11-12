@@ -13,7 +13,7 @@ export default function Insights() {
         eyebrow="Insights & Perspectives"
         eyebrowIcon={FileText}
         title="Engineering insights from production trenches."
-        intro="Technical perspectives on multi-agent AI systems, resilient software architectures, offline data resilience, and mobile performance."
+        intro="Technical perspectives on multi-agent AI systems, resilient software architectures, distributed retail data, and mobile performance."
       />
 
       {/* Grid of Articles */}

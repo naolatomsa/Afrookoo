@@ -1,24 +1,183 @@
-import { useEffect, useState } from 'react'
-import { navLinks, companyInfo } from '../data.js'
+import { useEffect, useRef, useState } from 'react'
+import { navLinks } from '../data.js'
 import { Button, Container } from '../ui.jsx'
-import { Sun, Moon, MenuIcon, CloseIcon, ArrowRight } from './Icons.jsx'
+import { Sun, Moon, MenuIcon, CloseIcon } from './Icons.jsx'
+import AfrookooBrand from './AfrookooBrand.jsx'
 
-export default function Navbar() {
+export default function Navbar({ onOpenModal }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [theme, setTheme] = useState('dark')
+  const [activeSection, setActiveSection] = useState('')
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 })
+
+  const navContainerRef = useRef(null)
+  const linkRefs = useRef({})
+  const isClickNavigatingRef = useRef(false)
+  const navLockTimeoutRef = useRef(null)
 
   useEffect(() => {
-    // Check initial theme from html class
     const isDark = document.documentElement.classList.contains('dark')
     setTheme(isDark ? 'dark' : 'light')
 
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+    const sectionIds = ['work', 'capabilities', 'engagement', 'contact']
+
+    // On initial refresh/load, sync with URL hash or start at top cleanly
+    const initialHash = window.location.hash
+    if (initialHash && sectionIds.map((id) => `#${id}`).includes(initialHash)) {
+      setActiveSection(initialHash)
+      isClickNavigatingRef.current = true
+      setTimeout(() => {
+        const targetId = initialHash.replace('#', '')
+        const targetEl = document.getElementById(targetId)
+        if (targetEl) {
+          const navbarOffset = 80
+          const elementPosition = targetEl.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.pageYOffset - navbarOffset
+          window.scrollTo({ top: offsetPosition, behavior: 'auto' })
+        }
+        isClickNavigatingRef.current = false
+      }, 50)
+    } else {
+      setActiveSection('')
+      setPillStyle((prev) => ({ ...prev, opacity: 0 }))
     }
+
+    const handleUserInteraction = () => {
+      if (isClickNavigatingRef.current) {
+        isClickNavigatingRef.current = false
+        if (navLockTimeoutRef.current) clearTimeout(navLockTimeoutRef.current)
+      }
+    }
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 15)
+
+      if (isClickNavigatingRef.current) return
+
+      // Near the top of the page / Hero section: clear active section completely
+      if (window.scrollY < 200) {
+        setActiveSection('')
+        return
+      }
+
+      // Check if at the absolute bottom of the document
+      const scrollBottom = window.innerHeight + window.scrollY
+      const totalHeight = document.documentElement.scrollHeight
+      if (totalHeight - scrollBottom < 80) {
+        setActiveSection('#contact')
+        return
+      }
+
+      const targetLine = window.scrollY + window.innerHeight * 0.35
+      let current = ''
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id)
+        if (el) {
+          const top = el.offsetTop
+          const height = el.offsetHeight
+          if (targetLine >= top && targetLine < top + height) {
+            current = `#${id}`
+            break
+          }
+        }
+      }
+
+      if (current) {
+        setActiveSection(current)
+      } else {
+        setActiveSection('')
+      }
+    }
+
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    window.addEventListener('wheel', handleUserInteraction, { passive: true })
+    window.addEventListener('touchmove', handleUserInteraction, { passive: true })
+    handleScroll()
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleUserInteraction)
+      window.removeEventListener('touchmove', handleUserInteraction)
+      if (navLockTimeoutRef.current) clearTimeout(navLockTimeoutRef.current)
+    }
   }, [])
+
+  // Position fluid sliding glass pill
+  useEffect(() => {
+    if (!activeSection) {
+      setPillStyle((prev) => ({ ...prev, opacity: 0 }))
+      return
+    }
+
+    const activeEl = linkRefs.current[activeSection]
+    const container = navContainerRef.current
+
+    if (activeEl && container) {
+      const containerRect = container.getBoundingClientRect()
+      const linkRect = activeEl.getBoundingClientRect()
+
+      setPillStyle({
+        left: linkRect.left - containerRect.left,
+        width: linkRect.width,
+        opacity: 1,
+      })
+    }
+  }, [activeSection, scrolled])
+
+  const handleLogoClick = (e) => {
+    if (e && e.preventDefault) e.preventDefault()
+    close()
+
+    setActiveSection('')
+    isClickNavigatingRef.current = true
+    if (navLockTimeoutRef.current) clearTimeout(navLockTimeoutRef.current)
+
+    // Smoothly scroll to the very top
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    // Clean up hash from URL cleanly without reload
+    if (window.location.hash) {
+      try {
+        history.replaceState(null, '', window.location.pathname + window.location.search)
+      } catch (err) {}
+    }
+
+    navLockTimeoutRef.current = setTimeout(() => {
+      isClickNavigatingRef.current = false
+    }, 800)
+  }
+
+  const handleNavClick = (e, href) => {
+    if (e && e.preventDefault) e.preventDefault()
+    close()
+
+    setActiveSection(href)
+    isClickNavigatingRef.current = true
+    if (navLockTimeoutRef.current) clearTimeout(navLockTimeoutRef.current)
+
+    const targetId = href.replace('#', '')
+    const targetEl = document.getElementById(targetId)
+    if (targetEl) {
+      const navbarOffset = 80
+      const elementPosition = targetEl.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - navbarOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+
+      try {
+        history.pushState(null, '', href)
+      } catch (err) {}
+    }
+
+    navLockTimeoutRef.current = setTimeout(() => {
+      isClickNavigatingRef.current = false
+    }, 1000)
+  }
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark'
@@ -30,108 +189,174 @@ export default function Navbar() {
 
   const close = () => setOpen(false)
 
-  const visibleLinks = navLinks.filter(
-    (l) => l.label !== 'Contact' && l.label !== 'Process' && l.label !== 'Industries'
-  )
+  const handleModalClick = (modalId) => {
+    close()
+    if (onOpenModal) onOpenModal(modalId)
+  }
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 inset-x-0 z-40 transition-all duration-500 ${
         scrolled
-          ? 'bg-[var(--bg-surface)]/95 backdrop-blur-md shadow-sm border-b border-[var(--border-subtle)] py-3'
-          : 'bg-[var(--bg-page)]/85 backdrop-blur-md border-b border-[var(--border-subtle)]/70 py-4'
+          ? 'bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border-b border-black/[0.06] dark:border-white/[0.08] py-3.5 shadow-sm dark:shadow-2xl'
+          : 'bg-transparent py-5'
       }`}
     >
-      <Container className="flex items-center justify-between gap-4">
+      <Container className="flex items-center justify-between gap-3 xl:gap-6">
         {/* Brand */}
-        <a
-          href="#top"
-          onClick={close}
-          className="group flex items-center gap-2.5 text-decoration-none"
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-sky-400 text-white font-serif font-bold text-xl shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
-            A
-          </div>
-          <div className="flex flex-col">
-            <span className="font-serif text-xl font-bold tracking-tight text-[var(--text-heading)] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              Afrookoo
-            </span>
-            <span className="text-[10px] font-mono tracking-wider uppercase text-blue-600 dark:text-blue-400 font-semibold -mt-1">
-              Software
-            </span>
-          </div>
-        </a>
+        <AfrookooBrand onClick={handleLogoClick} />
 
-        {/* Desktop Navigation */}
-        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1 xl:gap-2">
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="px-3 py-1.5 rounded-lg text-sm font-medium text-[var(--text-body)] hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100/90 dark:hover:bg-slate-800/80 transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+        {/* Modern Frosted Glass Floating Navigation Capsule */}
+        <nav
+          ref={navContainerRef}
+          aria-label="Main navigation"
+          className="relative hidden lg:flex items-center gap-0.5 xl:gap-1 rounded-full border border-black/[0.07] dark:border-white/[0.1] bg-white/70 dark:bg-zinc-900/60 p-1 backdrop-blur-2xl shadow-xs shrink-0"
+        >
+          {/* Animated Fluid Glass Highlight Capsule */}
+          <span
+            className="absolute top-1 bottom-1 rounded-full bg-white dark:bg-white/15 backdrop-blur-md border border-black/5 dark:border-white/20 shadow-xs pointer-events-none transition-all duration-400 ease-out"
+            style={{
+              left: `${pillStyle.left}px`,
+              width: `${pillStyle.width}px`,
+              opacity: pillStyle.opacity,
+            }}
+          />
+
+          {navLinks.map((l) => {
+            const isActive = activeSection === l.href
+            return (
+              <a
+                key={l.label}
+                href={l.href}
+                ref={(el) => (linkRefs.current[l.href] = el)}
+                onClick={(e) => handleNavClick(e, l.href)}
+                className={`relative z-10 whitespace-nowrap px-3 xl:px-4 py-1.5 rounded-full text-xs font-medium transition-colors duration-200 select-none ${
+                  isActive
+                    ? 'text-[var(--text-heading)] font-semibold'
+                    : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
+                }`}
+              >
+                {l.label}
+              </a>
+            )
+          })}
+
+          <div className="hidden xl:block h-3 w-px bg-black/[0.08] dark:bg-white/[0.12] mx-1" />
+
+          <button
+            type="button"
+            onClick={() => handleModalClick('about')}
+            className="relative z-10 hidden xl:inline-block whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] transition-colors cursor-pointer"
+          >
+            About
+          </button>
+          <button
+            type="button"
+            onClick={() => handleModalClick('insights')}
+            className="relative z-10 hidden xl:inline-block whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] transition-colors cursor-pointer"
+          >
+            Insights
+          </button>
+          <button
+            type="button"
+            onClick={() => handleModalClick('careers')}
+            className="relative z-10 hidden xl:inline-block whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] transition-colors cursor-pointer"
+          >
+            Careers
+          </button>
         </nav>
 
-        {/* Action Controls */}
-        <div className="flex items-center gap-2 sm:gap-3">
-
-          {/* Theme Toggle */}
+        {/* Right Actions */}
+        <div className="flex items-center gap-3">
+          {/* Theme Toggle Button */}
           <button
             type="button"
             onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-800/90 text-[var(--text-heading)] hover:border-blue-500 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400 shadow-xs transition-colors cursor-pointer"
+            aria-label="Toggle theme"
+            className="rounded-full p-2.5 text-[var(--text-body)] hover:text-[var(--text-heading)] hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-300 hover:rotate-45 active:scale-90 cursor-pointer"
           >
-            {theme === 'dark' ? (
-              <Sun size={17} className="text-amber-400" />
-            ) : (
-              <Moon size={17} className="text-slate-700" />
-            )}
+            {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
           </button>
 
-          {/* CTA Button */}
-          <Button href="#contact" variant="primary" className="hidden md:inline-flex text-xs px-4 py-2 min-h-[38px]">
+          {/* Start a Project CTA Button */}
+          <Button
+            href="#contact"
+            onClick={(e) => handleNavClick(e, '#contact')}
+            variant="primary"
+            className="hidden sm:inline-flex rounded-full text-xs h-9 px-5 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white shadow-md shadow-blue-500/20"
+          >
             <span>Start a Project</span>
-            <ArrowRight size={14} />
           </Button>
 
-          {/* Mobile menu button */}
+          {/* Mobile hamburger */}
           <button
             type="button"
-            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-300 dark:border-slate-700 bg-white/90 dark:bg-slate-800/90 text-[var(--text-heading)] hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden cursor-pointer"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle mobile menu"
+            className="rounded-full p-2 text-[var(--text-heading)] hover:bg-black/5 dark:hover:bg-white/10 lg:hidden cursor-pointer"
           >
-            {open ? <CloseIcon size={20} /> : <MenuIcon size={20} />}
+            {open ? <CloseIcon size={18} /> : <MenuIcon size={18} />}
           </button>
         </div>
       </Container>
 
       {/* Mobile Drawer */}
       {open && (
-        <div className="fixed inset-x-0 top-[65px] bg-[var(--bg-surface)]/98 backdrop-blur-xl border-b border-[var(--border-subtle)] px-6 py-6 shadow-2xl lg:hidden flex flex-col gap-2 max-h-[calc(100vh-70px)] overflow-y-auto">
-          <div className="flex flex-col divide-y divide-[var(--border-subtle)] mb-4">
-            {navLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={close}
-                className="py-3 text-base font-medium text-[var(--text-heading)] hover:text-blue-500 flex items-center justify-between"
+        <div className="lg:hidden border-b border-black/[0.06] dark:border-white/[0.1] bg-white/95 dark:bg-zinc-950/95 backdrop-blur-2xl px-6 py-6 shadow-2xl animate-fade">
+          <div className="flex flex-col space-y-3">
+            {navLinks.map((l) => {
+              const isActive = activeSection === l.href
+              return (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={(e) => handleNavClick(e, l.href)}
+                  className={`py-2 px-3 rounded-xl text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'bg-[var(--accent-muted)] text-[var(--accent)] font-semibold'
+                      : 'text-[var(--text-body)] hover:text-[var(--text-heading)]'
+                  }`}
+                >
+                  {l.label}
+                </a>
+              )
+            })}
+
+            <div className="h-px bg-black/[0.06] dark:bg-white/[0.08] my-2" />
+
+            <button
+              type="button"
+              onClick={() => handleModalClick('about')}
+              className="py-1 px-3 text-left text-sm text-[var(--text-body)] hover:text-[var(--text-heading)] cursor-pointer"
+            >
+              About Studio
+            </button>
+            <button
+              type="button"
+              onClick={() => handleModalClick('insights')}
+              className="py-1 px-3 text-left text-sm text-[var(--text-body)] hover:text-[var(--text-heading)] cursor-pointer"
+            >
+              Engineering Insights
+            </button>
+            <button
+              type="button"
+              onClick={() => handleModalClick('careers')}
+              className="py-1 px-3 text-left text-sm text-[var(--text-body)] hover:text-[var(--text-heading)] cursor-pointer"
+            >
+              Careers
+            </button>
+
+            <div className="pt-2">
+              <Button
+                href="#contact"
+                onClick={(e) => handleNavClick(e, '#contact')}
+                variant="primary"
+                className="w-full text-xs rounded-full h-10"
               >
-                <span>{l.label}</span>
-                <span className="text-slate-400">→</span>
-              </a>
-            ))}
+                <span>Start a Project</span>
+              </Button>
+            </div>
           </div>
-
-
-          <Button href="#contact" onClick={close} className="w-full mt-2">
-            Start a Project
-          </Button>
         </div>
       )}
     </header>
